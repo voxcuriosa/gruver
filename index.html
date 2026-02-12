@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxCuriosa - Utforsk Nysgjerrigheten</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="description"
+        content="VoxCuriosa: Utforsk nysgjerrigheten din! En portal for interaktive kart over gruver i Skiensmarka, historie-quizer, retro spill og læringsressurser.">
+    <meta name="google-site-verification" content="OotJN4Z_uvC4h2EfwEqHmBu0p5zr16j5DYWKBHWqZHM" />
+    <meta name="keywords"
+        content="Skien, Gruver, Skiensmarka, Historie, Quiz, Kart, VoxCuriosa, Telemark, Gruvevandring">
+    <meta name="author" content="Christian Borchgrevink-Vigeland">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#00f2ff">
+    <link rel="canonical" href="https://www.voxcuriosa.no/">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <style>
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg: #0a0b0d;
+            --text: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 2rem;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 30%, var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.4));
+            letter-spacing: -3px;
+            text-transform: tracking-tight;
+            display: inline-block;
+        }
+
+        h1 span {
+            color: var(--secondary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 2.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 90%;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-icon {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 5px;
+            width: 48px;
+            height: 48px;
+        }
+
+        .card-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--primary);
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .card-icon svg {
+            filter: drop-shadow(0 0 8px var(--primary));
+            transform: scale(1.1);
+        }
+
+        .card h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            margin: 0;
+            color: #ccc;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: auto;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover .btn {
+            transform: translateX(5px);
+        }
+
+        /* Abstract Background shapes */
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--secondary), transparent 70%);
+            filter: blur(80px);
+            opacity: 0.2;
+            z-index: -1;
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(-20%, -20%);
+            }
+
+            to {
+                transform: translate(20%, 20%);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+                letter-spacing: -1px;
+            }
+
+            .hero {
+                padding: 1rem;
+            }
+
+            .grid {
+                width: 95%;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blob"></div>
+    <div class="hero">
+        <h1>Vox<span></span>Curiosa</span></h1>
+        <p>Utforsk nysgjerrigheten!</p>
+    </div>
+
+    <div class="grid">
+        <!-- Snake -->
+        <a href="/snake/" class="card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="4" ry="4"></rect>
+                    <path d="M8 12h4m2 0h2m-6 4h.01M9 8h6"></path>
+                    <path d="M10 16a2 2 0 1 0 4 0"></path>
+                    <!-- Abstract snake/game shape -->
+                    <path d="M8 13a2 2 0 1 0 4 0 2 2 0 0 0 -4 0" fill="currentColor" opacity="0.3"></path>
+                </svg>
+            </div>
+            <h2>Neon Snake</h2>
+            <p>Den klassiske slangen i en moderne, fargerik drakt. Spill alene eller utfordre venner!</p>
+            <span class="btn" onclick="logAppVisit('snake')">SPILL NÅ →</span>
+        </a>
+
+        <!-- History Quiz -->
+        <a href="/history/" class="card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+            </div>
+            <h2>History Quiz</h2>
+            <p>Test dine kunnskaper om historiens største begivenheter. Klarer du alle merkene?</p>
+            <span class="btn" onclick="logAppVisit('history')">START QUIZ →</span>
+        </a>
+
+        <!-- Historienotater -->
+        <a href="/notebooks/" class="card" onclick="logAppVisit('notebooks')">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 2 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+            <h2>Historienotater</h2>
+            <p>En samling NotebookLM notatblokker for historieundervisning VG2 og VG3.</p>
+            <span class="btn">LES NOTATER →</span>
+        </a>
+
+        <!-- Gruver i Skien -->
+        <a href="gruver/index.php" class="card" onclick="logAppVisit('gruver')">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21 3 6"></polygon>
+                    <line x1="9" y1="3" x2="9" y2="18"></line>
+                    <line x1="15" y1="6" x2="15" y2="21"></line>
+                </svg>
+            </div>
+            <h2>Skiensmarka</h2>
+            <p>Utforsk gruver, skjerp, bygdeborger og andre kulturminner i Skiensmarka. Se bilder og info fra mine
+                turer.</p>
+            <span class="btn">SE KARTET →</span>
+        </a>
+
+        <!-- LMGTFY -->
+        <a href="lmgtfy.html" class="card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+            <h2>LMGTFY</h2>
+            <p>La meg google det for deg. En enkel måte å hjelpe andre finne svaret.</p>
+            <span class="btn" onclick="logAppVisit('lmgtfy')">GÅ TIL SØK →</span>
+        </a>
+
+        <!-- Flervalgsgeneratoren -->
+        <a href="https://flervalgsgenerator.streamlit.app/" class="card" target="_blank">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                    <line x1="9" y1="11" x2="15" y2="11"></line>
+                </svg>
+            </div>
+            <h2>Flervalgsgenerator</h2>
+            <p>Lag flervalgsspørsmål automatisk med kunstig intelligens.</p>
+            <span class="btn" onclick="logAppVisit('flervalgsgenerator')">ÅPNE APP →</span>
+        </a>
+
+        <!-- SRT/VTT Oversetter -->
+        <a href="/translator/" class="card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    <line x1="9" y1="10" x2="15" y2="10"></line>
+                    <line x1="12" y1="7" x2="12" y2="13"></line>
+                </svg>
+            </div>
+            <h2>SRT/VTT Oversetter</h2>
+            <p>Oversett undertekster (SRT/VTT) til norsk med AI. Krever PIN.</p>
+            <span class="btn" onclick="logAppVisit('translator')">GÅ TIL OVERSETTER →</span>
+        </a>
+
+        <!-- Karakterutregner -->
+        <a href="/grades/" class="card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </div>
+            <h2>Karakterutregner</h2>
+            <p>Bergen karakterer basert på poengsummer. Enkel og nøyaktig utregning. Krever PIN.</p>
+            <span class="btn" onclick="logAppVisit('grades')">ÅPNE UTREGNER →</span>
+        </a>
+
+        <!-- Energy Monitor -->
+
+        <a href="https://cbvenergy.streamlit.app/" class="card" target="_blank">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            <h2>Energy Monitor</h2>
+            <p>Overvåk energiforbruk og strømpriser med sanntidsdata. (Privat app)</p>
+            <span class="btn" onclick="logAppVisit('energy')">ÅPNE APP →</span>
+        </a>
+
+
+
+        <!-- Kunnskap - Historie -->
+        <a href="/Kunnskap/" class="card" onclick="logAppVisit('kunnskap')">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+            </div>
+            <h2>Kunnskap</h2>
+            <p>Historie På Tvers. Læringsstier og gamified oppgaver. (Krever kode)</p>
+            <span class="btn">GÅ TIL LÆRING →</span>
+        </a>
+
+        <!-- Coming Soon -->
+        <div class="card" style="opacity: 0.5; cursor: default;">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <h2>Kommer Snart</h2>
+            <p>Jeg jobber med flere spennende prosjekter. Følg med!</p>
+        </div>
+    </div>
+
+    <!-- PWA Install Button (Hidden by default) -->
+    <button id="pwa-install-btn"
+        style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #00f2ff; color: #0a0b0d; border: none; padding: 15px 30px; border-radius: 50px; font-weight: 800; box-shadow: 0 0 20px rgba(0, 242, 255, 0.6); cursor: pointer; align-items: center; gap: 10px; font-family: 'Outfit', sans-serif; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s;">
+        <span style="font-size: 1.4rem;">⬇️</span> INSTALLER APP
+    </button>
+
+    <!-- Service Worker Registration & PWA Logic -->
+    <script>
+        function logAppVisit(appName) {
+            const payload = {
+                action: 'log_visit',
+                app: appName,
+                device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
+                screen_resolution: window.screen.width + "x" + window.screen.height,
+                referrer: document.referrer || 'Direct',
+                language: navigator.language || 'en'
+            };
+
+            fetch('/history/auth_v2.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(err => console.log("Analytics skipped."));
+        }
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js?v=7')
+                    .then(reg => console.log('Service Worker registered:', reg))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+
+        // PWA Install Logic
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwa-install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', (e) => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt');
+                }
+                deferredPrompt = null;
+            });
+        });
+    </script>
+
+</body>
+
+</html>

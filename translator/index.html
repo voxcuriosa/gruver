@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT/VTT Oversetter - VoxCuriosa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="blob"></div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Tilbake til Portal</a>
+        <h1>SRT/VTT Oversetter</h1>
+
+        <!-- PIN Screen -->
+        <div id="auth-screen" class="auth-screen">
+            <p style="text-align: center; color: #ccc;">Skriv inn PIN-kode for å få tilgang til oversetteren.</p>
+            <input type="password" id="pin-input" placeholder="PIN-kode (4 siffer)" maxlength="4">
+            <button id="unlock-btn">Lås opp</button>
+            <div class="contact-info">
+                Kontakt Christian Borchgrevink-Vigeland på
+                <span id="email-placeholder" class="email-reveal" onclick="revealEmail()">[klikk for å vise
+                    e-post]</span>
+                for å få kode.
+            </div>
+        </div>
+
+        <!-- App Screen -->
+        <div id="app-screen" class="app-screen hidden">
+            <div
+                style="background: rgba(0,200,255,0.1); border: 1px solid var(--primary); padding: 10px; border-radius: 8px; font-size: 0.9rem;">
+                <strong>Info:</strong> Last opp en .SRT eller .VTT fil. Verktøyet oversetter teksten til norsk (Bokmål)
+                og beholder tidsstemplene korrekt for Microsoft Stream.
+            </div>
+
+            <div
+                style="margin-top: 20px; margin-bottom: 20px; text-align: center; border: 2px dashed var(--border); padding: 20px; border-radius: 10px;">
+                <input type="file" id="file-input" accept=".srt,.vtt" style="color: #fff; width: 100%;">
+                <p id="file-name" style="margin-top: 10px; color: var(--primary); font-weight: bold;"></p>
+            </div>
+
+            <!-- Textarea removed as requested -->
+
+            <div class="stats">
+                <span id="cue-count"></span>
+                <span id="est-time"></span>
+                <span id="est-cost"></span>
+            </div>
+            <a href="https://platform.openai.com/settings/organization/billing/overview" target="_blank"
+                class="billing-link">Sjekk saldo (OpenAI)</a>
+
+            <div class="language-selection">
+                <label>Velg språk:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="lang" value="Norwegian (Bokmål)" checked>
+                        <span class="checkmark"></span> Norsk
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="lang" value="Somali">
+                        <span class="checkmark"></span> Somali
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="lang" value="Arabic">
+                        <span class="checkmark"></span> Arabisk
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="lang" value="Ukrainian">
+                        <span class="checkmark"></span> Ukrainsk
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="lang" value="Turkish">
+                        <span class="checkmark"></span> Tyrkisk
+                    </label>
+                </div>
+            </div>
+
+            <button id="translate-btn" class="primary-btn" disabled>Oversett til Norsk</button>
+
+            <div id="progress-container" class="hidden">
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+                <p id="status-text">Forbereder...</p>
+            </div>
+
+            <div id="result-area" class="hidden">
+                <div id="result-tabs" class="tabs">
+                    <!-- Tabs will be injected here -->
+                </div>
+                <textarea id="subtitle-output" readonly></textarea>
+                <div style="display: flex; gap: 10px;">
+                    <button id="copy-btn" style="flex: 1; background: #333;">Kopier</button>
+                    <button id="download-btn" style="flex: 1;">Last ned .vtt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple obfuscation
+        function revealEmail() {
+            const user = "borchgrevink";
+            const domain = "gmail.com";
+            const el = document.getElementById('email-placeholder');
+            el.textContent = user + "@" + domain;
+            el.classList.remove('email-reveal');
+            el.style.textDecoration = "none";
+            el.style.cursor = "text";
+            el.onclick = null;
+        }
+    </script>
+</body>
+
+</html>

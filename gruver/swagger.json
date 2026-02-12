@@ -1,0 +1,1057 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "NiB Eksport API",
+    "description": "## Autentisering\nDet er to måter å autentisere seg på. Basic auth eller Bearer token.\n\n### Basic auth\nBruk av API-et krever en GeoID bruker. Brukernavn og passord sendes inn i Authorization header.\nAuthorization header må være på følgende format:\n\n\"Basic base64(\\<brukernavn\\>:\\<passord\\>)\".\n\n<br/><br/>\n\n**Eksempel for brukernavn: \"person\" og passord: \"hemmelig\"**\n\nbase64(person:hemmelig) = cGVyc29uOmhlbW1lbGln\n\nAuthorization header = \"Basic cGVyc29uOmhlbW1lbGln\"\n\n<br/><br/>\n\n### Bearer token\nBruk av API-et krever en GeoID bruker og klienthemmelighet+klientid (clientSecret+clientId). For å få tak i klienthemmeligheten må man kontakte Kartverket. \n\nAPI-et bruker OAuth 2.0 Token for autentisering gjennom GeoID, som er Kartverkets autentiseringstjeneste. Token blir brukt for å autentisere brukeren og gi tilgang til API-et. Man sender token som en Bearer token i headeren til forespørselen. For å få tak i en gyldig token sender man en POST-forespørsel til GeoID med brukernavn, passord, client_id og client_secret.\n\nURL: `https://auth2.geoid.no/realms/geoid`\n\nMetode: `POST`\n\nContent-Type: `application/x-www-form-urlencoded`\n\nEksempel på en `curl`-kommando for å få tak i en token:\n\n```bash\ncurl --location 'https://auth2.geoid.no/realms/geoid/protocol/openid-connect/token' \\\n--header 'Content-Type: application/x-www-form-urlencoded' \\\n--data-urlencode 'username=<brukernavn>' \\\n--data-urlencode 'password=<passord>' \\\n--data-urlencode 'client_id=<client_id>' \\\n--data-urlencode 'client_secret=<client_secret>' \\\n--data-urlencode 'grant_type=password' \\\n--data-urlencode 'scope=openid'\n```\nBytt ut `<brukernavn>`, `<passord>`, `<client_id>` og `<client_secret>` med riktig informasjon.\n\nForespørselen vil returnere en JSON med token, eksempel:\n\n```json\n{\n    \"access_token\": \"<access_token>\",\n    \"expires_in\": 300,\n    \"refresh_expires_in\": 1800,\n    \"refresh_token\": \"<refresh_token>\",\n    \"token_type\": \"Bearer\",\n    \"id_token\": \"<id_token>\",\n    \"not-before-policy\": 0,\n    \"session_state\": \"<session_state>\",\n    \"scope\": \"openid profile email\"\n}\n```\nTa i bruk `access_token` for å autentisere mot API-et. Tokenet må sendes som en Bearer token i headeren til forespørselen.\n\n",
+    "version": "v1"
+  },
+  "paths": {
+    "/export/start": {
+      "post": {
+        "tags": [
+          "Export"
+        ],
+        "description": "### Start en eksportjobb\nDette endepunktet starter en ny eksport jobb i NiB. Det må sendes inn et JSON objekt som inneholder all nødvendig informasjon. \n\nEndepunktet returnerer en JSON respons med en `exportId` som kan brukes til å hente status på eksportjobben.\n\nDu vil bli sendt mail når eksporten har begynt og når den er ferdig. Den siste mailen vil inkludere linker får å laste ned eksporten.\n\nBeskrivelse av parametrene i forespørselen:\n\n\n| feltnavn | beskrivelse | type | eksempel | obligatorisk | nullable  | standardverdi |\n|---|---|---|---|---|---|---|\n|`copyEmail`| E-post adresse som skal motta nedlastingslenke i tillegg til brukeren som starter eksporten. Kommaseparer for flere | string | `\"ola.nordmann@email.no, oliverTwist123@gmail.com\"` | | X | |\n|`comment`| Beskrivende navn på eksportjobben | string | `\"Eksport av Oslo 2022, JPEG format\"` | | | `\"\"` |\n|`coordInput`| Geografisk avgrensning av eksport. Dersom denne utelates kreves det at 1 prosjekt angis i `projects`. Obligatorisk hvis `inputWkid` er definert| GeoJSON geometri object, NB: Må være `Polygon` eller `MultiPolygon`. Ref: [GeoJSON Geometry specification](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1). |<code>{\"type\": \"Polygon\"\"coordinates\": [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0],[100.0, 1.0], [100.0, 0.0]]]} </code> | (X) | X | |\n|`inputWkid`| Koordinatsystem for `coordInput`, obligatorisk hvis `coordInput` er definert | integer | `4326` | (X) | X | |\n| `cutNationalBorder` | Klippe langs riksgrense | boolean | `true` |  |  | `false` |\n| `format` | Eksport bilde-format | int enum<br>1 - Tiled TIFF <br>2 - TIFF<br>3 - TiledGeoTIFF<br>4 - GeoTIFF<br>5 - JPEG<br>6 - PNG<br>7 - ECW<br>8 - JPEG2000 | `3` | X |  |  |\n| `resolution` | Bakkeoppløsning i meter. Obligatorisk med unntak av eksport av enkeltprosjekt (prosjektets oppløsning blir da default) | double | `0.125` | (X) |  | |\n| `outputWkid` | Koordinatsystem for eksport | integer | `25832` |  |  | `25833` |\n| `fillColor` | Angivelse av utfyllingsfarge (svart->0, hvit->255)  | integer (`0` eller `255`) | `255` |  |  | `0` |\n|`fillImage`| Bestemmer om nyeste bilder skal fylle ut kartblader utenfor angitte prosjekter | boolean | `true` |  |  | `false` |\n|`projects`| Liste med prosjektnavn som skal eksporteres. `[\"AlleOrtofoto\"]`angis dersom nyeste bilder skal eksporteres. Rekkefølgen styrer synligheten i eksporten, prosjekter først i listen tegnes øverst i kartet. Dersom denne utelates kreves det at `coordInput` angis. Dersom kun ett prosjekt angis kreves ingen geometri, da brukes utsnittet til prosjektet. Ved eksport av flere prosjekter må geometri angis i tillegg.  | list of strings | `[\"Oslo 2022\", \"Bergen 2022\"]` | (X) | X |  |\n|`compressionMethod`| Kompresjonsmetode for bilder | int enum <br>0 - Ingen<br>1 - JPEG<br>2 - ECW<br>3 - JPEG 2000<br>4 - LZ77<br>5 - LZW<br>6 - JPEG YCbCr | `1` |  |  | `0` |\n|`compressionValue`| Kompresjonsverdi (0-100) dersom `compressionMethod` er en av `1,2,3,5,6`. Høyere tall => mer kompresjon/lavere kvalitet | int | `75` |  |  | `0` |\n|`imagemosaic` | Filoppdeling i eksport | int enum<br>1 - Utstrekning i meter<br>2 - Ingen oppdeling<br>3 - Kartbladtiles | `2` |  |  | `3` |\n|`mapsheetSize`| Kartbladstørrelse for eksport, dersom `imagemosaic` = `3`. Obligatorisk hvis `imagemosaic` = `3`. | int<br>500–1:500<br>1000–1:1000<br>2000–1:2000<br>5000-1:5000<br>10000–1:10000<br>20000–1:20000<br>15000–15km | `5000` |  | X |  |\n|`horizontal`| Bildefilenes horisontale utstrekning, dersom `imagemosaic` = `1` | int | `1000` |  | X |  |\n|`vertical`| Bildefilenes vertikale utstrekning, dersom `imagemosaic` = `1` | int | `1000` |  | X |  |\n|`exportFilename`| Navn på zip-fila som blir sendt, hvis ikke angitt bruker `eksport_<eksport-id>` som navn. | string | `\"Oslo_2022\"` |  | X | |",
+        "operationId": "start export job",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportJobRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportJobResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export/estimate": {
+      "post": {
+        "tags": [
+          "Export"
+        ],
+        "description": "\r\n### Hent estimat for eksport\r\n\r\nDette endepunktet gir deg et estimat p� hvor stor eksporten blir, hvor lang tid den vil ta, og hvor mange bildefiler som vil genereres � f�r du faktisk starter eksporten.\r\n\r\nEndepunktet returnerer en JSON-respons med:\r\n- `estimatedSizeMB` � Estimert total st�rrelse i megabyte\r\n- `estimatedTime` � Estimert prosesseringstid p� formatet HH:mm:ss\r\n- `estimatedFileCount` � Estimert antall bildefiler som vil bli generert\r\n\r\nDette er nyttig for � planlegge eksport og f� oversikt over ressursbehovet.\r\n\r\n#### Beskrivelse av parametrene i foresp�rselen\r\n\r\n| feltnavn | beskrivelse | type | eksempel | obligatorisk | nullable | standardverdi |\r\n|---|---|---|---|---|---|---|\r\n|`coordInput`| Geografisk avgrensning av eksport. Hvis denne utelates m� `projects` angis | GeoJSON-geometriobjekt, m� v�re `Polygon` eller `MultiPolygon`. Ref: [GeoJSON Geometry specification](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1) |<code>{\"type\": \"Polygon\", \"coordinates\": [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0],[100.0, 1.0], [100.0, 0.0]]]}</code> | (X) | X | |\r\n|`inputWkid`| Koordinatsystem for `coordInput`, p�krevd hvis `coordInput` er angitt | integer | `4326` | (X) | X | |\r\n|`resolution`| Bakkeoppl�sning i meter. P�krevd med mindre du eksporterer et enkeltprosjekt | double | `0.125` | (X) | X | |\r\n|`outputWkid`| Koordinatsystem for eksport | integer | `25832` |  |  | `25833` |\r\n|`projects`| Liste med prosjektnavn som skal eksporteres. `[\"AlleOrtofoto\"]` for nyeste bilder. Hvis denne utelates m� `coordInput` angis | liste av strenger | `[\"Oslo 2022\", \"Bergen 2022\"]` | (X) | X |  |\r\n|`imagemosaic`| Filoppdeling i eksport | int enum<br>1 - Utstrekning i meter<br>2 - Ingen oppdeling<br>3 - Kartbladtiles | `2` |  |  | `3` |\r\n|`mapsheetSize`| Kartbladst�rrelse for eksport, hvis `imagemosaic` = `3` | int<br>500, 1000, 2000, 5000, 10000, 20000, 15000 | `5000` |  | X | `5000` |\r\n|`horizontal`| Bildefilenes horisontale utstrekning i meter, hvis `imagemosaic` = `1` | int | `1000` | (X) | X |  |\r\n|`vertical`| Bildefilenes vertikale utstrekning i meter, hvis `imagemosaic` = `1` | int | `1000` | (X) | X |  |\r\n\r\n#### Eksempel p� respons\r\n\r\n```json\r\n{\r\n  \"estimatedSizeMB\": 337,\r\n  \"estimatedTime\": \"00:30:26\",\r\n  \"estimatedFileCount\": 4\r\n}\r\n```\r\n\r\n#### Notater\r\n\r\n- Autentisering er p�krevd for � bruke dette endepunktet\r\n- Estimatet er basert p� totalareal og oppl�sning for eksporten\r\n- Faktisk st�rrelse og tid kan variere avhengig av komprimeringsvalg og serverbelastning\r\n- Antall filer avhenger av `imagemosaic`-innstillingen og valgte kartbladst�rrelser\r\n",
+        "operationId": "get export estimate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportEstimateRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportEstimateResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export/{exportId}": {
+      "get": {
+        "tags": [
+          "Export"
+        ],
+        "description": "### Henter ut eksport status for en gitt eksport\n\nDette endepunktet tar inn en eksportjobb-id og henter informasjon om tilstanden på eksportjobben. \n\nMan vil ikke kunne hente ut tilstand til eksportjobber som tilhører en annen bruker (enn det autentiserings-tokenet tilhører), med mindre man er administrator.\n",
+        "operationId": "get export status",
+        "parameters": [
+          {
+            "name": "exportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export/originalExport/{projectId}": {
+      "post": {
+        "tags": [
+          "Export"
+        ],
+        "description": "### Start original eksport\nDette endepunktet tar inn en prosjekt-id og sender på mail en url der bruker kan laste ned de originale filene som tilhører prosjektet. \n\nDette endepunktet er kun tilgjengelig hvis brukeren (brukeren som er tilknyttet autentiserings-tokenet) er administrator.\n",
+        "operationId": "get original export",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OriginalExportRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OriginalExportResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "### Hente prosjekt\nDette endepunktet henter info om prosjekter. Det må sendes inn et JSON objekt som inneholder all nødvendig informasjon. \n\nEndepunktet returnerer en JSON respons med prosjektinfo.\n\nBeskrivelse av parametrene i forespørselen:\n\n\n| feltnavn | beskrivelse | type | eksempel | obligatorisk | nullable  | standardverdi |\n|---|---|---|---|---|---|---|\n|`geometry`| Geometri som spesifiserer område eller punkt man vil hente prosjekter fra. <br/>Alle prosjekt som overlapper med geometrien hentes | GeoJSON geometri object, NB: Må være `Polygon`, `MultiPolygon`, eller `Point`. Ref: [GeoJSON Geometry specification](https://datatracker.ietf.org/doc/html/rfc7946#section-3.1) | <code>{\"type\": \"Polygon\"\"coordinates\": [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0],[100.0, 1.0], [100.0, 0.0]]]} </code> | | X | |\n|`projects`| Liste av prosjektnavn som man vil hente | liste med strings | <code>[\"Stavanger 2020\", \"Jotunheimen 2009\"]</code> | | | <code>[]</code> |\n|`returnMetadata`| Sier om man vil hente all metadata om hvert prosjekt | boolean | `true` | | | `false` |\n|`returnGeometry`| Sier om man vil hente geometri for hvert prosjekt | boolean | `true` | | | `false` |\n|`publishedFrom`| Sier at man vil hente prosjekt som er publisert fra og med denne datoen | date | `\"2024-10-15\"` | | X | |\n|`publishedTo`| Sier at man vil hente prosjekt som er publisert frem til og med denne datoen | date | `\"2024-10-18\"` | | X | |\n|`inputWkid`| Koordinatsystemet til input geometrien | integer | `4326` | | | `25833` |\n|`outputWkid`| Koordinatsystemet til geometrien til hvert prosjekt man henter | integer | `4326` | | | `25833` |\n|`stopOnCover`| Sier at man vil bare hente prosjekt som dekkes fullstending av input geometri | boolean | `true` | | | `false` |\n|`inCacheOnly`| Sier at man vil bare hente prosjekt som ligger i cache | boolean | `true` | | | `false` |\n|`filters`| Ekstra filter på prosjekt-metadata. Alle enkelt-filtere listes under denne | JSON object | <code>{\"orthophotoType\": 9} </code> | | X | |\n|`filters.owner`| Navn på eier av prosjekt | string | `\"Fritzøe skoger og Selvik bruk\"` | | X | |\n|`filters.orthophotoType`| Hente prosjekt med en spesifikk ortofototype. Gyldige verdier: (1-12) | integer | `9` | | X | |\n|`filters.captureMethod`| Hente prosjekt med en spesifikk opptaksmetode. Gyldige verdier: (1-2) | integer | `2` | | X | |\n|`filters.imageCategory`| Hente prosjekt med en spesifikk bildekategori. Gyldige verdier: (1-4) | integer | `2` | | X | |\n|`filters.orientationMethod`| Hente prosjekt med en spesifikk orienteringsmetode. Gyldige verdier: (1-11) | integer | `7` | | X | |\n|`filters.aircraftCompany`| Navn på flyfirma for prosjekt | string | `\"TerraTec AS\"` | | X | |\n|`filters.producer`| Navn på produsent for prosjekt | string | `\"COWI AS\"` | | X | |\n|`filters.year`| Årstall for prosjekt | integer | `2020` | | X | |",
+        "operationId": "get projects",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectsRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectsResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/rss": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "get latest projects",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Void"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/updatemetadata": {
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "### Endre metadata\n\nFor å bruke dette endepunktet må du være logget inn som en admin bruker.\n\n#### Request:\n|Parameter\t\t|Beskrivelse\t\t\t\t\t\t\t\t\t\t| Type\t\t| Format regler\t\t\t\t\t\t\t\t\t\t\t| Obligatorisk?\t|\n|---------------|---------------------------------------------------|-----------|-------------------------------------------------------|---------------|\n| project\t\t|Navn til prosjektet med metadata som skal endres\t| string\t| Må være navn på et prosjekt som eksisterer\t\t\t| Ja\t\t\t|\n| data\t\t\t|Data som skal endres\t\t\t\t\t\t\t\t| string\t| Format: \"egenskap1:nyVerdi1,egenskap2:nyVerdi2,...\"\t| Ja\t\t\t|\n| forceUpdate\t|Om det skal tvinge en oppdatering av metadata\t\t| integer\t| 0: SOSI-kontroll utføres, 1: SOSI-kontroll slåes av\t| Nei\t\t\t|\n\n#### Data: \nOversikt over hvilke egenskaper som kan endres i et prosjekt, man kan endre så mange eller få man vil:\n\n| Egenskap\t\t\t\t\t| Type\t\t| Format regler\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t   |\n|---------------------------|-----------|--------------------------------------------------------------------------|\n| dekningsnummer\t\t\t| string    | Maks lengde 255 karakterer                                               |\n| eier\t\t\t\t\t\t| string    | Maks lengde 255 karakterer                                               |\n| opprinneligbildeformat\t| string    | Maks lengde 255 karakterer                                               |\n| flyfirma\t\t\t\t\t| string    | Maks lengde 255 karakterer                                               |\n| produsent\t\t\t\t\t| string    | Maks lengde 255 karakterer                                               |\n| produktspesifikasjonslink | string\t| Maks lengde 255 karakterer\t\t\t\t\t\t\t\t\t\t\t   |\n| standardavvik\t\t\t\t| double    | Alle heltall                                                             |\n| prosjektstart\t\t\t\t| integer   | Alle heltall                                                             |\n| bilde-bit-pixel\t\t\t| integer   | Alle heltall                                                             |\n| opprinneligbildesys\t\t| integer   | Tillatte verdier: [1, 2, 3, 4, 5, 6, 7, 8, 19, 20, 21, 22, 23, 24, 25, 26, 73, 74] |\n| orienteringsmetode\t\t| intToEnum | Tillatte verdier: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]                    |\n| bildekategori\t\t\t\t| intToEnum | Tillatte verdier: [1, 2, 3, 4]                                           |\n| opptaksmetode\t\t\t\t| intToEnum | Tillatte verdier: [1, 2]\t\t\t\t\t\t\t\t\t\t\t\t   |\n\n#### Enum Verdier:\n| Parameter          | Verdier                                                                |\n|--------------------|------------------------------------------------------------------------|\n| orienteringsmetode | 1: GNSS/INS, 2: GNSS/INS med AAT, 3: GNSS/INS med AT, 4: GNSS med AAT, 5: GNSS med AT, 6: AAT, 7: AT, 8: AT med kjentpunkt, 9: AT uten kjentpunkt, 10: GNSS med AT og kjentpunkt, 11: GNSS med AT uten kjentpunkt |\n| bildekategori      | 1: IR, 2: Pankromatisk, 3: Farge, 4: IRFarge                           |\n| opptaksmetode      | 1: Analogt kamera, 2: Digital sensor                                   |\n",
+        "operationId": "update metadata",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMetadataDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Void"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/getupdatemetadatastatus": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "description": "### Hent ut status på metadataoppdatering\n\nDette endepunktet henter ut status på en metadataoppdatering i NiB. Det må sendes inn en `updateId` som ble returnert fra `POST /updateMetadata`.",
+        "operationId": "get update metadata status",
+        "parameters": [
+          {
+            "name": "jobID",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Void"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status": {
+      "post": {
+        "tags": [
+          "Status"
+        ],
+        "description": "Dette endepunktet returnerer statusen til API-et. Det er for å sjekke om API-et, ArcGIS og databasen er oppe og kjører.\nResponsen vil være et JSON-objekt, der OK enten er true eller false. Hvis OK er false, vil responsen også inneholde feilmeldinger. \nResponsen vil se slik ut:\n\n```json\n{\n  \"OK\": true,\n  \"apiOK\": true,\n  \"dbOK\": true,\n  \"agsOK\": true,\n  \"agsError\": null,\n  \"dbError\": null,\n  \"apiError\": null\n}\n```",
+        "operationId": "get status",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectsResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token/tilecache": {
+      "post": {
+        "tags": [
+          "Token"
+        ],
+        "operationId": "get NiB Cache token",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "client",
+                  "expiration",
+                  "f"
+                ],
+                "type": "object",
+                "properties": {
+                  "client": {
+                    "type": "string"
+                  },
+                  "referer": {
+                    "type": "string"
+                  },
+                  "ip": {
+                    "type": "string"
+                  },
+                  "expiration": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "f": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "client": {
+                  "style": "form"
+                },
+                "referer": {
+                  "style": "form"
+                },
+                "ip": {
+                  "style": "form"
+                },
+                "expiration": {
+                  "style": "form"
+                },
+                "f": {
+                  "style": "form"
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "client",
+                  "expiration",
+                  "f"
+                ],
+                "type": "object",
+                "properties": {
+                  "client": {
+                    "type": "string"
+                  },
+                  "referer": {
+                    "type": "string"
+                  },
+                  "ip": {
+                    "type": "string"
+                  },
+                  "expiration": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "f": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "client": {
+                  "style": "form"
+                },
+                "referer": {
+                  "style": "form"
+                },
+                "ip": {
+                  "style": "form"
+                },
+                "expiration": {
+                  "style": "form"
+                },
+                "f": {
+                  "style": "form"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArcGisTokenResponseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Token"
+        ],
+        "operationId": "get NiB Cache token GUI",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Void"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArcGisTokenResponseDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaptureMethod": {
+        "enum": [
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "CompressionMethod": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ExportEstimateRequestDto": {
+        "type": "object",
+        "properties": {
+          "coordInput": {
+            "$ref": "#/components/schemas/GeoJsonGeometry"
+          },
+          "inputWkid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "resolution": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "outputWkid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "imagemosaic": {
+            "$ref": "#/components/schemas/Imagemosaic"
+          },
+          "mapsheetSize": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "horizontal": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "vertical": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExportEstimateResponseDto": {
+        "type": "object",
+        "properties": {
+          "estimatedSizeMB": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estimatedTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "estimatedFileCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExportFormat": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ExportJobRequestDto": {
+        "type": "object",
+        "properties": {
+          "copyEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "coordInput": {
+            "$ref": "#/components/schemas/GeoJsonGeometry"
+          },
+          "inputWkid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cutNationalBorder": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "format": {
+            "$ref": "#/components/schemas/ExportFormat"
+          },
+          "resolution": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "outputWkid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fillColor": {
+            "$ref": "#/components/schemas/FillColor"
+          },
+          "fillImage": {
+            "type": "boolean"
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "compressionMethod": {
+            "$ref": "#/components/schemas/CompressionMethod"
+          },
+          "compressionValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imagemosaic": {
+            "$ref": "#/components/schemas/Imagemosaic"
+          },
+          "mapsheetSize": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "horizontal": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "vertical": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "exportFilename": {
+            "type": "string",
+            "nullable": true
+          },
+          "supportFiles": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExportJobResponseDto": {
+        "required": [
+          "exportId"
+        ],
+        "type": "object",
+        "properties": {
+          "exportId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FileResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "bytes": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FillColor": {
+        "enum": [
+          0,
+          255
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "GeoJsonGeometry": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ImageCategory": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Imagemosaic": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Metadata": {
+        "type": "object",
+        "properties": {
+          "dekningsnummer": {
+            "type": "string",
+            "nullable": true
+          },
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "orthophotoType": {
+            "$ref": "#/components/schemas/OrthophotoType"
+          },
+          "pixelSize": {
+            "type": "number",
+            "format": "double"
+          },
+          "bildeBitPixel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "captureMethod": {
+            "$ref": "#/components/schemas/CaptureMethod"
+          },
+          "imageCategory": {
+            "$ref": "#/components/schemas/ImageCategory"
+          },
+          "originalImageSystem": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "originalImageFormat": {
+            "type": "string",
+            "nullable": true
+          },
+          "orientationMethod": {
+            "$ref": "#/components/schemas/OrientationMethod"
+          },
+          "aircraftCompany": {
+            "type": "string",
+            "nullable": true
+          },
+          "producer": {
+            "type": "string",
+            "nullable": true
+          },
+          "productSpecificationLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "bufferDistance": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "simplifyTolerance": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "changedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "photoDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "xMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "xMax": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMax": {
+            "type": "number",
+            "format": "double"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inCache": {
+            "type": "boolean"
+          },
+          "publishedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxScale": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxScaleHint": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "standardDeviation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrientationMethod": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "OriginalExportRequestDto": {
+        "type": "object",
+        "properties": {
+          "copyEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "sendEmail": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OriginalExportResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FileResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrthophotoType": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Project": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/GeoJsonGeometry"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectsFilters": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string",
+            "nullable": true
+          },
+          "orthophotoType": {
+            "$ref": "#/components/schemas/OrthophotoType"
+          },
+          "captureMethod": {
+            "$ref": "#/components/schemas/CaptureMethod"
+          },
+          "imageCategory": {
+            "$ref": "#/components/schemas/ImageCategory"
+          },
+          "orientationMethod": {
+            "$ref": "#/components/schemas/OrientationMethod"
+          },
+          "aircraftCompany": {
+            "type": "string",
+            "nullable": true
+          },
+          "producer": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectsRequestDto": {
+        "type": "object",
+        "properties": {
+          "geometry": {
+            "$ref": "#/components/schemas/GeoJsonGeometry"
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "inputWkid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outputWkid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "returnMetadata": {
+            "type": "boolean"
+          },
+          "returnGeometry": {
+            "type": "boolean"
+          },
+          "publishedFrom": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "publishedTo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "inCacheOnly": {
+            "type": "boolean"
+          },
+          "stopOnCover": {
+            "type": "boolean"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/ProjectsFilters"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProjectsResponseDto": {
+        "type": "object",
+        "properties": {
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Project"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "priority": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateStarted": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateFinished": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "estimateTimeMinutes": {
+            "type": "number",
+            "format": "double"
+          },
+          "estimateSizeMB": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateMetadataDto": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "string",
+            "nullable": true
+          },
+          "forceUpdate": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Void": {
+        "type": "object",
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "Basic": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    },
+    {
+      "Basic": [ ]
+    }
+  ]
+}

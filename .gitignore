@@ -1,0 +1,16 @@
+# Large/Dynamic directories
+gruver/bilder/
+gruver/backup/
+backup/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local/Agent files
+.agent/
+.gemini/
+
+# OS files
+Thumbs.db
+.DS_Store

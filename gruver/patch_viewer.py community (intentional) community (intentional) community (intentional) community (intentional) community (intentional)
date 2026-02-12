@@ -1,0 +1,18 @@
+import os
+
+file_path = r'c:\Users\chr1203\OneDrive - Telemark fylkeskommune\Jobb\Diverse\Antigravity\vox_portal\gruver\viewer.js'
+
+with open(file_path, 'r', encoding='utf-8') as f:
+    content = f.read()
+
+# 1. Update WMS version
+content = content.replace("version: '1.1.1'", "version: '1.3.0'")
+
+# 2. Fix image paths (revert to relative)
+content = content.replace("`/portal/gruver/bilder/${safeName}_${i + 1}.jpg`", "`bilder/${safeName}_${i + 1}.jpg`")
+content = content.replace("`/portal/gruver/bilder/${safeName}_1.jpg`", "`bilder/ ${safeName}_1.jpg`".replace("bilder/ ", "bilder/"))
+
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("Patching complete.")

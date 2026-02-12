@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakterutregner (Snillere) - VoxCuriosa</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="blob"></div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Tilbake til Portal</a>
+        <h1>Karakterutregner <span style="font-size: 0.5em; opacity: 0.7; vertical-align: middle;">(Snillere)</span>
+        </h1>
+
+        <!-- PIN Screen -->
+        <div id="auth-screen" class="auth-screen">
+            <p style="text-align: center; color: #ccc;">Skriv inn PIN-kode for å få tilgang til utregneren.</p>
+            <input type="password" id="pin-input" placeholder="PIN-kode (4 siffer)" maxlength="4"
+                autocomplete="one-time-code">
+            <button id="unlock-btn">Lås opp</button>
+            <div class="contact-info">
+                Kontakt Christian Borchgrevink-Vigeland på
+                <span id="email-placeholder" class="email-reveal" onclick="revealEmail()">[klikk for å vise
+                    e-post]</span>
+                for å få kode.
+            </div>
+        </div>
+
+        <!-- App Screen -->
+        <div id="app-screen" class="app-screen hidden">
+            <div class="warning-banner">
+                ⚠️ OBS: Dette er den SNILLE versjonen. Den anbefales IKKE brukt som standard!
+            </div>
+
+            <div class="info-box" style="border-color: #4CAF50; background: rgba(76, 175, 80, 0.1);">
+                <strong>Viktig informasjon:</strong> Dette er en matematisk veiledning. Det er mange andre faktorer som
+                bestemmer en karakter, som for eksempel vekting av spørsmål og vurderingsfaglige skjønn. Elevene må
+                alltid ha tydelige vurderingskriterier.
+            </div>
+
+            <div class="calculator-card">
+                <div class="input-group">
+                    <label for="student-points">Elevens poengsum</label>
+                    <input type="number" id="student-points" placeholder="f.eks. 12" step="0.5">
+                </div>
+
+                <div class="input-group">
+                    <label for="max-points">Max poengsum</label>
+                    <input type="number" id="max-points" placeholder="f.eks. 15" step="0.5">
+                </div>
+
+                <div id="result-container" class="result-container hidden">
+                    <div class="result-label" style="color: #4CAF50;">Beregnet karakter (Snillere):</div>
+                    <div id="grade-display" class="grade-display"
+                        style="color: #4CAF50; text-shadow: 0 0 20px rgba(76, 175, 80, 0.5);">-</div>
+                    <div id="points-display" class="points-display"></div>
+                </div>
+
+                <div class="version-switch">
+                    <p>Ønsker du standard utregning?</p>
+                    <a href="index.html" class="version-link">Gå til standard versjon →</a>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <h3>Sammenligning av versjoner</h3>
+                <p>Snillere versjon (til venstre) når karakter 6 tidligere enn standardversjonen (til høyre). Dette kan
+                    være aktuelt ved spesielt krevende prøver.</p>
+                <button id="toggle-img-btn" class="secondary-btn"
+                    style="width: auto; padding: 10px 20px; font-size: 0.9rem; background: #4CAF50;">Se sammenligning av
+                    skalaene ↓</button>
+                <div id="comparison-img-container" class="hidden" style="margin-top: 20px;">
+                    <img src="comparison.jpg" alt="Sammenligning av karakterutregnere" class="comparison-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Analytics
+        function logVisit() {
+            const payload = {
+                action: 'log_visit',
+                app: 'grades_snill',
+                device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
+                screen_resolution: window.screen.width + "x" + window.screen.height,
+                referrer: document.referrer || 'Direct',
+                language: navigator.language || 'en'
+            };
+
+            fetch('../history/auth_v2.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(err => console.log("Analytics skipped."));
+        }
+        window.addEventListener('load', logVisit);
+    </script>
+</body>
+
+</html>

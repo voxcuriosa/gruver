@@ -1,0 +1,1750 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"   xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengeospatial.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengeospatial.net/sld/1.1.0/sld_capabilities.xsd  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd http://mapserver.gis.umn.edu/mapserver https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
+
+<!-- MapServer version 7.4.3 OUTPUT=PNG OUTPUT=JPEG OUTPUT=KML SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=SVG_SYMBOLS SUPPORTS=RSVG SUPPORTS=ICONV SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=FASTCGI SUPPORTS=THREADS SUPPORTS=GEOS SUPPORTS=PBF INPUT=JPEG INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
+
+<Service>
+  <Name>WMS</Name>
+  <Title>MetalsWMS2</Title>
+  <Abstract>MetalsWMS2</Abstract>
+  <KeywordList>
+      <Keyword>Minerals</Keyword>
+      <Keyword>Metals</Keyword>
+      <Keyword>Commodity</Keyword>
+      <Keyword>Commodities</Keyword>
+      <Keyword>Deposits</Keyword>
+      <Keyword>Base metals</Keyword>
+      <Keyword>Arsenic</Keyword>
+      <Keyword>Bismuth</Keyword>
+      <Keyword>Copper</Keyword>
+      <Keyword>Lead</Keyword>
+      <Keyword>Tin</Keyword>
+      <Keyword>Zinc</Keyword>
+      <Keyword>Fe-Sulphides</Keyword>
+      <Keyword>Ferrous metals</Keyword>
+      <Keyword>Iron</Keyword>
+      <Keyword>Iron-Titanium</Keyword>
+      <Keyword>Manganese</Keyword>
+      <Keyword>Titanium</Keyword>
+      <Keyword>Ferroalloys</Keyword>
+      <Keyword>Chromium</Keyword>
+      <Keyword>Cobalt</Keyword>
+      <Keyword>Molybdenium</Keyword>
+      <Keyword>Nickel</Keyword>
+      <Keyword>Vanadium</Keyword>
+      <Keyword>Wolfram</Keyword>
+      <Keyword>Precious metals</Keyword>
+      <Keyword>Gold</Keyword>
+      <Keyword>PGE</Keyword>
+      <Keyword>Silver</Keyword>
+      <Keyword>Energy metals</Keyword>
+      <Keyword>Thorium</Keyword>
+      <Keyword>Uranium</Keyword>
+      <Keyword>Special metals</Keyword>
+      <Keyword>Beryllium</Keyword>
+      <Keyword>Lithium</Keyword>
+      <Keyword>Niobium</Keyword>
+      <Keyword>REE</Keyword>
+      <Keyword>Scandium</Keyword>
+      <Keyword>Tantalum</Keyword>
+  </KeywordList>
+  <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/>
+  <ContactInformation>
+    <ContactPersonPrimary>
+      <ContactPerson>Sverre Iversen</ContactPerson>
+      <ContactOrganization>Norges geologiske undersøkelse</ContactOrganization>
+    </ContactPersonPrimary>
+      <ContactPosition>Web Map Services</ContactPosition>
+    <ContactAddress>
+        <AddressType>Postal address</AddressType>
+        <Address>-</Address>
+        <City>Trondheim</City>
+        <StateOrProvince>Sør-Trøndelag</StateOrProvince>
+        <PostCode>7491</PostCode>
+        <Country>Norway</Country>
+    </ContactAddress>
+      <ContactVoiceTelephone>+ 47 73 90 40 00</ContactVoiceTelephone>
+  <ContactElectronicMailAddress>wmsdrift@ngu.no</ContactElectronicMailAddress>
+  </ContactInformation>
+  <Fees>none</Fees>
+  <AccessConstraints>Copyright Geological Survey of Norway 2011</AccessConstraints>
+  <MaxWidth>4000</MaxWidth>
+  <MaxHeight>4000</MaxHeight>
+</Service>
+
+<Capability>
+  <Request>
+    <GetCapabilities>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetCapabilities>
+    <GetMap>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <Format>image/vnd.jpeg-png</Format>
+      <Format>image/vnd.jpeg-png8</Format>
+      <Format>application/x-pdf</Format>
+      <Format>image/svg+xml</Format>
+      <Format>image/tiff</Format>
+      <Format>application/vnd.google-earth.kml+xml</Format>
+      <Format>application/vnd.google-earth.kmz</Format>
+      <Format>application/x-protobuf</Format>
+      <Format>application/json</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetMap>
+    <GetFeatureInfo>
+      <Format>text/html</Format>
+      <Format>application/vnd.ogc.gml</Format>
+      <Format>text/plain</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetFeatureInfo>
+    <sld:DescribeLayer>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:DescribeLayer>
+    <sld:GetLegendGraphic>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <Format>image/vnd.jpeg-png</Format>
+      <Format>image/vnd.jpeg-png8</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:GetLegendGraphic>
+    <ms:GetStyles>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </ms:GetStyles>
+  </Request>
+  <Exception>
+    <Format>XML</Format>
+    <Format>INIMAGE</Format>
+    <Format>BLANK</Format>
+  </Exception>
+  <sld:UserDefinedSymbolization SupportSLD="1" UserLayer="0" UserStyle="1" RemoteWFS="0" InlineFeature="0" RemoteWCS="0"/>
+  <inspire_vs:ExtendedCapabilities>
+<!-- WARNING: Mandatory metadata '..._inspire_resourcelocator' was missing in this context. -->
+    <inspire_common:ResourceType>service</inspire_common:ResourceType>
+<!-- WARNING: Mandatory metadata '..._inspire_temporal_reference' was missing in this context. -->
+    <inspire_common:TemporalReference>
+      <inspire_common:DateOfLastRevision></inspire_common:DateOfLastRevision>
+    </inspire_common:TemporalReference>
+    <inspire_common:Conformity>
+      <inspire_common:Specification>
+        <inspire_common:Title>-</inspire_common:Title>
+        <inspire_common:DateOfLastRevision></inspire_common:DateOfLastRevision>
+      </inspire_common:Specification>
+      <inspire_common:Degree>notEvaluated</inspire_common:Degree>
+    </inspire_common:Conformity>
+    <inspire_common:MetadataPointOfContact>
+<!-- WARNING: Mandatory metadata '..._inspire_mpoc_name' was missing in this context. -->
+      <inspire_common:OrganisationName></inspire_common:OrganisationName>
+<!-- WARNING: Mandatory metadata '..._inspire_mpoc_email' was missing in this context. -->
+      <inspire_common:EmailAddress></inspire_common:EmailAddress>
+    </inspire_common:MetadataPointOfContact>
+<!-- WARNING: Mandatory metadata '..._inspire_metadatadate' was missing in this context. -->
+      <inspire_common:MetadataDate></inspire_common:MetadataDate>
+    <inspire_common:SpatialDataServiceType>view</inspire_common:SpatialDataServiceType>
+<!-- WARNING: Mandatory metadata '..._inspire_keyword' was missing in this context. -->
+    <inspire_common:MandatoryKeyword>
+      <inspire_common:KeywordValue></inspire_common:KeywordValue>
+    </inspire_common:MandatoryKeyword>
+    <inspire_common:SupportedLanguages>
+      <inspire_common:DefaultLanguage><inspire_common:Language>nor</inspire_common:Language></inspire_common:DefaultLanguage>
+      <inspire_common:SupportedLanguage><inspire_common:Language>eng</inspire_common:Language></inspire_common:SupportedLanguage>
+    </inspire_common:SupportedLanguages>
+    <inspire_common:ResponseLanguage><inspire_common:Language>nor</inspire_common:Language></inspire_common:ResponseLanguage>
+  </inspire_vs:ExtendedCapabilities>
+  <Layer queryable="1">
+    <Name>MetalsWMS2</Name>
+    <Title>MetalsWMS2</Title>
+    <Abstract>MetalsWMS2</Abstract>
+    <KeywordList>
+        <Keyword>Minerals</Keyword>
+        <Keyword>Metals</Keyword>
+        <Keyword>Commodity</Keyword>
+        <Keyword>Commodities</Keyword>
+        <Keyword>Deposits</Keyword>
+        <Keyword>Base metals</Keyword>
+        <Keyword>Arsenic</Keyword>
+        <Keyword>Bismuth</Keyword>
+        <Keyword>Copper</Keyword>
+        <Keyword>Lead</Keyword>
+        <Keyword>Tin</Keyword>
+        <Keyword>Zinc</Keyword>
+        <Keyword>Fe-Sulphides</Keyword>
+        <Keyword>Ferrous metals</Keyword>
+        <Keyword>Iron</Keyword>
+        <Keyword>Iron-Titanium</Keyword>
+        <Keyword>Manganese</Keyword>
+        <Keyword>Titanium</Keyword>
+        <Keyword>Ferroalloys</Keyword>
+        <Keyword>Chromium</Keyword>
+        <Keyword>Cobalt</Keyword>
+        <Keyword>Molybdenium</Keyword>
+        <Keyword>Nickel</Keyword>
+        <Keyword>Vanadium</Keyword>
+        <Keyword>Wolfram</Keyword>
+        <Keyword>Precious metals</Keyword>
+        <Keyword>Gold</Keyword>
+        <Keyword>PGE</Keyword>
+        <Keyword>Silver</Keyword>
+        <Keyword>Energy metals</Keyword>
+        <Keyword>Thorium</Keyword>
+        <Keyword>Uranium</Keyword>
+        <Keyword>Special metals</Keyword>
+        <Keyword>Beryllium</Keyword>
+        <Keyword>Lithium</Keyword>
+        <Keyword>Niobium</Keyword>
+        <Keyword>REE</Keyword>
+        <Keyword>Scandium</Keyword>
+        <Keyword>Tantalum</Keyword>
+    </KeywordList>
+    <CRS>EPSG:32633</CRS>
+    <CRS>EPSG:4326</CRS>
+    <CRS>EPSG:4258</CRS>
+    <CRS>EPSG:25833</CRS>
+    <CRS>EPSG:32631</CRS>
+    <CRS>EPSG:32632</CRS>
+    <CRS>EPSG:32634</CRS>
+    <CRS>EPSG:32635</CRS>
+    <CRS>EPSG:32636</CRS>
+    <CRS>EPSG:25829</CRS>
+    <CRS>EPSG:25830</CRS>
+    <CRS>EPSG:25831</CRS>
+    <CRS>EPSG:25832</CRS>
+    <CRS>EPSG:25834</CRS>
+    <CRS>EPSG:25835</CRS>
+    <CRS>EPSG:25836</CRS>
+    <CRS>EPSG:3034</CRS>
+    <CRS>EPSG:900913</CRS>
+    <CRS>EPSG:32661</CRS>
+    <CRS>EPSG:3857</CRS>
+    <CRS>EPSG:5105</CRS>
+    <CRS>EPSG:5106</CRS>
+    <CRS>EPSG:5107</CRS>
+    <CRS>EPSG:5108</CRS>
+    <CRS>EPSG:5109</CRS>
+    <CRS>EPSG:5110</CRS>
+    <CRS>EPSG:5111</CRS>
+    <CRS>EPSG:5112</CRS>
+    <CRS>EPSG:5113</CRS>
+    <CRS>EPSG:5114</CRS>
+    <CRS>EPSG:5115</CRS>
+    <CRS>EPSG:5116</CRS>
+    <CRS>EPSG:5117</CRS>
+    <CRS>EPSG:5118</CRS>
+    <CRS>EPSG:5119</CRS>
+    <CRS>EPSG:5120</CRS>
+    <CRS>EPSG:5121</CRS>
+    <CRS>EPSG:5122</CRS>
+    <CRS>EPSG:5123</CRS>
+    <CRS>EPSG:5124</CRS>
+    <CRS>EPSG:5125</CRS>
+    <CRS>EPSG:5126</CRS>
+    <CRS>EPSG:5127</CRS>
+    <CRS>EPSG:5128</CRS>
+    <CRS>EPSG:5129</CRS>
+    <CRS>EPSG:5130</CRS>
+    <EX_GeographicBoundingBox>
+        <westBoundLongitude>-6.18463</westBoundLongitude>
+        <eastBoundLongitude>44.7462</eastBoundLongitude>
+        <southBoundLatitude>55.8259</southBoundLatitude>
+        <northBoundLatitude>72.8424</northBoundLatitude>
+    </EX_GeographicBoundingBox>
+    <BoundingBox CRS="EPSG:32633"
+                minx="-229585" miny="6.32183e+06" maxx="1.57305e+06" maxy="8.08292e+06" />
+    <Attribution>
+        <Title>Norges geologiske undersøkelse</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.ngu.no"/>
+        <LogoURL width="55" height="60">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://geo.ngu.no/service/common/NGUklode.png"/>
+          </LogoURL>
+    </Attribution>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="247" height="1129">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=MetalsWMS2&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+    <Layer queryable="1">
+      <Name>Deposits</Name>
+      <Title>Deposits</Title>
+      <Abstract>Deposits</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="247" height="228">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Deposits&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Deposits_zoom</Name>
+        <Title>Metal deposits - outline</Title>
+        <Abstract>Metal deposits - outline. Not sorted on commodity types. Points.</Abstract>
+        <KeywordList>
+            <Keyword>Deposits zoom</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Deposits_zoom"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="77" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Deposits_zoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>1.5e+06</MinScaleDenominator>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Point_Metals</Name>
+        <Title>Metals; Deposits, prospects and occurrences.</Title>
+        <Abstract>Metals; Deposits, prospects and occurrences.</Abstract>
+        <KeywordList>
+            <Keyword>Metals Deposits prospects occurrences.</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Point_Metals"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="154" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Point_Metals&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>1.5e+06</MaxScaleDenominator>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Province</Name>
+        <Title>Metal provinces</Title>
+        <Abstract>Metal provinces. Polygons.</Abstract>
+        <KeywordList>
+            <Keyword>Province</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Province"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="65" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Province&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Area_Metals</Name>
+        <Title>Metal deposits, prospects and occurrences</Title>
+        <Abstract>Metal deposits, prospects and occurrences</Abstract>
+        <KeywordList>
+            <Keyword>Deposit area</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Area_Metals"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="150" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Area_Metals&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>1.5e+06</MaxScaleDenominator>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Deposit_importance</Name>
+        <Title>Metal deposits of public importance</Title>
+        <Abstract>Metal deposits of public importance. Polygons.</Abstract>
+        <KeywordList>
+            <Keyword>Deposit Importance</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Deposit_importance"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="247" height="92">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Deposit_importance&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>Base_metals</Name>
+      <Title>Base metals</Title>
+      <Abstract>Base_metals</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="187" height="211">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Base_metals&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Base_metals_compile</Name>
+        <Title>Base metal deposits, prospects and occurrences</Title>
+        <Abstract>Base metal deposits, prospects and occurrences</Abstract>
+        <KeywordList>
+            <Keyword>Base metals</Keyword>
+            <Keyword>Groupe</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Base_metals_compile"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="187" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Base_metals_compile&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Base_metals</Name>
+        <Title>Base metals</Title>
+        <Abstract>Basemetals  - outline</Abstract>
+        <KeywordList>
+            <Keyword>Base metals</Keyword>
+            <Keyword>Commodity</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Base_metals"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="105" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Base_metals&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Antimony</Name>
+        <Title>Antimony</Title>
+        <Abstract>Antimony</Abstract>
+        <KeywordList>
+            <Keyword>[LayerKeywordList]</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Antimony"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="87" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Antimony&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Arsenic</Name>
+        <Title>Arsenic</Title>
+        <Abstract>Arsenic</Abstract>
+        <KeywordList>
+            <Keyword>Arsenic</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Arsenic"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="76" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Arsenic&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Bismuth</Name>
+        <Title>Bismuth</Title>
+        <Abstract>Bismuth</Abstract>
+        <KeywordList>
+            <Keyword>Bismuth</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Bismuth"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="80" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Bismuth&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Copper</Name>
+        <Title>Copper</Title>
+        <Abstract>Copper</Abstract>
+        <KeywordList>
+            <Keyword>Copper</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Copper"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="76" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Copper&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Lead</Name>
+        <Title>Lead</Title>
+        <Abstract>Lead</Abstract>
+        <KeywordList>
+            <Keyword>Lead</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Lead"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="62" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Lead&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Tin</Name>
+        <Title>Tin</Title>
+        <Abstract>Tin</Abstract>
+        <KeywordList>
+            <Keyword>Tin</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Tin"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="51" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Tin&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Zinc</Name>
+        <Title>Zinc</Title>
+        <Abstract>Zinc</Abstract>
+        <KeywordList>
+            <Keyword>Zinc</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Zinc"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="58" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Zinc&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Fe-Sulphides</Name>
+        <Title>Fe-Sulphides</Title>
+        <Abstract>Fe-sulphides; pyrite, pyrrhotite, etc</Abstract>
+        <KeywordList>
+            <Keyword>Fe-Sulphides</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Fe-Sulphides"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="110" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Fe-Sulphides&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>Ferrous_metals</Name>
+      <Title>Ferrous metals</Title>
+      <Abstract>Ferrous_metals</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="202" height="143">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Ferrous_metals&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Ferrous_metals_compile</Name>
+        <Title>Ferrous metal deposits, prospects and occurrences</Title>
+        <Abstract>Ferrous metal deposits, prospects and occurrences</Abstract>
+        <KeywordList>
+            <Keyword>Ferrous metals</Keyword>
+            <Keyword>Groupe</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Ferrous_metals_compile"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="202" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Ferrous_metals_compile&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Ferrous_metals</Name>
+        <Title>Ferrous metals - outline</Title>
+        <Abstract>Ferrous metals - outline</Abstract>
+        <KeywordList>
+            <Keyword>Ferrous metals</Keyword>
+            <Keyword>Commodity</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Ferrous_metals"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="120" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Ferrous_metals&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Iron</Name>
+        <Title>Iron</Title>
+        <Abstract>Iron</Abstract>
+        <KeywordList>
+            <Keyword>Iron</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Iron"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="55" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Iron&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Iron-Titanium</Name>
+        <Title>Iron-Titanium</Title>
+        <Abstract>Iron-Titanium; Ilmenite, rutile</Abstract>
+        <KeywordList>
+            <Keyword>Iron-Titanium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Iron-Titanium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="110" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Iron-Titanium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Manganese</Name>
+        <Title>Manganese</Title>
+        <Abstract>Manganese</Abstract>
+        <KeywordList>
+            <Keyword>Manganese</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Manganese"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="101" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Manganese&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Titanium</Name>
+        <Title>Titanium</Title>
+        <Abstract>Titanium; Rutile, anatas, ilmenite, titanite, sphene</Abstract>
+        <KeywordList>
+            <Keyword>Titanium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Titanium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="83" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Titanium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>Ferroalloys</Name>
+      <Title>Ferroalloys</Title>
+      <Abstract>Ferroalloys - occurrence type and commodity type.</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="180" height="177">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Ferroalloys&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Ferroalloys_compile</Name>
+        <Title>Ferroalloy deposits, prospects and occurrences</Title>
+        <Abstract>Ferroalloy deposits, prospects and occurrences</Abstract>
+        <KeywordList>
+            <Keyword>Ferroalloys</Keyword>
+            <Keyword>Groupe</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Ferroalloys_compile"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="180" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Ferroalloys_compile&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Ferroalloys</Name>
+        <Title>Ferroalloys - outline</Title>
+        <Abstract>Ferroalloys (Commodity)</Abstract>
+        <KeywordList>
+            <Keyword>Ferroalloys</Keyword>
+            <Keyword>Commodity</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Ferroalloys"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="97" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Ferroalloys&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Chromium</Name>
+        <Title>Chromium</Title>
+        <Abstract>Chromium</Abstract>
+        <KeywordList>
+            <Keyword>Chromium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Chromium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="93" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Chromium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Cobalt</Name>
+        <Title>Cobalt</Title>
+        <Abstract>Cobalt</Abstract>
+        <KeywordList>
+            <Keyword>Cobalt</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Cobalt"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="71" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Cobalt&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Molybdenium</Name>
+        <Title>Molybdenium</Title>
+        <Abstract>Molybdenium</Abstract>
+        <KeywordList>
+            <Keyword>Molybdenium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Molybdenium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="110" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Molybdenium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Nickel</Name>
+        <Title>Nickel</Title>
+        <Abstract>Nickel</Abstract>
+        <KeywordList>
+            <Keyword>Nickel</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Nickel"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="68" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Nickel&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Vanadium</Name>
+        <Title>Vanadium</Title>
+        <Abstract>Vanadium</Abstract>
+        <KeywordList>
+            <Keyword>Vanadium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Vanadium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="92" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Vanadium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Wolfram</Name>
+        <Title>Wolfram</Title>
+        <Abstract>Wolfram</Abstract>
+        <KeywordList>
+            <Keyword>Wolfram</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Wolfram"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="81" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Wolfram&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>Precious_metals</Name>
+      <Title>Precious metals</Title>
+      <Abstract>Precious metals - occurrence type and commodity type.</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="208" height="126">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Precious_metals&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Precious_metals_compile</Name>
+        <Title>Precious metalldeposits, prospects and occurrences</Title>
+        <Abstract>Precious metalldeposits, prospects and occurrences</Abstract>
+        <KeywordList>
+            <Keyword>EPrecious metals</Keyword>
+            <Keyword>Groupe</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Precious_metals_compile"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="208" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Precious_metals_compile&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Precious_metals</Name>
+        <Title>Precious metals - outline</Title>
+        <Abstract>Precious metals - outline</Abstract>
+        <KeywordList>
+            <Keyword>Precious metals</Keyword>
+            <Keyword>Commodity</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Precious_metals"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="125" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Precious_metals&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Gold</Name>
+        <Title>Gold</Title>
+        <Abstract>Gold</Abstract>
+        <KeywordList>
+            <Keyword>Gold</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Gold"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="60" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Gold&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>PGE</Name>
+        <Title>PGE - Platinum group elements</Title>
+        <Abstract>PGE - Platinum group elements (rhutenium, rhodium, palladium, osmium, iridium and platinum)</Abstract>
+        <KeywordList>
+            <Keyword>rhutenium</Keyword>
+            <Keyword> rhodium</Keyword>
+            <Keyword> palladium</Keyword>
+            <Keyword> osmium </Keyword>
+            <Keyword>iridium </Keyword>
+            <Keyword>platinum</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=PGE"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="60" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=PGE&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Silver</Name>
+        <Title>Silver</Title>
+        <Abstract>Silver</Abstract>
+        <KeywordList>
+            <Keyword>Silver</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Silver"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="66" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Silver&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>Energy_metals</Name>
+      <Title>Energy metals</Title>
+      <Abstract>Energy metals - occurrence type and commodity type.</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="198" height="109">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Energy_metals&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Energy_metals_compile</Name>
+        <Title>Energy metalldeposits, prospects and occurrences</Title>
+        <Abstract>Energy metalldeposits, prospects and occurrences</Abstract>
+        <KeywordList>
+            <Keyword>Energy metals</Keyword>
+            <Keyword>Groupe</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Energy_metals_compile"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="198" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Energy_metals_compile&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Energy_metals</Name>
+        <Title>Energy metals - outline</Title>
+        <Abstract>Energy metals - outline</Abstract>
+        <KeywordList>
+            <Keyword>Energy metals</Keyword>
+            <Keyword>Commodity</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Energy_metals"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="116" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Energy_metals&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Thorium</Name>
+        <Title>Thorium</Title>
+        <Abstract>Thorium</Abstract>
+        <KeywordList>
+            <Keyword>Thorium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Thorium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="81" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Thorium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Uranium</Name>
+        <Title>Uranium</Title>
+        <Abstract>Uranium</Abstract>
+        <KeywordList>
+            <Keyword>Uranium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Uranium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="82" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Uranium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>Special_metals</Name>
+      <Title>Special metals</Title>
+      <Abstract>Special metals - occurrence type and commodity type.</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="200" height="177">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Special_metals&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Special_metals_compile</Name>
+        <Title>Special metalldeposits, prospects and occurrences</Title>
+        <Abstract>Special metalldeposits, prospects and occurrences</Abstract>
+        <KeywordList>
+            <Keyword>Special metals</Keyword>
+            <Keyword>Groupe</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Special_metals_compile"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="58">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Special_metals_compile&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Special_metals</Name>
+        <Title>Special metals - outline</Title>
+        <Abstract>Special metals - outline</Abstract>
+        <KeywordList>
+            <Keyword>Special metals</Keyword>
+            <Keyword>Commodity</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Special_metals"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="118" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Special_metals&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Beryllium</Name>
+        <Title>Beryllium</Title>
+        <Abstract>Beryllium</Abstract>
+        <KeywordList>
+            <Keyword>Beryllium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Beryllium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="86" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Beryllium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Lithium</Name>
+        <Title>Lithium</Title>
+        <Abstract>Lithium</Abstract>
+        <KeywordList>
+            <Keyword>Lithium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Lithium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="75" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Lithium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Niobium</Name>
+        <Title>Niobium</Title>
+        <Abstract>Niobium</Abstract>
+        <KeywordList>
+            <Keyword>Niobium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Niobium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="81" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Niobium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>REE</Name>
+        <Title>REE  (Rear Earth Elements) and Yttrium</Title>
+        <Abstract>REE  (Rear Earth Elements) and Yttrium</Abstract>
+        <KeywordList>
+            <Keyword>REE</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=REE"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="60" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=REE&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Scandium</Name>
+        <Title>Scandium</Title>
+        <Abstract>Scandium</Abstract>
+        <KeywordList>
+            <Keyword>Scandium</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Scandium"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="91" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Scandium&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Tantalum</Name>
+        <Title>Tantalum</Title>
+        <Abstract>Tantalum</Abstract>
+        <KeywordList>
+            <Keyword>Tantalum</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>4.74264</westBoundLongitude>
+            <eastBoundLongitude>31.0839</eastBoundLongitude>
+            <southBoundLatitude>58.0281</southBoundLatitude>
+            <northBoundLatitude>71.1042</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:4326"
+                    minx="58.0281" miny="4.74264" maxx="71.1042" maxy="31.0839" />
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;request=GetMetadata&amp;layer=Tantalum"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="87" height="24">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/MetalsWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Tantalum&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+  </Layer>
+</Capability>
+</WMS_Capabilities>

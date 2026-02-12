@@ -1,0 +1,2517 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"   xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/sld_capabilities.xsd  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd http://mapserver.gis.umn.edu/mapserver https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
+
+<!-- MapServer version 7.0.7 OUTPUT=PNG OUTPUT=JPEG OUTPUT=KML SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=SVG_SYMBOLS SUPPORTS=RSVG SUPPORTS=ICONV SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=FASTCGI SUPPORTS=THREADS SUPPORTS=GEOS INPUT=JPEG INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
+
+<Service>
+  <Name>WMS</Name>
+  <Title>BerggrunnWMS3 - Nasjonal berggrunnsdatabase</Title>
+  <Abstract>Nasjonal berggrunnsdatabase. Inneholder berggrunnskart på nasjonal (1:1 350 000), regional (1:250 000) og lokal (1:50 000) målestokk.
+                          Disse er også kombinert i gruppelaget for &quot;Sammenstilt målestokksvisning med tema hovedbergart&quot; ut i fra zoom-nivå.
+                          Bergartsflater er representert som hovedbergart, bergartsenhet (hvor tilgjengelig), dannelsesalder og tektonisk hovedinndeling.
+                          Enkelte lag med målestokkbegrensning har alternative lag uten slik begrensning (&quot;fullzoom&quot;).</Abstract>
+  <KeywordList>
+      <Keyword>Berggrunn</Keyword>
+      <Keyword>Bergart</Keyword>
+      <Keyword>Hovedbergart</Keyword>
+      <Keyword>Bergartsenhet</Keyword>
+      <Keyword>Struktur</Keyword>
+      <Keyword>Forkastning</Keyword>
+      <Keyword>Skjærsone</Keyword>
+      <Keyword>Kart</Keyword>
+      <Keyword>Kartlegging</Keyword>
+      <Keyword>Bedrock</Keyword>
+      <Keyword>Rock type</Keyword>
+      <Keyword>Rock unit</Keyword>
+      <Keyword>Structure</Keyword>
+      <Keyword>Fault</Keyword>
+      <Keyword>Shear zone</Keyword>
+      <Keyword>Maps</Keyword>
+      <Keyword>Mapping</Keyword>
+      <Keyword vocabulary="ISO">infoMapAccessService</Keyword>
+  </KeywordList>
+  <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/>
+  <ContactInformation>
+    <ContactPersonPrimary>
+      <ContactPerson>Seksjon for geomatikk og IT</ContactPerson>
+      <ContactOrganization>Norges geologiske undersøkelse (NGU)</ContactOrganization>
+    </ContactPersonPrimary>
+      <ContactPosition>owner</ContactPosition>
+    <ContactAddress>
+        <AddressType>Postal address</AddressType>
+        <Address>Postboks 6315 Torgarden</Address>
+        <City>Trondheim</City>
+        <StateOrProvince>Trøndelag</StateOrProvince>
+        <PostCode>7491</PostCode>
+        <Country>Norway</Country>
+    </ContactAddress>
+      <ContactVoiceTelephone>+ 47 73 90 40 00</ContactVoiceTelephone>
+  <ContactElectronicMailAddress>wmsdrift@ngu.no</ContactElectronicMailAddress>
+  </ContactInformation>
+  <Fees>no conditions apply</Fees>
+  <AccessConstraints>Copyright The Geological Survey of Norway (NGU) 2024</AccessConstraints>
+  <MaxWidth>4000</MaxWidth>
+  <MaxHeight>4000</MaxHeight>
+</Service>
+
+<Capability>
+  <Request>
+    <GetCapabilities>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetCapabilities>
+    <GetMap>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <Format>application/x-pdf</Format>
+      <Format>image/svg+xml</Format>
+      <Format>image/tiff</Format>
+      <Format>application/vnd.google-earth.kml+xml</Format>
+      <Format>application/vnd.google-earth.kmz</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetMap>
+    <GetFeatureInfo>
+      <Format>text/html</Format>
+      <Format>application/vnd.ogc.gml</Format>
+      <Format>text/plain</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetFeatureInfo>
+    <sld:DescribeLayer>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:DescribeLayer>
+    <sld:GetLegendGraphic>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:GetLegendGraphic>
+    <ms:GetStyles>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </ms:GetStyles>
+  </Request>
+  <Exception>
+    <Format>XML</Format>
+    <Format>INIMAGE</Format>
+    <Format>BLANK</Format>
+  </Exception>
+  <sld:UserDefinedSymbolization SupportSLD="1" UserLayer="0" UserStyle="1" RemoteWFS="0" InlineFeature="0" RemoteWCS="0"/>
+  <inspire_vs:ExtendedCapabilities>
+    <inspire_common:ResourceLocator>
+      <inspire_common:URL>https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=51243d4e-e86e-474b-baf8-b7ccfb59fe8e</inspire_common:URL>
+    </inspire_common:ResourceLocator>
+    <inspire_common:ResourceType>service</inspire_common:ResourceType>
+    <inspire_common:TemporalReference>
+      <inspire_common:DateOfLastRevision>2022-02-25</inspire_common:DateOfLastRevision>
+    </inspire_common:TemporalReference>
+    <inspire_common:Conformity>
+      <inspire_common:Specification>
+        <inspire_common:Title>-</inspire_common:Title>
+        <inspire_common:DateOfLastRevision>2022-02-25</inspire_common:DateOfLastRevision>
+      </inspire_common:Specification>
+      <inspire_common:Degree>notEvaluated</inspire_common:Degree>
+    </inspire_common:Conformity>
+    <inspire_common:MetadataPointOfContact>
+      <inspire_common:OrganisationName>Norges geologiske undersøkelse (NGU)</inspire_common:OrganisationName>
+      <inspire_common:EmailAddress>wmsdrift(a)ngu.no</inspire_common:EmailAddress>
+    </inspire_common:MetadataPointOfContact>
+      <inspire_common:MetadataDate>2022-02-25</inspire_common:MetadataDate>
+    <inspire_common:SpatialDataServiceType>view</inspire_common:SpatialDataServiceType>
+    <inspire_common:MandatoryKeyword>
+      <inspire_common:KeywordValue>infoMapAccessService</inspire_common:KeywordValue>
+    </inspire_common:MandatoryKeyword>
+    <inspire_common:SupportedLanguages>
+      <inspire_common:DefaultLanguage><inspire_common:Language>nor</inspire_common:Language></inspire_common:DefaultLanguage>
+      <inspire_common:SupportedLanguage><inspire_common:Language>eng</inspire_common:Language></inspire_common:SupportedLanguage>
+    </inspire_common:SupportedLanguages>
+    <inspire_common:ResponseLanguage><inspire_common:Language>nor</inspire_common:Language></inspire_common:ResponseLanguage>
+  </inspire_vs:ExtendedCapabilities>
+  <Layer>
+    <Name>BerggrunnWMS3</Name>
+    <Title>BerggrunnWMS3 - Nasjonal berggrunnsdatabase</Title>
+    <Abstract>Nasjonal berggrunnsdatabase. Inneholder berggrunnskart på nasjonal (1:1 350 000), regional (1:250 000) og lokal (1:50 000) målestokk.
+                          Disse er også kombinert i gruppelaget for &quot;Sammenstilt målestokksvisning med tema hovedbergart&quot; ut i fra zoom-nivå.
+                          Bergartsflater er representert som hovedbergart, bergartsenhet (hvor tilgjengelig), dannelsesalder og tektonisk hovedinndeling.
+                          Enkelte lag med målestokkbegrensning har alternative lag uten slik begrensning (&quot;fullzoom&quot;).</Abstract>
+    <KeywordList>
+        <Keyword>Berggrunn</Keyword>
+        <Keyword>Bergart</Keyword>
+        <Keyword>Hovedbergart</Keyword>
+        <Keyword>Bergartsenhet</Keyword>
+        <Keyword>Struktur</Keyword>
+        <Keyword>Forkastning</Keyword>
+        <Keyword>Skjærsone</Keyword>
+        <Keyword>Kart</Keyword>
+        <Keyword>Kartlegging</Keyword>
+        <Keyword>Bedrock</Keyword>
+        <Keyword>Rock type</Keyword>
+        <Keyword>Rock unit</Keyword>
+        <Keyword>Structure</Keyword>
+        <Keyword>Fault</Keyword>
+        <Keyword>Shear zone</Keyword>
+        <Keyword>Maps</Keyword>
+        <Keyword>Mapping</Keyword>
+        <Keyword vocabulary="ISO">infoMapAccessService</Keyword>
+    </KeywordList>
+    <CRS>EPSG:25833</CRS>
+    <CRS>EPSG:32633</CRS>
+    <CRS>EPSG:4326</CRS>
+    <CRS>EPSG:4258</CRS>
+    <CRS>EPSG:32631</CRS>
+    <CRS>EPSG:32632</CRS>
+    <CRS>EPSG:32634</CRS>
+    <CRS>EPSG:32635</CRS>
+    <CRS>EPSG:32636</CRS>
+    <CRS>EPSG:25829</CRS>
+    <CRS>EPSG:25830</CRS>
+    <CRS>EPSG:25831</CRS>
+    <CRS>EPSG:25832</CRS>
+    <CRS>EPSG:25834</CRS>
+    <CRS>EPSG:25835</CRS>
+    <CRS>EPSG:25836</CRS>
+    <CRS>EPSG:3034</CRS>
+    <CRS>EPSG:900913</CRS>
+    <CRS>EPSG:32661</CRS>
+    <CRS>EPSG:3857</CRS>
+    <CRS>EPSG:5105</CRS>
+    <CRS>EPSG:5106</CRS>
+    <CRS>EPSG:5107</CRS>
+    <CRS>EPSG:5108</CRS>
+    <CRS>EPSG:5109</CRS>
+    <CRS>EPSG:5110</CRS>
+    <CRS>EPSG:5111</CRS>
+    <CRS>EPSG:5112</CRS>
+    <CRS>EPSG:5113</CRS>
+    <CRS>EPSG:5114</CRS>
+    <CRS>EPSG:5115</CRS>
+    <CRS>EPSG:5116</CRS>
+    <CRS>EPSG:5117</CRS>
+    <CRS>EPSG:5118</CRS>
+    <CRS>EPSG:5119</CRS>
+    <CRS>EPSG:5120</CRS>
+    <CRS>EPSG:5121</CRS>
+    <CRS>EPSG:5122</CRS>
+    <CRS>EPSG:5123</CRS>
+    <CRS>EPSG:5124</CRS>
+    <CRS>EPSG:5125</CRS>
+    <CRS>EPSG:5126</CRS>
+    <CRS>EPSG:5127</CRS>
+    <CRS>EPSG:5128</CRS>
+    <CRS>EPSG:5129</CRS>
+    <CRS>EPSG:5130</CRS>
+    <EX_GeographicBoundingBox>
+        <westBoundLongitude>-2.56007</westBoundLongitude>
+        <eastBoundLongitude>33.0201</eastBoundLongitude>
+        <southBoundLatitude>57.0881</southBoundLatitude>
+        <northBoundLatitude>71.8912</northBoundLatitude>
+    </EX_GeographicBoundingBox>
+    <BoundingBox CRS="EPSG:25833"
+                minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+    <Attribution>
+        <Title>Norges geologiske undersøkelse (NGU)</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ngu.no"/>
+        <LogoURL width="55" height="60">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/common/NGUklode.png"/>
+          </LogoURL>
+    </Attribution>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="403" height="15963">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=BerggrunnWMS3&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Fotolineamenter_n750</Name>
+        <Title>Fotolineamenter, målestokk 1:750 000</Title>
+        <Abstract>Fotolineamenter. Fra Gabrielsen m.fl. (2002). Tilrettelagt for målestokk 1:750 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="209" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Fotolineamenter_n750&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal</Name>
+        <Title>Berggrunn - Nasjonalt nivå (målestokk 1:1 350 000)</Title>
+        <Abstract>Berggrunn - Nasjonalt nivå (målestokk 1:1 350 000)</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="651" height="8880">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_flater</Name>
+        <Title>Flatelag, nasjonalt nivå</Title>
+        <Abstract>Flatelag, nasjonalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="651" height="8105">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_flater&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_dannelsesalder</Name>
+        <Title>Dannelsesalder, målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Dannelsesalder (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="168" height="530">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_nasjonal_dannelsesalder&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_tektonisk_hovedinndeling</Name>
+        <Title>Tektonisk hovedinndeling, målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Tektonisk hovedinndeling (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="403" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_nasjonal_tektonisk_hovedinndeling&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_bergartsenheter</Name>
+        <Title>Bergartsenheter, målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Bergartsenheter (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="651" height="4205">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_bergartsenheter&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_hovedbergarter</Name>
+        <Title>Hovedbergarter, målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Hovedbergarter (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="263" height="3130">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_hovedbergarter&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_linjer</Name>
+        <Title>Linjelag, nasjonalt nivå</Title>
+        <Abstract>Linjelag, nasjonalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="780">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_linjer&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_bergartsgrenser</Name>
+        <Title>Bergartsgrenser, målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Bergartsgrenser (SOSI objekttyper: BergartGrense, Dataavgrensning, FiktivDelelinje). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="191" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_nasjonal_bergartsgrenser&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_bergartslinjer</Name>
+        <Title>Bergartslinjer, målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Bergartslinjer (SOSI objekttype: Gang). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="144" height="80">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_nasjonal_bergartslinjer&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_linearstrukturer</Name>
+        <Title>Lineærstrukturer, målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Lineærstrukturer (SOSI objekttyper: Forkastning, Skjaersone). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="230">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_nasjonal_linearstrukturer&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>2e+06</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_tekster</Name>
+        <Title>Tekstlag, nasjonalt nivå</Title>
+        <Abstract>Tekstlag, nasjonalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_bergartsenheter_tekst</Name>
+        <Title>Bergartsenheter (tekst), målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Bergartsenheter (tekst) (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>2e+06</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_nasjonal_hovedbergarter_tekst</Name>
+        <Title>Hovedbergarter (tekst), målestokk 1:1 350 000</Title>
+        <Abstract>Nasjonalt berggrunnskart - Hovedbergarter (tekst) (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:1 350 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=43dc3e09-3bac-49b1-9b34-62358482f58c"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>2e+06</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+    </Layer>
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional</Name>
+        <Title>Berggrunn - Regionalt nivå (målestokk 1:250 000)</Title>
+        <Abstract>Berggrunn - Regionalt nivå (målestokk 1:250 000)</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="403" height="6005">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_regional&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_raster</Name>
+        <Title>Rasterlag, regionalt nivå</Title>
+        <Abstract>Rasterlag, regionalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="1050">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/regional/utgitte_kartblad_raster_med_rutenett_w200px.png"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_utgitte_kartblad_raster</Name>
+        <Title>Utgitte kartblad (bildeformat), målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Utgitte kartblad (bildeformat). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="1050">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/regional/utgitte_kartblad_raster_w200px.png"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_utgitte_kartblad_rutenett</Name>
+        <Title>Kartbladrutenett for målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Kartbladrutenett for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="126" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_utgitte_kartblad_rutenett&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_flater</Name>
+        <Title>Flatelag, regionalt nivå</Title>
+        <Abstract>Flatelag, regionalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="403" height="3930">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_regional_flater&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_dannelsesalder</Name>
+        <Title>Dannelsesalder, målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Dannelsesalder (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="168" height="530">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_dannelsesalder&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_tektonisk_hovedinndeling</Name>
+        <Title>Tektonisk hovedinndeling, målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Tektonisk hovedinndeling (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="403" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_tektonisk_hovedinndeling&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_hovedbergarter</Name>
+        <Title>Hovedbergarter, målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Hovedbergarter (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="263" height="3130">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_hovedbergarter&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_losmasseoverdekker</Name>
+        <Title>Løsmasseoverdekker, målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Løsmasseoverdekker (SOSI objekttype: Overdekke). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="169" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_losmasseoverdekker&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_linjer</Name>
+        <Title>Linjelag, regionalt nivå</Title>
+        <Abstract>Linjelag, regionalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="1105">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_regional_linjer&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_linjer_fullzoom</Name>
+        <Title>Linjelag, regionalt nivå (alternativ visning uten målestokkbegrensning)</Title>
+        <Abstract>Linjelag, regionalt nivå (alternativ visning uten målestokkbegrensning)</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="480">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_regional_linjer_fullzoom&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_bergartsgrenser_fullzoom</Name>
+        <Title>Bergartsgrenser, målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Bergartsgrenser (SOSI objekttyper: BergartGrense, Dataavgrensning, Kartbladkant, Riksgrense). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="191" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_bergartsgrenser_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_linearstrukturer_fullzoom</Name>
+        <Title>Lineærstrukturer, målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Lineærstrukturer (SOSI objekttyper: Forkastning, Skjaersone, Sprekk). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="230">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_linearstrukturer_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_bergartsgrenser</Name>
+        <Title>Bergartsgrenser, målestokk 1:250 000, med målestokkbegrensning</Title>
+        <Abstract>Regionalt berggrunnskart - Bergartsgrenser (SOSI objekttyper: BergartGrense, Dataavgrensning, Kartbladkant, Riksgrense). Tilrettelagt for målestokk 1:250 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="191" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_bergartsgrenser&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>376000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_bergartslinjer</Name>
+        <Title>Bergartslinjer, målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Bergartslinjer (SOSI objekttyper: Gang, SedimentaereLag, VulkanskeLag). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="144" height="80">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_bergartslinjer&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_linearstrukturer</Name>
+        <Title>Lineærstrukturer, målestokk 1:250 000, med målestokkbegrensning</Title>
+        <Abstract>Regionalt berggrunnskart - Lineærstrukturer (SOSI objekttyper: Forkastning, Skjaersone, Sprekk). Tilrettelagt for målestokk 1:250 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="230">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_linearstrukturer&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>376000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_punkter</Name>
+        <Title>Punktlag, regionalt nivå</Title>
+        <Abstract>Punktlag, regionalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="214" height="480">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_regional_strukturpunkter&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_strukturpunkter_linje</Name>
+        <Title>Linjestrukturmålinger, målestokk 1:250 000, med målestokkbegrensning</Title>
+        <Abstract>Regionalt berggrunnskart - Linjestrukturmålinger (SOSI objekttype: LinjeStrukturPkt). Tilrettelagt for målestokk 1:250 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="214" height="180">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_strukturpunkter_linje&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>376000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_strukturpunkter_plan</Name>
+        <Title>Planstrukturmålinger, målestokk 1:250 000, med målestokkbegrensning</Title>
+        <Abstract>Regionalt berggrunnskart - Planstrukturmålinger (SOSI objekttype: PlanStrukturPkt). Tilrettelagt for målestokk 1:250 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="201" height="305">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_regional_strukturpunkter_plan&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>376000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_tekster</Name>
+        <Title>Tekstlag, regionalt nivå</Title>
+        <Abstract>Tekstlag, regionalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_hovedbergarter_tekst</Name>
+        <Title>Hovedbergarter (tekst), målestokk 1:250 000</Title>
+        <Abstract>Regionalt berggrunnskart - Hovedbergarter (tekst) (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:250 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>2e+06</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_strukturpunkter_linje_tekst</Name>
+        <Title>Linjestrukturmålinger (tekst), målestokk 1:250 000, med målestokkbegrensning</Title>
+        <Abstract>Regionalt berggrunnskart - Linjestrukturmålinger (tekst) (SOSI objekttype: LinjeStrukturPkt). Tilrettelagt for målestokk 1:250 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>376000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_regional_strukturpunkter_plan_tekst</Name>
+        <Title>Planstrukturmålinger (tekst), målestokk 1:250 000, med målestokkbegrensning</Title>
+        <Abstract>Regionalt berggrunnskart - Planstrukturmålinger (tekst) (SOSI objekttype: PlanStrukturPkt). Tilrettelagt for målestokk 1:250 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=7c39be66-77b6-4b74-b58d-53b6bee90067"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>376000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+    </Layer>
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal</Name>
+        <Title>Berggrunn - Lokalt nivå (målestokk 1:50 000)</Title>
+        <Abstract>Berggrunn - Lokalt nivå (målestokk 1:50 000)</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="403" height="9450">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_lokal&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_flater</Name>
+        <Title>Flatelag, lokalt nivå</Title>
+        <Abstract>Flatelag, lokalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="403" height="7375">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_lokal_flater&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_flater_fullzoom</Name>
+        <Title>Flatelag, lokalt nivå (alternativ visning uten målestokkbegrensning)</Title>
+        <Abstract>Flatelag, lokalt nivå (alternativ visning uten målestokkbegrensning)</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="376" height="3255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_lokal_flater_fullzoom&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning_fullzoom</Name>
+        <Title>Dekningsoversikt, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Dekningsoversikt. Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="61">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_dekning_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning_ingen_fullzoom</Name>
+        <Title>Ingen dekning, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Ingen dekning. Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="115" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_dekning_ingen_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_bergartsenheter_fullzoom</Name>
+        <Title>Bergartsenheter, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Bergartsenheter (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="920">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/lokal/bergartsenheter_w200px.png"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_hovedbergarter_fullzoom</Name>
+        <Title>Hovedbergarter, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Hovedbergarter (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="263" height="3130">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_hovedbergarter_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_losmasseoverdekker_fullzoom</Name>
+        <Title>Løsmasseoverdekker, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Løsmasseoverdekker (SOSI objekttype: Overdekke). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="169" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_losmasseoverdekker_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dannelsesalder</Name>
+        <Title>Dannelsesalder, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Dannelsesalder (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="168" height="530">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_dannelsesalder&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_tektonisk_hovedinndeling</Name>
+        <Title>Tektonisk hovedinndeling, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Tektonisk hovedinndeling (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="403" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_tektonisk_hovedinndeling&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning_rutenett</Name>
+        <Title>Dekningsoversikt rutenett, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Dekningsoversikt rutenett. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="146" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_dekning_rutenett&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>350000</MinScaleDenominator>
+        <MaxScaleDenominator>1.5e+06</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning</Name>
+        <Title>Dekningsoversikt, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Dekningsoversikt. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="61">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_dekning&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>350000</MinScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning_ingen</Name>
+        <Title>Ingen dekning, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Ingen dekning. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="115" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_dekning_ingen&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_feltplanomrader</Name>
+        <Title>Pågående feltkartleggingsområder, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Pågående feltkartleggingsområder. Målestokk 1:50 000</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="161" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_feltplanomrader&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_manus</Name>
+        <Title>Manuskart (ikke ferdigstilte kart), målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Manuskart (ikke ferdigstilte kart). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="174" height="50">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_manus&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_bergartsenheter</Name>
+        <Title>Bergartsenheter, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Bergartsenheter (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="920">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/lokal/bergartsenheter_w200px.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_hovedbergarter</Name>
+        <Title>Hovedbergarter, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Hovedbergarter (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="263" height="3130">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_hovedbergarter&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_losmasseoverdekker</Name>
+        <Title>Løsmasseoverdekker, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Løsmasseoverdekker (SOSI objekttype: Overdekke). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="169" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_losmasseoverdekker&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_linjer</Name>
+        <Title>Linjelag, lokalt nivå</Title>
+        <Abstract>Linjelag, lokalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="1130">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_lokal_linjer&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_linjer_fullzoom</Name>
+        <Title>Linjelag, lokalt nivå (alternativ visning uten målestokkbegrensning)</Title>
+        <Abstract>Linjelag, lokalt nivå (alternativ visning uten målestokkbegrensning)</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="555">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_lokal_linjer_fullzoom&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_bergartsgrenser_fullzoom</Name>
+        <Title>Bergartsgrenser, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Bergartsgrenser (SOSI objekttyper: BergartGrense, Dataavgrensning, Kartbladkant, FiktivDelelinje). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="191" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_bergartsgrenser_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_bergartslinjer_fullzoom</Name>
+        <Title>Bergartslinjer, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Bergartslinjer (SOSI objekttyper: Gang, SedimentaereLag, VulkanskeLag). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="144" height="80">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_bergartslinjer_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+          <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_linearstrukturer_fullzoom</Name>
+        <Title>Lineærstrukturer, målestokk 1:50 000</Title>
+        <Abstract>Lokalt berggrunnskart - Lineærstrukturer (SOSI objekttyper: Forkastning, Skjaersone, Sprekk). Tilrettelagt for målestokk 1:50 000.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="230">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_linearstrukturer_fullzoom&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+          </Layer>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_bergartsgrenser</Name>
+        <Title>Bergartsgrenser, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Bergartsgrenser (SOSI objekttyper: BergartGrense, Dataavgrensning, Kartbladkant, FiktivDelelinje). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="191" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_bergartsgrenser&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_bergartsgrenser_kartbladkant</Name>
+        <Title>Bergartsgrenser: kartbladkant, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Bergartsgrenser: kartbladkant (SOSI objekttype: Kartbladkant). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="118" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_bergartsgrenser_kartbladkant&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_bergartslinjer</Name>
+        <Title>Bergartslinjer, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Bergartslinjer (SOSI objekttyper: Gang, SedimentaereLag, VulkanskeLag). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="144" height="80">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_bergartslinjer&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_linearstrukturer</Name>
+        <Title>Lineærstrukturer, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Lineærstrukturer (SOSI objekttyper: Forkastning, Skjaersone, Sprekk). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="230">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_linearstrukturer&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_punkter</Name>
+        <Title>Punktlag, lokalt nivå</Title>
+        <Abstract>Punktlag, lokalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="214" height="480">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_lokal_strukturpunkter&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_strukturpunkter_linje</Name>
+        <Title>Linjestrukturmålinger, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Linjestrukturmålinger (SOSI objekttype: LinjeStrukturPkt). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="214" height="180">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_strukturpunkter_linje&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_strukturpunkter_plan</Name>
+        <Title>Planstrukturmålinger, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Planstrukturmålinger (SOSI objekttype: PlanStrukturPkt). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="201" height="305">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_lokal_strukturpunkter_plan&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_tekster</Name>
+        <Title>Tekstlag, lokalt nivå</Title>
+        <Abstract>Tekstlag, lokalt nivå</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning_rutenett_tekst</Name>
+        <Title>Dekningsoversikt rutenett (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Dekningsoversikt rutenett (tekst). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>350000</MinScaleDenominator>
+        <MaxScaleDenominator>1.5e+06</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning_tekst</Name>
+        <Title>Dekningsoversikt (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Dekningsoversikt (tekst). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>350000</MinScaleDenominator>
+        <MaxScaleDenominator>1.5e+06</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_dekning_ingen_tekst</Name>
+        <Title>Ingen dekning (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Ingen dekning (tekst). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_feltplanomrader_tekst</Name>
+        <Title>Pågående feltkartleggingsområder (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Pågående feltkartleggingsområder (tekst). Målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_manus_tekst</Name>
+        <Title>Manuskart (ikke ferdigstilte kart) (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Manuskart (ikke ferdigstilte kart) (tekst). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_hovedbergarter_tekst</Name>
+        <Title>Hovedbergarter (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Hovedbergarter (tekst) (SOSI objekttype: BergartFlate). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>350000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_strukturpunkter_linje_tekst</Name>
+        <Title>Linjestrukturmålinger (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Linjestrukturmålinger (tekst) (SOSI objekttype: LinjeStrukturPkt). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_lokal_strukturpunkter_plan_tekst</Name>
+        <Title>Planstrukturmålinger (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Lokalt berggrunnskart - Planstrukturmålinger (tekst) (SOSI objekttype: PlanStrukturPkt). Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+    </Layer>
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt</Name>
+        <Title>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter. Viser berggrunnsdata fra nasjonal (1:1 350 000), regional (1:250 000) og lokal (1:50 000) målestokk avhengig av zoom-nivå.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="3825">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_sammenstilt&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_flater</Name>
+        <Title>Flatelag, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Flatelag, alle nivå (SOSI objekttype: BergartFlate).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="376" height="3300">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_sammenstilt_flater&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_dekning_lokal</Name>
+        <Title>Dekningsoversikt, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Dekningsoversikt, lokalt nivå. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="200" height="61">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_sammenstilt_dekning_lokal&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>5000</MinScaleDenominator>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_dekning_ingen_lokal</Name>
+        <Title>Ingen dekning, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Ingen dekning, lokalt nivå. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="115" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_sammenstilt_dekning_ingen_lokal&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>5000</MinScaleDenominator>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_feltplanomrader_lokal</Name>
+        <Title>Pågående feltkartleggingsområder, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Pågående feltkartleggingsområder, lokalt nivå. Målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="161" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_sammenstilt_feltplanomrader_lokal&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>5000</MinScaleDenominator>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_manus_lokal</Name>
+        <Title>Manuskart (ikke ferdigstilte kart), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Manuskart (ikke ferdigstilte kart), lokalt nivå. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="174" height="50">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_sammenstilt_manus_lokal&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>5000</MinScaleDenominator>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_hovedbergarter</Name>
+        <Title>Hovedbergarter, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Hovedbergarter, alle nivå (SOSI objekttype: BergartFlate).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="263" height="3130">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_hovedbergarter&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_losmasseoverdekker</Name>
+        <Title>Løsmasseoverdekker, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Løsmasseoverdekker, regionalt og lokalt nivå (SOSI objekttype: Overdekke).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="169" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_regional_losmasseoverdekker&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_linjer</Name>
+        <Title>Linjelag, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Linjelag, alle nivå (SOSI objekttype: BergartFlate).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="580">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_sammenstilt_linjer&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_bergartsgrenser</Name>
+        <Title>Bergartsgrenser, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Bergartsgrenser, alle nivå (SOSI objekttyper: BergartGrense, Dataavgrensning, FiktivDelelinje, Kartbladkant, Riksgrense).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="191" height="255">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_bergartsgrenser&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_bergartslinjer</Name>
+        <Title>Bergartslinjer, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Bergartslinjer, alle nivå (SOSI objekttyper: Gang, SedimentaereLag, VulkanskeLag).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="144" height="80">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_bergartslinjer&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_linearstrukturer</Name>
+        <Title>Lineærstrukturer, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Lineærstrukturer, alle nivå (SOSI objekttyper: Forkastning, Skjaersone).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="307" height="230">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?VERSION=1.3.0&amp;SERVICE=WMS&amp;REQUEST=GetLegendGraphic&amp;LAYER=Berggrunn_nasjonal_linearstrukturer&amp;FORMAT=image/png&amp;SLD_VERSION=1.1.0"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_bergartsgrenser_kartbladkant_lokal</Name>
+        <Title>Bergartsgrenser: kartbladkant, målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Bergartsgrenser: kartbladkant (SOSI objekttype: Kartbladkant), lokalt nivå. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <MetadataURL type="ISO19115:2003">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=a5c76d05-33bd-4a1d-b28b-81575092e468"/>
+        </MetadataURL>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="118" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/BerggrunnWMS3?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Berggrunn_sammenstilt_bergartsgrenser_kartbladkant_lokal&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>5000</MinScaleDenominator>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_tekster</Name>
+        <Title>Tekstlag, sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Tekstlag, alle nivå (SOSI objekttype: BergartFlate).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_hovedbergarter_tekst</Name>
+        <Title>Hovedbergarter (tekst), sammenstilt målestokksvisning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Hovedbergarter (tekst), alle nivå (SOSI objekttype: BergartFlate).</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_dekning_ingen_tekst_lokal</Name>
+        <Title>Ingen dekning (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Ingen dekning (tekst), lokalt nivå. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>5000</MinScaleDenominator>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+        <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Berggrunn_sammenstilt_manus_tekst_lokal</Name>
+        <Title>Manuskart (ikke ferdigstilte kart) (tekst), målestokk 1:50 000, med målestokkbegrensning</Title>
+        <Abstract>Berggrunn - Sammenstilt målestokksvisning med tema hovedbergarter - Manuskart (ikke ferdigstilte kart) (tekst), lokalt nivå. Tilrettelagt for målestokk 1:50 000. Med målestokkbegrensning.</Abstract>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="45" height="1">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/BerggrunnWMS3/legend/blank.png"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>5000</MinScaleDenominator>
+        <MaxScaleDenominator>100000</MaxScaleDenominator>
+        </Layer>
+      </Layer>
+    </Layer>
+  </Layer>
+</Capability>
+</WMS_Capabilities>

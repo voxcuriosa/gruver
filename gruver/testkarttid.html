@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test av Flyfoto - Gruvekart</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .info-box {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            background: white;
+            padding: 10px;
+            z-index: 1000;
+            border: 2px solid #333;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="info-box">
+        <strong>Tester: Nibcache_web_mercator_v2</strong><br>
+        Token: FyDU1YTP... (Aktivt)<br>
+        Område: Skien / Grenland
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Sentrerer over Skien sentrum
+        var map = L.map('map').setView([59.2096, 9.6084], 13);
+
+        // Definerer WMTS-laget med tokenet ditt
+        var flyfoto = L.tileLayer('https://tilecache.norgeibilder.no/arcgis/rest/services/Nibcache_web_mercator_v2/MapServer/WMTS/tile/1.0.0/Nibcache_web_mercator_v2/default/default028mm/{z}/{y}/{x}.png?token=FyDU1YTPsbZjHsQ-DsM8fNQzFiqteJZE6NZCW-rh5K3lmVa0oUMkcabSQrQsaw2l', {
+            maxZoom: 19,
+            attribution: '&copy; Norge i bilder'
+        }).addTo(map);
+
+        flyfoto.on('tileerror', function (error) {
+            console.error('Feil ved lasting av flyfoto-flis:', error);
+            alert('Kunne ikke laste flyfoto. Sjekk konsollen (F12) for feilmelding (sannsynligvis 401 eller 499).');
+        });
+    </script>
+
+</body>
+
+</html>

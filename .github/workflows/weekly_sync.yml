@@ -1,0 +1,14 @@
+name: Weekly Image Sync
+on:
+  schedule:
+    # Run at 03:00 on Sunday
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+
+jobs:
+  sync_images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Sync Script on Server
+        run: |
+          curl -s "https://voxcuriosa.no/gruver/sync_smart.php?key=vox_cron_auto_7734"

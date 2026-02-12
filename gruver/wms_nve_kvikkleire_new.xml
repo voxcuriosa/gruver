@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WMS_Capabilities version="1.3.0"
+  xmlns="http://www.opengis.net/wms"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:esri_wms="http://www.esri.com/wms"
+  xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd http://www.esri.com/wms https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?version=1.3.0%26service=WMS%26request=GetSchemaExtension">
+  <Service>
+    <Name><![CDATA[SkredKvikkleire2]]></Name>
+    <Title><![CDATA[SkredKvikkleire2]]></Title>
+    <Abstract><![CDATA[Kartlagte kvikkleiresoner gir en oversikt over soner med potentiell fare for kvikkleireskred]]></Abstract>
+    <KeywordList><Keyword><![CDATA[skred, kvikkleire, aktsomhet]]></Keyword></KeywordList>
+    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?"/>
+    <ContactInformation>
+      <ContactPersonPrimary>
+        <ContactPerson><![CDATA[Seksjon for geomatikk og dataanalyse IGD]]></ContactPerson>
+        <ContactOrganization><![CDATA[NVE]]></ContactOrganization>
+      </ContactPersonPrimary>
+      <ContactPosition><![CDATA[Data ansvarlig]]></ContactPosition>
+      <ContactAddress>
+        <AddressType><![CDATA[Besoksadresse]]></AddressType>
+        <Address><![CDATA[Middelthunsgate 29]]></Address>
+        <City><![CDATA[Oslo]]></City>
+        <StateOrProvince><![CDATA[Oslo]]></StateOrProvince>
+        <PostCode><![CDATA[0301 Majorstuen]]></PostCode>
+        <Country><![CDATA[Norway]]></Country>
+      </ContactAddress>
+      <ContactVoiceTelephone><![CDATA[+47 22959595]]></ContactVoiceTelephone>
+      <ContactFacsimileTelephone><![CDATA[+47 22959000]]></ContactFacsimileTelephone>
+      <ContactElectronicMailAddress><![CDATA[gisstotte@nve.no]]></ContactElectronicMailAddress>
+    </ContactInformation>
+    <Fees><![CDATA[None]]></Fees>
+    <AccessConstraints><![CDATA[NLOD]]></AccessConstraints>
+    <MaxWidth>4096</MaxWidth>
+    <MaxHeight>4096</MaxHeight>
+  </Service>
+  <Capability>
+    <Request>
+      <GetCapabilities>
+        <Format>application/vnd.ogc.wms_xml</Format>
+        <Format>text/xml</Format>
+        <DCPType>
+          <HTTP><Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?"/></Get></HTTP>
+        </DCPType>
+      </GetCapabilities>
+      <GetMap>
+        <Format>image/bmp</Format>
+        <Format>image/jpeg</Format>
+        <Format>image/tiff</Format>
+        <Format>image/png</Format>
+        <Format>image/png8</Format>
+        <Format>image/png24</Format>
+        <Format>image/png32</Format>
+        <Format>image/gif</Format>
+        <Format>image/svg+xml</Format>
+        <DCPType>
+          <HTTP><Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?"/></Get></HTTP>
+        </DCPType>
+      </GetMap>
+      <GetFeatureInfo>
+        <Format>application/vnd.esri.wms_raw_xml</Format>
+        <Format>application/vnd.esri.wms_featureinfo_xml</Format>
+        <Format>application/vnd.ogc.wms_xml</Format>
+        <Format>application/geo+json</Format>
+        <Format>text/xml</Format>
+        <Format>text/html</Format>
+        <Format>text/plain</Format>
+        <DCPType>
+          <HTTP><Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?"/></Get></HTTP>
+        </DCPType>
+      </GetFeatureInfo>
+      <esri_wms:GetStyles>
+        <Format>application/vnd.ogc.sld+xml</Format>
+        <DCPType>
+          <HTTP><Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?"/></Get></HTTP>
+        </DCPType>
+      </esri_wms:GetStyles>
+    </Request>
+    <Exception>
+      <Format>application/vnd.ogc.se_xml</Format>
+      <Format>application/vnd.ogc.se_inimage</Format>
+      <Format>application/vnd.ogc.se_blank</Format>
+      <Format>text/xml</Format>
+      <Format>XML</Format>
+    </Exception>
+    <Layer>
+      <Title><![CDATA[SkredKvikkleire2]]></Title>
+<CRS>CRS:84</CRS>
+<CRS>EPSG:4326</CRS>
+<CRS>EPSG:25833</CRS>
+<CRS>EPSG:3857</CRS>
+ <!-- alias 3857 -->
+<CRS>EPSG:102100</CRS>
+<CRS>EPSG:25831</CRS>
+<CRS>EPSG:25832</CRS>
+<CRS>EPSG:25834</CRS>
+<CRS>EPSG:25835</CRS>
+<CRS>EPSG:25836</CRS>
+<CRS>EPSG:32631</CRS>
+<CRS>EPSG:32632</CRS>
+<CRS>EPSG:32633</CRS>
+<CRS>EPSG:32634</CRS>
+<CRS>EPSG:32635</CRS>
+<CRS>EPSG:32636</CRS>
+<EX_GeographicBoundingBox><westBoundLongitude>-1.278117</westBoundLongitude><eastBoundLongitude>32.395361</eastBoundLongitude><southBoundLatitude>57.521248</southBoundLatitude><northBoundLatitude>71.718841</northBoundLatitude></EX_GeographicBoundingBox>
+<BoundingBox CRS="CRS:84" minx="-1.278117" miny="57.521248" maxx="32.395361" maxy="71.718841"/>
+<BoundingBox CRS="EPSG:4326" minx="57.521248" miny="-1.278117" maxx="71.718841" maxy="32.395361"/>
+<BoundingBox CRS="EPSG:25833" minx="-84936.198800" miny="6424130.008800" maxx="1127444.312600" maxy="7957571.985100"/>
+<BoundingBox CRS="EPSG:3857" minx="-142279.302019" miny="7867412.031859" maxx="3606235.123942" maxy="11652657.273714"/>
+<BoundingBox CRS="EPSG:102100" minx="-142279.302019" miny="7867412.031859" maxx="3606235.123942" maxy="11652657.273714"/>
+<BoundingBox CRS="EPSG:25831" minx="344729.933339" miny="6383862.778777" maxx="1832310.855110" maxy="8124656.431108"/>
+<BoundingBox CRS="EPSG:25832" minx="128272.992890" miny="6388101.596513" maxx="1482391.827958" maxy="8030654.075132"/>
+<BoundingBox CRS="EPSG:25834" minx="-439766.551320" miny="6384346.313194" maxx="913914.505234" maxy="8026385.369426"/>
+<BoundingBox CRS="EPSG:25835" minx="-789804.475280" miny="6376402.493206" maxx="696770.027485" maxy="8116089.802752"/>
+<BoundingBox CRS="EPSG:25836" minx="-1132771.892702" miny="6400235.366967" maxx="477923.360469" maxy="8226192.342963"/>
+<BoundingBox CRS="EPSG:32631" minx="344729.933341" miny="6383862.778901" maxx="1832310.855095" maxy="8124656.431218"/>
+<BoundingBox CRS="EPSG:32632" minx="128272.992896" miny="6388101.596637" maxx="1482391.827946" maxy="8030654.075243"/>
+<BoundingBox CRS="EPSG:32633" minx="-84936.198791" miny="6424130.008924" maxx="1127444.312593" maxy="7957571.985212"/>
+<BoundingBox CRS="EPSG:32634" minx="-439766.551309" miny="6384346.313318" maxx="913914.505228" maxy="8026385.369537"/>
+<BoundingBox CRS="EPSG:32635" minx="-789804.475265" miny="6376402.493330" maxx="696770.027482" maxy="8116089.802862"/>
+<BoundingBox CRS="EPSG:32636" minx="-1132771.892683" miny="6400235.367091" maxx="477923.360470" maxy="8226192.343071"/>
+      <Layer queryable="1">
+        <Name>KvikkleireKartlagtOmrade</Name>
+        <Title><![CDATA[KvikkleireKartlagtOmrade]]></Title>
+        <Abstract><![CDATA[]]></Abstract>
+<CRS>CRS:84</CRS>
+<CRS>EPSG:4326</CRS>
+<CRS>EPSG:25833</CRS>
+<CRS>EPSG:3857</CRS>
+ <!-- alias 3857 -->
+<CRS>EPSG:102100</CRS>
+<CRS>EPSG:25831</CRS>
+<CRS>EPSG:25832</CRS>
+<CRS>EPSG:25834</CRS>
+<CRS>EPSG:25835</CRS>
+<CRS>EPSG:25836</CRS>
+<CRS>EPSG:32631</CRS>
+<CRS>EPSG:32632</CRS>
+<CRS>EPSG:32633</CRS>
+<CRS>EPSG:32634</CRS>
+<CRS>EPSG:32635</CRS>
+<CRS>EPSG:32636</CRS>
+<EX_GeographicBoundingBox><westBoundLongitude>-1.278117</westBoundLongitude><eastBoundLongitude>32.395361</eastBoundLongitude><southBoundLatitude>57.521248</southBoundLatitude><northBoundLatitude>71.718841</northBoundLatitude></EX_GeographicBoundingBox>
+<BoundingBox CRS="CRS:84" minx="-1.278117" miny="57.521248" maxx="32.395361" maxy="71.718841"/>
+<BoundingBox CRS="EPSG:4326" minx="57.521248" miny="-1.278117" maxx="71.718841" maxy="32.395361"/>
+<BoundingBox CRS="EPSG:25833" minx="-84936.198800" miny="6424130.008800" maxx="1127444.312600" maxy="7957571.985100"/>
+<BoundingBox CRS="EPSG:3857" minx="-142279.302019" miny="7867412.031859" maxx="3606235.123942" maxy="11652657.273714"/>
+<BoundingBox CRS="EPSG:102100" minx="-142279.302019" miny="7867412.031859" maxx="3606235.123942" maxy="11652657.273714"/>
+<BoundingBox CRS="EPSG:25831" minx="344729.933339" miny="6383862.778777" maxx="1832310.855110" maxy="8124656.431108"/>
+<BoundingBox CRS="EPSG:25832" minx="128272.992890" miny="6388101.596513" maxx="1482391.827958" maxy="8030654.075132"/>
+<BoundingBox CRS="EPSG:25834" minx="-439766.551320" miny="6384346.313194" maxx="913914.505234" maxy="8026385.369426"/>
+<BoundingBox CRS="EPSG:25835" minx="-789804.475280" miny="6376402.493206" maxx="696770.027485" maxy="8116089.802752"/>
+<BoundingBox CRS="EPSG:25836" minx="-1132771.892702" miny="6400235.366967" maxx="477923.360469" maxy="8226192.342963"/>
+<BoundingBox CRS="EPSG:32631" minx="344729.933341" miny="6383862.778901" maxx="1832310.855095" maxy="8124656.431218"/>
+<BoundingBox CRS="EPSG:32632" minx="128272.992896" miny="6388101.596637" maxx="1482391.827946" maxy="8030654.075243"/>
+<BoundingBox CRS="EPSG:32633" minx="-84936.198791" miny="6424130.008924" maxx="1127444.312593" maxy="7957571.985212"/>
+<BoundingBox CRS="EPSG:32634" minx="-439766.551309" miny="6384346.313318" maxx="913914.505228" maxy="8026385.369537"/>
+<BoundingBox CRS="EPSG:32635" minx="-789804.475265" miny="6376402.493330" maxx="696770.027482" maxy="8116089.802862"/>
+<BoundingBox CRS="EPSG:32636" minx="-1132771.892683" miny="6400235.367091" maxx="477923.360470" maxy="8226192.343071"/>
+        <Style>
+          <Name>default</Name>
+          <Title><![CDATA[KvikkleireKartlagtOmrade]]></Title>
+          <LegendURL width="66" height="36">
+            <Format>image/png</Format>
+            <OnlineResource xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=KvikkleireKartlagtOmrade" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>75595.238095</MinScaleDenominator>
+      </Layer>
+      <Layer queryable="1">
+        <Name>KvikkleireRisiko</Name>
+        <Title><![CDATA[KvikkleireRisiko]]></Title>
+        <Abstract><![CDATA[]]></Abstract>
+<CRS>CRS:84</CRS>
+<CRS>EPSG:4326</CRS>
+<CRS>EPSG:25833</CRS>
+<CRS>EPSG:3857</CRS>
+ <!-- alias 3857 -->
+<CRS>EPSG:102100</CRS>
+<CRS>EPSG:25831</CRS>
+<CRS>EPSG:25832</CRS>
+<CRS>EPSG:25834</CRS>
+<CRS>EPSG:25835</CRS>
+<CRS>EPSG:25836</CRS>
+<CRS>EPSG:32631</CRS>
+<CRS>EPSG:32632</CRS>
+<CRS>EPSG:32633</CRS>
+<CRS>EPSG:32634</CRS>
+<CRS>EPSG:32635</CRS>
+<CRS>EPSG:32636</CRS>
+<EX_GeographicBoundingBox><westBoundLongitude>-0.013878</westBoundLongitude><eastBoundLongitude>30.346984</eastBoundLongitude><southBoundLatitude>57.912420</southBoundLatitude><northBoundLatitude>70.874322</northBoundLatitude></EX_GeographicBoundingBox>
+<BoundingBox CRS="CRS:84" minx="-0.013878" miny="57.912420" maxx="30.346984" maxy="70.874322"/>
+<BoundingBox CRS="EPSG:4326" minx="57.912420" miny="-0.013878" maxx="70.874322" maxy="30.346984"/>
+<BoundingBox CRS="EPSG:25833" minx="-61224.220000" miny="6460348.946600" maxx="1074250.579100" maxy="7863380.020700"/>
+<BoundingBox CRS="EPSG:3857" minx="-1544.883352" miny="7948942.092634" maxx="3378210.761592" maxy="11359436.116976"/>
+<BoundingBox CRS="EPSG:102100" minx="-1544.883352" miny="7948942.092634" maxx="3378210.761592" maxy="11359436.116976"/>
+<BoundingBox CRS="EPSG:25831" minx="386372.678618" miny="6423549.499882" maxx="1772496.897316" maxy="8020896.798212"/>
+<BoundingBox CRS="EPSG:25832" minx="161127.104336" miny="6426152.085269" maxx="1425783.776461" maxy="7931259.555787"/>
+<BoundingBox CRS="EPSG:25834" minx="-412727.083218" miny="6424997.054949" maxx="851803.277885" maxy="7929958.697533"/>
+<BoundingBox CRS="EPSG:25835" minx="-759483.097288" miny="6421253.546816" maxx="626351.825040" maxy="8018285.650689"/>
+<BoundingBox CRS="EPSG:25836" minx="-1099220.811649" miny="6449090.151387" maxx="399829.765072" maxy="8127928.284125"/>
+<BoundingBox CRS="EPSG:32631" minx="386372.678620" miny="6423549.500006" maxx="1772496.897301" maxy="8020896.798323"/>
+<BoundingBox CRS="EPSG:32632" minx="161127.104341" miny="6426152.085393" maxx="1425783.776450" maxy="7931259.555899"/>
+<BoundingBox CRS="EPSG:32633" minx="-61224.219992" miny="6460348.946724" maxx="1074250.579093" maxy="7863380.020813"/>
+<BoundingBox CRS="EPSG:32634" minx="-412727.083208" miny="6424997.055073" maxx="851803.277880" maxy="7929958.697645"/>
+<BoundingBox CRS="EPSG:32635" minx="-759483.097273" miny="6421253.546939" maxx="626351.825038" maxy="8018285.650800"/>
+<BoundingBox CRS="EPSG:32636" minx="-1099220.811630" miny="6449090.151511" maxx="399829.765074" maxy="8127928.284234"/>
+        <Style>
+          <Name>default</Name>
+          <Title><![CDATA[KvikkleireRisiko]]></Title>
+          <LegendURL width="102" height="108">
+            <Format>image/png</Format>
+            <OnlineResource xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=KvikkleireRisiko" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>151191.421131</MaxScaleDenominator>
+      </Layer>
+      <Layer queryable="1">
+        <Name>KvikkleireFaregrad</Name>
+        <Title><![CDATA[KvikkleireFaregrad]]></Title>
+        <Abstract><![CDATA[]]></Abstract>
+<CRS>CRS:84</CRS>
+<CRS>EPSG:4326</CRS>
+<CRS>EPSG:25833</CRS>
+<CRS>EPSG:3857</CRS>
+ <!-- alias 3857 -->
+<CRS>EPSG:102100</CRS>
+<CRS>EPSG:25831</CRS>
+<CRS>EPSG:25832</CRS>
+<CRS>EPSG:25834</CRS>
+<CRS>EPSG:25835</CRS>
+<CRS>EPSG:25836</CRS>
+<CRS>EPSG:32631</CRS>
+<CRS>EPSG:32632</CRS>
+<CRS>EPSG:32633</CRS>
+<CRS>EPSG:32634</CRS>
+<CRS>EPSG:32635</CRS>
+<CRS>EPSG:32636</CRS>
+<EX_GeographicBoundingBox><westBoundLongitude>-0.013878</westBoundLongitude><eastBoundLongitude>30.346984</eastBoundLongitude><southBoundLatitude>57.912420</southBoundLatitude><northBoundLatitude>70.874322</northBoundLatitude></EX_GeographicBoundingBox>
+<BoundingBox CRS="CRS:84" minx="-0.013878" miny="57.912420" maxx="30.346984" maxy="70.874322"/>
+<BoundingBox CRS="EPSG:4326" minx="57.912420" miny="-0.013878" maxx="70.874322" maxy="30.346984"/>
+<BoundingBox CRS="EPSG:25833" minx="-61224.220000" miny="6460348.946600" maxx="1074250.579100" maxy="7863380.020700"/>
+<BoundingBox CRS="EPSG:3857" minx="-1544.883352" miny="7948942.092634" maxx="3378210.761592" maxy="11359436.116976"/>
+<BoundingBox CRS="EPSG:102100" minx="-1544.883352" miny="7948942.092634" maxx="3378210.761592" maxy="11359436.116976"/>
+<BoundingBox CRS="EPSG:25831" minx="386372.678618" miny="6423549.499882" maxx="1772496.897316" maxy="8020896.798212"/>
+<BoundingBox CRS="EPSG:25832" minx="161127.104336" miny="6426152.085269" maxx="1425783.776461" maxy="7931259.555787"/>
+<BoundingBox CRS="EPSG:25834" minx="-412727.083218" miny="6424997.054949" maxx="851803.277885" maxy="7929958.697533"/>
+<BoundingBox CRS="EPSG:25835" minx="-759483.097288" miny="6421253.546816" maxx="626351.825040" maxy="8018285.650689"/>
+<BoundingBox CRS="EPSG:25836" minx="-1099220.811649" miny="6449090.151387" maxx="399829.765072" maxy="8127928.284125"/>
+<BoundingBox CRS="EPSG:32631" minx="386372.678620" miny="6423549.500006" maxx="1772496.897301" maxy="8020896.798323"/>
+<BoundingBox CRS="EPSG:32632" minx="161127.104341" miny="6426152.085393" maxx="1425783.776450" maxy="7931259.555899"/>
+<BoundingBox CRS="EPSG:32633" minx="-61224.219992" miny="6460348.946724" maxx="1074250.579093" maxy="7863380.020813"/>
+<BoundingBox CRS="EPSG:32634" minx="-412727.083208" miny="6424997.055073" maxx="851803.277880" maxy="7929958.697645"/>
+<BoundingBox CRS="EPSG:32635" minx="-759483.097273" miny="6421253.546939" maxx="626351.825038" maxy="8018285.650800"/>
+<BoundingBox CRS="EPSG:32636" minx="-1099220.811630" miny="6449090.151511" maxx="399829.765074" maxy="8127928.284234"/>
+        <Style>
+          <Name>default</Name>
+          <Title><![CDATA[KvikkleireFaregrad]]></Title>
+          <LegendURL width="216" height="144">
+            <Format>image/png</Format>
+            <OnlineResource xlink:href="https://kart.nve.no/enterprise/services/SkredKvikkleire2/MapServer/WMSServer?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=KvikkleireFaregrad" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>151191.421131</MaxScaleDenominator>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMS_Capabilities>

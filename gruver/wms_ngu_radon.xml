@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"   xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/sld_capabilities.xsd  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0  http://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd http://mapserver.gis.umn.edu/mapserver https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
+
+<!-- MapServer version 7.0.7 OUTPUT=PNG OUTPUT=JPEG OUTPUT=KML SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=SVG_SYMBOLS SUPPORTS=RSVG SUPPORTS=ICONV SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=FASTCGI SUPPORTS=THREADS SUPPORTS=GEOS INPUT=JPEG INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
+
+<Service>
+  <Name>WMS</Name>
+  <Title>NGU Radon og alunskifer</Title>
+  <Abstract>* RADON * Nasjonalt aktsomhetskart for radon viser hvilke områder i Norge som kan være mer radonutsatt enn andre. Kartet er basert på inneluftmålinger av radon og på kunnskap om geologiske forhold.
+                          Kartet viser fire klasser: «særlig høy aktsomhet» (lilla farge), «høy aktsomhet» (rød farge), «moderat til lav aktsomhet» (gul farge) og «usikker aktsomhet» (grå farge). Kartet er basert på inneluftmålinger av radon og på kunnskap om geologiske forhold. I noen områder i Norge er mange boliger målt for radon, i andre få eller ingen. Dette kartet er utviklet ved at kunnskap om andel høye radonkonsentrasjoner i boliger som ligger på kjent geologi er overført til andre områder med tilsvarende geologiske forhold. «særlig høy aktsomhet» er en selvstendig klasse som også finnes i egne alunskiferkart. I områder markert med «høy aktsomhet», er det beregnet at minst 20 % av boligene har radonkonsentrasjoner over øvre anbefalte grenseverdi på 200 Bq/m3 i første etasje.
+                          Kartet kan ikke benyttes til å forutsi radonkonsentrasjonen i enkeltbygninger. Den eneste måten å få sikker kunnskap om radon i en bygning, er å gjennomføre en måling. Radon i inneluft avhenger ikke bare av geologiske forhold, men også av bygningens konstruksjon og drift, samt kvaliteten av radonforebyggende tiltak.</Abstract>
+  <KeywordList>
+      <Keyword vocabulary="ISO">infoMapAccessService</Keyword>
+  </KeywordList>
+  <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/>
+  <ContactInformation>
+    <ContactPersonPrimary>
+      <ContactPerson>Seksjon for geomatikk og IT</ContactPerson>
+      <ContactOrganization>Norges geologiske undersøkelse (NGU)</ContactOrganization>
+    </ContactPersonPrimary>
+      <ContactPosition>owner</ContactPosition>
+    <ContactAddress>
+        <AddressType>Postal address</AddressType>
+        <Address>Postboks 6315 Torgarden</Address>
+        <City>Trondheim</City>
+        <StateOrProvince>Trøndelag</StateOrProvince>
+        <PostCode>7491</PostCode>
+        <Country>Norway</Country>
+    </ContactAddress>
+      <ContactVoiceTelephone>+ 47 73 90 40 00</ContactVoiceTelephone>
+  <ContactElectronicMailAddress>wmsdrift@ngu.no</ContactElectronicMailAddress>
+  </ContactInformation>
+  <Fees>no conditions apply</Fees>
+  <AccessConstraints>Copyright The Geological Survey of Norway (NGU) 2024</AccessConstraints>
+  <MaxWidth>4000</MaxWidth>
+  <MaxHeight>4000</MaxHeight>
+</Service>
+
+<Capability>
+  <Request>
+    <GetCapabilities>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetCapabilities>
+    <GetMap>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <Format>application/x-pdf</Format>
+      <Format>image/svg+xml</Format>
+      <Format>image/tiff</Format>
+      <Format>application/vnd.google-earth.kml+xml</Format>
+      <Format>application/vnd.google-earth.kmz</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetMap>
+    <GetFeatureInfo>
+      <Format>text/html</Format>
+      <Format>application/vnd.ogc.gml</Format>
+      <Format>text/plain</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetFeatureInfo>
+    <sld:DescribeLayer>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:DescribeLayer>
+    <sld:GetLegendGraphic>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/png; mode=8bit</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:GetLegendGraphic>
+    <ms:GetStyles>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;"/></Post>
+        </HTTP>
+      </DCPType>
+    </ms:GetStyles>
+  </Request>
+  <Exception>
+    <Format>XML</Format>
+    <Format>INIMAGE</Format>
+    <Format>BLANK</Format>
+  </Exception>
+  <sld:UserDefinedSymbolization SupportSLD="1" UserLayer="0" UserStyle="1" RemoteWFS="0" InlineFeature="0" RemoteWCS="0"/>
+  <inspire_vs:ExtendedCapabilities>
+    <inspire_common:ResourceLocator>
+      <inspire_common:URL>https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=e43d4fd2-cfad-4feb-ac35-b020be19eb98</inspire_common:URL>
+    </inspire_common:ResourceLocator>
+    <inspire_common:ResourceType>service</inspire_common:ResourceType>
+    <inspire_common:TemporalReference>
+      <inspire_common:DateOfLastRevision>2020-04-29</inspire_common:DateOfLastRevision>
+    </inspire_common:TemporalReference>
+    <inspire_common:Conformity>
+      <inspire_common:Specification>
+        <inspire_common:Title>-</inspire_common:Title>
+        <inspire_common:DateOfLastRevision>2020-04-29</inspire_common:DateOfLastRevision>
+      </inspire_common:Specification>
+      <inspire_common:Degree>notEvaluated</inspire_common:Degree>
+    </inspire_common:Conformity>
+    <inspire_common:MetadataPointOfContact>
+      <inspire_common:OrganisationName>Norges geologiske undersøkelse (NGU)</inspire_common:OrganisationName>
+      <inspire_common:EmailAddress>wmsdrift(a)ngu.no</inspire_common:EmailAddress>
+    </inspire_common:MetadataPointOfContact>
+      <inspire_common:MetadataDate>2020-04-29</inspire_common:MetadataDate>
+    <inspire_common:SpatialDataServiceType>view</inspire_common:SpatialDataServiceType>
+    <inspire_common:MandatoryKeyword>
+      <inspire_common:KeywordValue>infoMapAccessService</inspire_common:KeywordValue>
+    </inspire_common:MandatoryKeyword>
+    <inspire_common:SupportedLanguages>
+      <inspire_common:DefaultLanguage><inspire_common:Language>nor</inspire_common:Language></inspire_common:DefaultLanguage>
+      <inspire_common:SupportedLanguage><inspire_common:Language>eng</inspire_common:Language></inspire_common:SupportedLanguage>
+    </inspire_common:SupportedLanguages>
+    <inspire_common:ResponseLanguage><inspire_common:Language>nor</inspire_common:Language></inspire_common:ResponseLanguage>
+  </inspire_vs:ExtendedCapabilities>
+  <Layer>
+    <Name>RadonWMS2</Name>
+    <Title>NGU Radon og alunskifer</Title>
+    <Abstract>* RADON * Nasjonalt aktsomhetskart for radon viser hvilke områder i Norge som kan være mer radonutsatt enn andre. Kartet er basert på inneluftmålinger av radon og på kunnskap om geologiske forhold.
+                          Kartet viser fire klasser: «særlig høy aktsomhet» (lilla farge), «høy aktsomhet» (rød farge), «moderat til lav aktsomhet» (gul farge) og «usikker aktsomhet» (grå farge). Kartet er basert på inneluftmålinger av radon og på kunnskap om geologiske forhold. I noen områder i Norge er mange boliger målt for radon, i andre få eller ingen. Dette kartet er utviklet ved at kunnskap om andel høye radonkonsentrasjoner i boliger som ligger på kjent geologi er overført til andre områder med tilsvarende geologiske forhold. «særlig høy aktsomhet» er en selvstendig klasse som også finnes i egne alunskiferkart. I områder markert med «høy aktsomhet», er det beregnet at minst 20 % av boligene har radonkonsentrasjoner over øvre anbefalte grenseverdi på 200 Bq/m3 i første etasje.
+                          Kartet kan ikke benyttes til å forutsi radonkonsentrasjonen i enkeltbygninger. Den eneste måten å få sikker kunnskap om radon i en bygning, er å gjennomføre en måling. Radon i inneluft avhenger ikke bare av geologiske forhold, men også av bygningens konstruksjon og drift, samt kvaliteten av radonforebyggende tiltak.</Abstract>
+    <KeywordList>
+        <Keyword vocabulary="ISO">infoMapAccessService</Keyword>
+    </KeywordList>
+    <CRS>EPSG:25833</CRS>
+    <CRS>EPSG:32633</CRS>
+    <CRS>EPSG:4326</CRS>
+    <CRS>EPSG:4258</CRS>
+    <CRS>EPSG:32631</CRS>
+    <CRS>EPSG:32632</CRS>
+    <CRS>EPSG:32634</CRS>
+    <CRS>EPSG:32635</CRS>
+    <CRS>EPSG:32636</CRS>
+    <CRS>EPSG:25829</CRS>
+    <CRS>EPSG:25830</CRS>
+    <CRS>EPSG:25831</CRS>
+    <CRS>EPSG:25832</CRS>
+    <CRS>EPSG:25834</CRS>
+    <CRS>EPSG:25835</CRS>
+    <CRS>EPSG:25836</CRS>
+    <CRS>EPSG:3034</CRS>
+    <CRS>EPSG:900913</CRS>
+    <CRS>EPSG:32661</CRS>
+    <CRS>EPSG:3857</CRS>
+    <CRS>EPSG:5105</CRS>
+    <CRS>EPSG:5106</CRS>
+    <CRS>EPSG:5107</CRS>
+    <CRS>EPSG:5108</CRS>
+    <CRS>EPSG:5109</CRS>
+    <CRS>EPSG:5110</CRS>
+    <CRS>EPSG:5111</CRS>
+    <CRS>EPSG:5112</CRS>
+    <CRS>EPSG:5113</CRS>
+    <CRS>EPSG:5114</CRS>
+    <CRS>EPSG:5115</CRS>
+    <CRS>EPSG:5116</CRS>
+    <CRS>EPSG:5117</CRS>
+    <CRS>EPSG:5118</CRS>
+    <CRS>EPSG:5119</CRS>
+    <CRS>EPSG:5120</CRS>
+    <CRS>EPSG:5121</CRS>
+    <CRS>EPSG:5122</CRS>
+    <CRS>EPSG:5123</CRS>
+    <CRS>EPSG:5124</CRS>
+    <CRS>EPSG:5125</CRS>
+    <CRS>EPSG:5126</CRS>
+    <CRS>EPSG:5127</CRS>
+    <CRS>EPSG:5128</CRS>
+    <CRS>EPSG:5129</CRS>
+    <CRS>EPSG:5130</CRS>
+    <EX_GeographicBoundingBox>
+        <westBoundLongitude>-2.56007</westBoundLongitude>
+        <eastBoundLongitude>33.0201</eastBoundLongitude>
+        <southBoundLatitude>57.0881</southBoundLatitude>
+        <northBoundLatitude>71.8912</northBoundLatitude>
+    </EX_GeographicBoundingBox>
+    <BoundingBox CRS="EPSG:25833"
+                minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+    <Attribution>
+        <Title>Norges geologiske undersøkelse (NGU)</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ngu.no"/>
+        <LogoURL width="55" height="60">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/service/common/NGUklode.png"/>
+          </LogoURL>
+    </Attribution>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="132" height="130">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=RadonWMS2&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>Radon_aktsomhet_oversikt</Name>
+        <Title>Radon aktsomhet oversikt</Title>
+        <Abstract>Raster oversikt</Abstract>
+        <KeywordList>
+            <Keyword>Radon</Keyword>
+            <Keyword>Raster</Keyword>
+            <Keyword>Oversikt</Keyword>
+        </KeywordList>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <AuthorityURL name="Geonorge">
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=dc0605f3-2301-4abe-a91f-6da42464c281"/>
+        </AuthorityURL>
+        <Identifier authority="Geonorge">https://data.geonorge.no/sosi/geologi</Identifier>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="132" height="30">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Radon_aktsomhet_oversikt&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MinScaleDenominator>187502</MinScaleDenominator>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>Radon_aktsomhet</Name>
+        <Title>Radon - aktsomhet</Title>
+        <Abstract>Radon - aktsomhet</Abstract>
+        <KeywordList>
+            <Keyword>Radon - aktsomhet</Keyword>
+        </KeywordList>
+        <CRS>EPSG:25833</CRS>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-2.56007</westBoundLongitude>
+            <eastBoundLongitude>33.0201</eastBoundLongitude>
+            <southBoundLatitude>57.0881</southBoundLatitude>
+            <northBoundLatitude>71.8912</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="EPSG:25833"
+                    minx="-127998" miny="6.37792e+06" maxx="1.14551e+06" maxy="7.9768e+06" />
+        <AuthorityURL name="Geonorge">
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.geonorge.no/geonetwork/srv/nor/xml_iso19139?uuid=dc0605f3-2301-4abe-a91f-6da42464c281"/>
+        </AuthorityURL>
+        <Identifier authority="Geonorge">https://data.geonorge.no/sosi/geologi</Identifier>
+        <Style>
+          <Name>default</Name>
+          <Title>default</Title>
+          <LegendURL width="126" height="105">
+             <Format>image/png</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.ngu.no/mapserver/RadonWMS2?language=nor&amp;version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=Radon_aktsomhet&amp;format=image/png&amp;STYLE=default"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>187502</MaxScaleDenominator>
+    </Layer>
+  </Layer>
+</Capability>
+</WMS_Capabilities>

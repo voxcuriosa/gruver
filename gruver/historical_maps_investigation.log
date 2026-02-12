@@ -1,0 +1,36 @@
+################################################################################
+# 📜 HISTORICAL MAPS INVESTIGATION LOG
+# Date: 2026-02-10
+#
+# GOAL: Activate historical topographic maps (Økonomisk Kartverk, Detaljkart Skien, etc.)
+#       using GeoID authentication via nib_proxy.php.
+#
+# FINDINGS:
+# 1. WMS Service 'wms.historiskekart' only provides:
+#    - 'amt1' (Amtskart) -> WORKS via WMS.
+#    - 'georefererte' -> Requires specific map ID.
+#    - 'historiskekart' -> Parent layer, not viewable.
+#
+# 2. Requested layers do NOT exist in WMS:
+#    - 'farge_ok' (Økonomisk Kartverk) -> NOT FOUND.
+#    - 'his_top_under_50000' -> NOT FOUND.
+#    - 'his_top_over_50000' -> NOT FOUND.
+#    - 'topo4graatone' -> 500 ERROR on GetCapabilities.
+#
+# 3. Norge i Bilder implementation:
+#    - Uses ArcGIS REST API (not WMS).
+#    - URL: services.norgeibilder.no/arcgis/rest/services/ortofoto/ImageServer/exportImage
+#    - Authentication: Specialized token, not standard GeoID Basic Auth.
+#    - Identification: Uses internal 'nib_project_id' (e.g., 2904) in query.
+#
+# CONCLUSION:
+# The specific historical maps visible on norgeibilder.no are NOT available via
+# standard WMS services compatible with Leaflet/OpenLayers without significant
+# reverse-engineering of the ArcGIS REST API or specific agreements.
+#
+# ACTION TAKEN:
+# - Reverted viewer.js to only active 'Amtskart' (which works).
+# - Reverted nib_proxy.php to original state.
+# - Deleted all debug scripts from server.
+#
+################################################################################

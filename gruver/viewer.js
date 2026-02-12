@@ -1510,7 +1510,11 @@ function openModal(url, title, siteId = null, imgIndex = 0, htmlContent = null) 
                     if (errorMsg) errorMsg.style.display = 'block';
                     if (img) img.style.display = 'none';
                 };
-                img.src = url; img.style.display = 'block';
+                img.src = url;
+                img.style.display = 'block';
+                img.style.cursor = 'zoom-in';
+                img.title = 'Klikk for å se bildet i full størrelse';
+                img.onclick = () => window.open(url, '_blank');
             }
             if (currentModalSite && currentModalSite.images.length > 1) {
                 if (prevBtn) prevBtn.style.display = 'flex';

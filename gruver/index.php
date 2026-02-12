@@ -2384,9 +2384,6 @@
             <div class="modal-header">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span id="modal-title" style="font-weight: 700; color: var(--accent-color);">Innhold</span>
-                    <a id="modal-external-link" href="#" target="_blank"
-                        style="color: white; font-size: 0.8rem; text-decoration: none; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px;">↗️
-                        Åpne i nytt vindu dersom det er en ekstern link som ikke vises korrekt</a>
                 </div>
                 <button class="modal-close" id="mobile-close-btn" onclick="closeModal()">Lukk</button>
             </div>
@@ -2409,12 +2406,6 @@
 
                 <button class="modal-nav prev" id="modal-prev" onclick="changeModalImage(-1)">❮</button>
                 <button class="modal-nav next" id="modal-next" onclick="changeModalImage(1)">❯</button>
-            </div>
-            <div id="modal-error-msg" style="display: none; padding: 20px; text-align: center; color: var(--text-dim);">
-                <p>Noen sider (som Google Bilder) tillater ikke visning i rammer.</p>
-                <a id="modal-error-link" href="#" target="_blank"
-                    style="color: var(--accent-color); font-weight: 600;">Klikk her for å åpne i et nytt vindu i
-                    stedet.</a>
             </div>
         </div>
     </div>

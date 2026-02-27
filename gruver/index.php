@@ -2811,12 +2811,12 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
 
-    <script src="viewer.js?v=v119"></script>
+    <script src="viewer.js?v=v120"></script>
     <div id="version-tag"
         style="display:block; position:fixed; bottom:5px; right:5px; color:rgba(255,255,255,0.03); font-size:8px; z-index:99999; font-family:sans-serif; pointer-events:none;">
         v117</div>
     <script>document.title = documen        t.title.replace(/\[v\d+\]\s*/, '');</script>
-    <script src="admin_tools.js?v=4" charset="UTF-8"></script>
+    <script src="admin_tools.js?v=5" charset="UTF-8"></script>
     <!-- PWA Install Logic -->
     <script>
         if ('serviceWorker' in navigator) {

@@ -563,6 +563,19 @@ function deleteSite(name, lat, lng) {
     saveOverride(name, lat, lng, 'delete');
 }
 
+// ID-based wrappers (safe for names with special characters)
+function hideSiteById(id) {
+    const site = allSites.find(s => s.id === id);
+    if (!site) { alert('Punkt ikke funnet'); return; }
+    hideSite(site.name, site.lat, site.lng);
+}
+
+function deleteSiteById(id) {
+    const site = allSites.find(s => s.id === id);
+    if (!site) { alert('Punkt ikke funnet'); return; }
+    deleteSite(site.name, site.lat, site.lng);
+}
+
 function saveOverride(name, lat, lng, action, value = null) {
     showAdminStatus("Lagrer override...", "warn");
     fetch('save_override.php', {

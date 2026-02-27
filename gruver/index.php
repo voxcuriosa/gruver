@@ -2511,42 +2511,6 @@ session_start();
                     onclick="showGuestInfoModal()" title="Foreslå et nytt punkt til kartet">📍 Legg til punkt</div>
             </div>
 
-            <!-- Guest info modal -->
-            <div id="guest-info-modal"
-                style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:20000; align-items:center; justify-content:center; backdrop-filter:blur(6px);">
-                <div
-                    style="background:#111827; width:90%; max-width:520px; border-radius:14px; border:1px solid #0ea5e9; padding:28px; box-shadow:0 20px 50px rgba(0,0,0,0.6); font-family:'Outfit',sans-serif; color:#e2e8f0;">
-                    <h3 style="margin:0 0 16px 0; color:#0ea5e9; font-size:1.2rem;">📍 Legg til nytt punkt</h3>
-                    <p style="line-height:1.7; font-size:0.95rem; margin-bottom:12px;">
-                        Har du funnet noe interessant i Skiensmarka? En gammel gruve, en hustuft, en hule eller noe
-                        annet spennende?
-                        Her kan du foreslå et nytt punkt til kartet.
-                    </p>
-                    <p style="line-height:1.7; font-size:0.95rem; margin-bottom:12px;">
-                        <strong>Slik fungerer det:</strong>
-                    </p>
-                    <ul style="line-height:1.7; font-size:0.9rem; padding-left:20px; margin-bottom:16px;">
-                        <li>Du klikker på kartet for å plassere punktet</li>
-                        <li>Du fyller inn navn, kategori og eventuelt bilder/beskrivelse</li>
-                        <li>Punktet sendes til administrator for godkjenning</li>
-                        <li>Etter godkjenning blir det synlig for alle</li>
-                    </ul>
-                    <p style="line-height:1.7; font-size:0.85rem; color:#94a3b8; margin-bottom:20px;">
-                        Ditt navn lagres sammen med punktet som kreditering.
-                    </p>
-                    <div style="display:flex; gap:10px;">
-                        <button onclick="startGuestMode()"
-                            style="flex:1; padding:12px; background:linear-gradient(135deg,#0ea5e9,#0284c7); border:none; color:white; border-radius:8px; cursor:pointer; font-weight:700; font-size:0.95rem;">
-                            OK, jeg forstår – start
-                        </button>
-                        <button onclick="document.getElementById('guest-info-modal').style.display='none'"
-                            style="padding:12px 18px; background:rgba(239,68,68,0.1); border:1px solid #ef4444; color:#ef4444; border-radius:8px; cursor:pointer; font-size:0.9rem;">
-                            Avbryt
-                        </button>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <div id="map">
@@ -2851,8 +2815,8 @@ session_start();
     <div id="version-tag"
         style="display:block; position:fixed; bottom:5px; right:5px; color:rgba(255,255,255,0.03); font-size:8px; z-index:99999; font-family:sans-serif; pointer-events:none;">
         v117</div>
-    <script>document.title = document.title.replace(/\[v\d+\]\s*/, '');</script>
-    <script src="admin_tools.js?v=2" charset="UTF-8"></script>
+    <script>document.title = documen        t.title.replace(/\[v\d+\]\s*/, '');</script>
+    <script src="admin_tools.js?v=4" charset="UTF-8"></script>
     <!-- PWA Install Logic -->
     <script>
         if ('serviceWorker' in navigator) {
@@ -2863,6 +2827,40 @@ session_start();
             });
         }
     </script>
+    <!-- Guest info modal (must be at body level to avoid sidebar stacking context) -->
+    <div id="guest-info-modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:20000; align-items:center; justify-content:center; backdrop-filter:blur(6px); overflow-y:auto;">
+        <div
+            style="background:#111827; width:90%; max-width:520px; border-radius:14px; border:1px solid #0ea5e9; padding:28px; box-shadow:0 20px 50px rgba(0,0,0,0.6); font-family:'Outfit',sans-serif; color:#e2e8f0; margin:auto;">
+            <h3 style="margin:0 0 16px 0; color:#0ea5e9; font-size:1.2rem;">📍 Legg til nytt punkt</h3>
+            <p style="line-height:1.7; font-size:0.95rem; margin-bottom:12px;">
+                Har du funnet noe interessant i Skiensmarka? En gammel gruve, en hustuft, en hule eller noe annet
+                spennende? Her kan du foreslå et nytt punkt til kartet.
+            </p>
+            <p style="line-height:1.7; font-size:0.95rem; margin-bottom:12px;">
+                <strong>Slik fungerer det:</strong>
+            </p>
+            <ul style="line-height:1.7; font-size:0.9rem; padding-left:20px; margin-bottom:16px;">
+                <li>Du klikker på kartet for å plassere punktet</li>
+                <li>Du fyller inn navn, kategori og eventuelt bilder/beskrivelse</li>
+                <li>Punktet sendes til administrator for godkjenning</li>
+                <li>Etter godkjenning blir det synlig for alle</li>
+            </ul>
+            <p style="line-height:1.7; font-size:0.85rem; color:#94a3b8; margin-bottom:20px;">
+                Ditt navn lagres sammen med punktet som kreditering.
+            </p>
+            <div style="display:flex; gap:10px;">
+                <button onclick="startGuestMode()"
+                    style="flex:1; padding:12px; background:linear-gradient(135deg,#0ea5e9,#0284c7); border:none; color:white; border-radius:8px; cursor:pointer; font-weight:700; font-size:0.95rem;">
+                    OK, jeg forstår – start
+                </button>
+                <button onclick="document.getElementById('guest-info-modal').style.display='none'"
+                    style="padding:12px 18px; background:rgba(239,68,68,0.1); border:1px solid #ef4444; color:#ef4444; border-radius:8px; cursor:pointer; font-size:0.9rem;">
+                    Avbryt
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

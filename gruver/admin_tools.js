@@ -685,6 +685,8 @@ let tempPlacementMarker = null;
 // --- Guest mode ---
 
 function showGuestInfoModal() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && !sidebar.classList.contains('collapsed')) toggleSidebar();
     document.getElementById('guest-info-modal').style.display = 'flex';
 }
 
@@ -790,8 +792,8 @@ function showAddPointModal(lat, lng) {
     modal.style.cssText = `
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0,0,0,0.85); z-index: 20000; display: flex;
-        align-items: center; justify-content: center; backdrop-filter: blur(6px);
-        overflow-y: auto; padding: 20px 0;
+        align-items: flex-start; justify-content: center; backdrop-filter: blur(6px);
+        overflow-y: auto; padding: 30px 0;
     `;
 
     const fieldStyle = `width:100%; margin:5px 0 12px; padding:10px 12px; background:#1e293b; border:1px solid #334155; color:white; border-radius:8px; font-size:0.9rem; box-sizing:border-box; font-family:'Outfit',sans-serif;`;
@@ -1051,7 +1053,7 @@ async function checkPendingCount() {
 // --- Override admin toolbar to include new buttons ---
 
 const _originalInjectAdminToolbar = injectAdminToolbar;
-injectAdminToolbar = async function () {
+injectAdminToolbar = function () {
     const existing = document.getElementById('admin-toolbar');
     if (existing) existing.remove();
 
@@ -1065,9 +1067,6 @@ injectAdminToolbar = async function () {
         font-family: 'Outfit', sans-serif; font-size: 0.9rem;
     `;
 
-    const pendingCount = await checkPendingCount();
-    const badge = pendingCount > 0 ? `<span style="background:#ef4444; color:white; font-size:0.7em; padding:1px 6px; border-radius:50%; margin-left:4px;">${pendingCount}</span>` : '';
-
     toolbar.innerHTML = `
         <div id="admin-status" style="font-weight: 600; color: #10b981;">Klar</div>
         <div style="width: 1px; height: 20px; background: #374151;"></div>
@@ -1080,8 +1079,8 @@ injectAdminToolbar = async function () {
         <button onclick="startAddPointMode()" style="background:none; border:none; color:#0ea5e9; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
             <span style="font-size:1.2em;">➕</span> Nytt punkt
         </button>
-        <button onclick="showApprovalPanel()" style="background:none; border:none; color:#f59e0b; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
-            <span style="font-size:1.2em;">👥</span> Godkjenn${badge}
+        <button id="btn-approve" onclick="showApprovalPanel()" style="background:none; border:none; color:#f59e0b; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
+            <span style="font-size:1.2em;">👥</span> Godkjenn
         </button>
         <button onclick="exitAdminMode()" style="background:none; border:none; color:#ef4444; cursor:pointer; font-weight:bold;">
             Avslutt
@@ -1089,11 +1088,14 @@ injectAdminToolbar = async function () {
     `;
     document.body.appendChild(toolbar);
 
-    // Show toast if pending points
-    if (pendingCount > 0) {
-        setTimeout(() => {
-            showAdminStatus(`${pendingCount} gjestepunkt${pendingCount > 1 ? 'er' : ''} venter på godkjenning`, "warn");
+    // Check pending count in background (non-blocking)
+    checkPendingCount().then(count => {
+        if (count > 0) {
+            const btn = document.getElementById('btn-approve');
+            if (btn) btn.innerHTML = `<span style="font-size:1.2em;">👥</span> Godkjenn<span style="background:#ef4444; color:white; font-size:0.7em; padding:1px 6px; border-radius:50%; margin-left:4px;">${count}</span>`;
+            showAdminStatus(`${count} gjestepunkt${count > 1 ? 'er' : ''} venter på godkjenning`, "warn");
             setTimeout(() => showAdminStatus("Admin-modus: KLAR. Klikk et punkt for å flytte.", "ok"), 4000);
-        }, 1000);
-    }
+        }
+    });
 };
+

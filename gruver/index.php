@@ -2815,7 +2815,7 @@ session_start();
     <div id="version-tag"
         style="display:block; position:fixed; bottom:5px; right:5px; color:rgba(255,255,255,0.03); font-size:8px; z-index:99999; font-family:sans-serif; pointer-events:none;">
         v117</div>
-    <script>document.title = documen        t.title.replace(/\[v\d+\]\s*/, '');</script>
+    <script>document.title = document.title.replace(/\[v\d+\]\s*/, '');</script>
     <script src="admin_tools.js?v=5" charset="UTF-8"></script>
     <!-- PWA Install Logic -->
     <script>

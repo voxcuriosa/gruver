@@ -565,14 +565,14 @@ function deleteSite(name, lat, lng) {
 
 // ID-based wrappers (safe for names with special characters)
 function hideSiteById(id) {
-    const site = allSites.find(s => s.id === id);
-    if (!site) { alert('Punkt ikke funnet'); return; }
+    const site = allSites.find(s => s.id == id);
+    if (!site) { console.error('hideSiteById: site not found for id', id); return; }
     hideSite(site.name, site.lat, site.lng);
 }
 
 function deleteSiteById(id) {
-    const site = allSites.find(s => s.id === id);
-    if (!site) { alert('Punkt ikke funnet'); return; }
+    const site = allSites.find(s => s.id == id);
+    if (!site) { console.error('deleteSiteById: site not found for id', id); return; }
     deleteSite(site.name, site.lat, site.lng);
 }
 

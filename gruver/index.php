@@ -1,9 +1,26 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="no">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YYPRYXPN70"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-YYPRYXPN70');
+    </script>
+
+    <script>
+        // Inject Admin Status from PHP Session
+        window.isAdminMode = <?php echo (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) ? 'true' : 'false'; ?>;
+    </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Skiensmarka - Gruver & Severdigheter</title>
     <meta name="description"
         content="Interaktivt kart over Skiensmarka med gruver, kulturminner, mineralressurser, reguleringsplaner, radon, løsmasser, berggrunn, kvikkleire og eiendomsinformasjon. Mer brukervennlig enn offisielle kartløsninger fra NGU, Kartverket og Riksantikvaren.">
@@ -14,13 +31,15 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0b0f19">
     <link rel="apple-touch-icon" href="assets/app-icon-512.png?v=2">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Gruvekart">
 
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-toolbar@0.4.0-alpha.2/dist/leaflet.toolbar.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-distortableimage@0.21.7/dist/leaflet.distortableimage.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;600&display=swap"
@@ -57,6 +76,8 @@
             display: flex;
             height: 100vh;
             width: 100vw;
+            position: relative;
+            /* CRITICAL for absolute children outside #map */
         }
 
         #map {
@@ -126,47 +147,55 @@
 
         #mobile-toggle:hover {
             background: var(--card-hover);
-            transform: scale(1.05);
+            transform: scale(1.05) translateZ(0);
+            border-color: var(--accent-color);
+        }
+
+        #mobile-toggle {
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
 
 
         .desktop-btn {
+            box-sizing: border-box;
             background: var(--panel-bg);
             border: 1px solid var(--glass-border);
             color: var(--accent-color);
-            padding: 4px 2px;
-            /* Litt mer pusterom på sidene */
+            padding: 0;
+            padding-bottom: 7px;
             width: 52px;
-            /* Standardized to match Meny */
             height: 52px;
-            /* Standardized to match Meny */
             border-radius: 12px;
             overflow: hidden;
-            /* Hindrer tekst-lekkasje */
             cursor: pointer;
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            font-size: 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 0;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             transition: all 0.2s;
             line-height: 1;
         }
 
         .desktop-btn span {
-            font-size: 0.58rem;
-            /* Litt mindre font så "FLYFOTO" får plass */
+            font-size: 0.6rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--text-main);
+            color: var(--accent-color);
             white-space: nowrap;
             width: 100%;
             text-align: center;
+            margin-top: 1px;
+        }
+
+        .desktop-btn svg {
+            margin-bottom: auto;
+            margin-top: 13px;
         }
 
         .desktop-btn:hover {
@@ -203,7 +232,7 @@
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             display: none;
-            z-index: 2000;
+            z-index: 9000;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
@@ -212,10 +241,17 @@
             margin-top: 82px !important;
             right: 20px !important;
             min-width: 240px;
+            max-height: 88vh !important;
             border: 1px solid var(--glass-border) !important;
             background: var(--panel-bg) !important;
             backdrop-filter: blur(20px) saturate(180%) !important;
             border-radius: 12px !important;
+            overflow: hidden !important;
+        }
+
+        /* Support for layering on mobile */
+        .leaflet-right {
+            z-index: 8000 !important;
         }
 
         /* Ensure no border when collapsed to fix the "thin black line" */
@@ -234,7 +270,6 @@
         /* --- 3. FJERN DE TO LINJENE I MENYEN --- */
         /* Dette skjuler dem selv om de finnes i JavaScript-objektet */
         label[for*="Historiske Flyfoto"],
-        label[for*="Kommer snart"],
         .leaflet-control-layers-base label:nth-last-child(-n+2) {
             display: none !important;
         }
@@ -596,6 +631,36 @@
 
         /* STOR RØD LUKK-KNAPP I POPUP */
         .property-popup .leaflet-popup-close-button,
+        .point-popup .leaflet-popup-close-button,
+        .modal-back {
+            background: #475569 !important;
+            /* Dark gray for back button */
+            color: white !important;
+            width: auto !important;
+            height: 30px !important;
+            padding: 0 15px !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            border-radius: 8px !important;
+            opacity: 1 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            transition: all 0.2s !important;
+            z-index: 16000 !important;
+            text-decoration: none !important;
+            cursor: pointer;
+        }
+
+        .modal-back:hover {
+            background: var(--accent-color) !important;
+            color: #0b0f19 !important;
+            transform: scale(1.05);
+        }
+
+        .property-popup .leaflet-popup-close-button,
         .point-popup .leaflet-popup-close-button {
             background: #ef4444 !important;
             color: white !important;
@@ -656,16 +721,23 @@
 
         @media (max-width: 1024px) {
             .property-popup .leaflet-popup-content {
-                width: 280px !important;
+                width: calc(100vw - 60px) !important;
+                max-width: 380px !important;
+                /* Keep a reasonable max on tablets */
                 max-height: 50vh !important;
                 overflow-y: auto !important;
                 padding: 15px !important;
             }
 
-            /* Juster målestokk på mobil for å unngå kanten */
+            /* Målestokk og attributasjon nede på mobil – samme linje */
             .leaflet-bottom.leaflet-left {
                 margin-left: 10px !important;
-                margin-bottom: 25px !important;
+                margin-bottom: 0 !important;
+            }
+
+            .leaflet-bottom.leaflet-right {
+                margin-right: 0 !important;
+                margin-bottom: 0 !important;
             }
 
             /* Flytt Fullfør-knappen høyere på mobil for å unngå nettleser-UI */
@@ -735,19 +807,20 @@
 
         /* SØKERESULTATER DROPDOWN */
         #search-results-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            margin-top: 8px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid var(--accent-color);
-            border-radius: 12px;
-            z-index: 2000;
-            max-height: 300px;
-            /* Hindrer at listen går utenfor skjermen */
-            overflow-y: auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            position: absolute !important;
+            top: 100% !important;
+            left: 0 !important;
+            width: 100% !important;
+            background: #111827 !important;
+            border: 1px solid var(--glass-border) !important;
+            border-top: none !important;
+            border-radius: 0 0 12px 12px !important;
+            z-index: 1000 !important;
+            max-height: 300px !important;
+            overflow-y: auto !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
+            backdrop-filter: none !important;
+            /* Stable on mobile */
         }
 
         /* Knapp for å avslutte måling/høyde */
@@ -902,6 +975,7 @@
             border: 1px solid var(--glass-border);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
+            flex-wrap: nowrap !important;
         }
 
         #desktop-controls,
@@ -911,17 +985,14 @@
         }
 
         #coord-search-input {
-            background: rgba(0, 0, 0, 0.2);
-            /* More transparent */
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: transparent;
+            border: none;
             color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            width: 220px;
-            font-family: inherit;
-            font-size: 0.9rem;
+            padding: 4px 0;
+            font-size: 0.95rem;
+            width: 100%;
+            min-width: 0;
             outline: none;
-            transition: border-color 0.2s;
         }
 
         #coord-search-input:focus {
@@ -942,6 +1013,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            flex-shrink: 0 !important;
         }
 
         #coord-search-btn:hover {
@@ -1152,15 +1224,54 @@
 
         /* Popup Styles */
         .leaflet-popup-content-wrapper {
-            background: var(--panel-bg) !important;
+            background: #111827 !important;
             color: white !important;
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--accent-color);
             border-radius: 16px !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+            width: fit-content !important;
+            max-width: 300px !important;
+            min-width: 0 !important;
+        }
+
+        .leaflet-popup-content {
+            width: auto !important;
+            margin: 0 !important;
+            box-sizing: border-box;
         }
 
         .leaflet-popup-tip {
-            background: var(--panel-bg) !important;
+            background: #111827 !important;
+        }
+
+        /* Spesialfiks for Søkehjelp (smalere og uten den røde Lukk-knappen) */
+        .compact-popup .leaflet-popup-content-wrapper {
+            max-width: 280px !important;
+            width: fit-content !important;
+            padding: 0 !important;
+        }
+
+        .compact-popup .leaflet-popup-content {
+            width: auto !important;
+            margin: 0 !important;
+        }
+
+        .compact-popup .leaflet-popup-close-button {
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: #38bdf8 !important;
+            width: 24px !important;
+            height: 24px !important;
+            font-size: 14px !important;
+            box-shadow: none !important;
+            top: 10px !important;
+            right: 10px !important;
+            display: flex !important;
+        }
+
+        .compact-popup .leaflet-popup-close-button::after {
+            content: "✕" !important;
+            font-size: 14px !important;
+            color: #38bdf8 !important;
         }
 
         .popup-content {
@@ -1239,25 +1350,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(2, 6, 17, 0.9);
+            background: rgba(2, 6, 17, 0.95);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 100000;
-            backdrop-filter: blur(12px);
         }
 
         /* Mer gjennomsiktig bakgrunn for info-modaler så man ser kartet bak */
         #about-modal,
         #site-list-modal {
-            background: rgba(2, 6, 17, 0.3) !important;
-            backdrop-filter: blur(4px) !important;
+            background: rgba(2, 6, 17, 0.8) !important;
         }
 
         /* No backdrop for compact modal */
         #content-modal.compact {
             background: transparent;
-            backdrop-filter: none;
         }
 
         .modal-container {
@@ -1277,7 +1385,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(17, 24, 39, 0.7);
+            background: rgba(17, 24, 39, 0.85);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.1);
             width: 50px;
@@ -1290,7 +1398,6 @@
             justify-content: center;
             font-size: 1.5rem;
             transition: all 0.2s;
-            backdrop-filter: blur(4px);
         }
 
         .modal-nav:hover {
@@ -1466,8 +1573,7 @@
             /* Flytt Portal-knappen litt mer til høyre slik at den ikke overlapper Meny-knappen */
             /* Initially overlapping, will adjust via JS/class if needed, or set static */
             z-index: 1100;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.95);
             border: 1px solid var(--glass-border);
             color: white;
             padding: 8px 16px;
@@ -1501,12 +1607,8 @@
 
         /* Emoji Marker Styles */
         .emoji-marker {
-            background: rgba(255, 255, 255, 0.2);
-            /* Much more transparent */
-            backdrop-filter: blur(15px) saturate(160%);
-            /* High blur for "glass" look */
-            -webkit-backdrop-filter: blur(15px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -1579,41 +1681,95 @@
 
         /* Mobile adjustments */
         @media (max-width: 1024px) {
-            .leaflet-control-location {
-                margin-bottom: 60px !important;
-                /* Push Locate button up */
-            }
 
+            /* Nullstill leaflet-bottom så de ikke overstyrer */
             .leaflet-bottom {
-                bottom: 80px !important;
-                /* Increased safe area for mobile browsers (Scale Bar visibility) */
+                bottom: env(safe-area-inset-bottom, 5px) !important;
             }
 
+            /* Bruk absolute posisjonering for å bryte ut av Leaflets 'float' logikk som skaper stack overflow på smale skjermer */
             .leaflet-control-scale {
+                position: absolute !important;
+                bottom: 0 !important;
+                /* Bottom 0 inside .leaflet-bottom.leaflet-left */
+                left: 10px !important;
+                margin: 0 !important;
+                height: 22px !important;
+            }
+
+            .leaflet-control-scale-line {
+                height: 22px !important;
+                line-height: 20px !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+            }
+
+            .leaflet-control-attribution {
+                position: absolute !important;
+                bottom: 0 !important;
+                /* Bottom 0 inside .leaflet-bottom.leaflet-right */
+                right: 10px !important;
+                margin: 0 !important;
+                height: 22px !important;
+                line-height: 22px !important;
+                box-sizing: border-box !important;
+                padding: 0 5px !important;
+            }
+
+            /* Flytt zoom- og locate-knapper opp slik at de ikke dekker attributasjon/målestokk */
+            .leaflet-control-location,
+            .leaflet-control-locate {
+                margin-bottom: 30px !important;
+                /* Clear the 22px attribution + 8px margin */
+            }
+
+            .leaflet-control-zoom {
                 margin-bottom: 10px !important;
-                margin-left: 10px !important;
             }
 
             /* Disable heavy effects for better performance on mobile */
             .emoji-marker {
-                background: rgba(255, 255, 255, 0.85) !important;
+                background: #ffffff !important;
+                /* Solid on mobile */
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
-                border: 1px solid rgba(255, 255, 255, 0.6) !important;
+                border: 1px solid #ccc !important;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important;
             }
 
+            .leaflet-popup-content-wrapper {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: #111827 !important;
+                /* Fully opaque dark */
+                border: 1px solid var(--accent-color) !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+            }
+
+            .leaflet-popup-tip {
+                background: #111827 !important;
+                backdrop-filter: none !important;
+            }
+
             /* Enable scrolling in map layer list if it's too long */
+            /* v117: Increased heights for less scrolling + hide-before-js-init trick */
             .leaflet-control-layers-expanded {
-                max-height: 80vh !important;
+                max-height: 88vh !important;
                 display: flex !important;
                 flex-direction: column !important;
                 width: 300px !important;
                 box-sizing: border-box !important;
             }
 
+            /* v117: Hide the panel initially to prevent full-size flash on first load */
+            .leaflet-control-layers:not(.leaflet-control-layers-expanded) {
+                visibility: hidden !important;
+                max-height: 0 !important;
+                overflow: hidden !important;
+            }
+
             .leaflet-control-layers-list {
-                max-height: 75vh !important;
+                max-height: 83vh !important;
                 overflow-y: auto !important;
                 padding-right: 15px !important;
                 -webkit-overflow-scrolling: touch;
@@ -1668,7 +1824,7 @@
             /* Fjern X-en som Leaflet lager på mobil/utvidet modus */
             .leaflet-control-layers-expanded .leaflet-control-layers-toggle::before,
             .leaflet-control-layers-close {
-                content: "" !important;
+                content: none !important;
                 display: none !important;
             }
 
@@ -1684,36 +1840,10 @@
                 text-decoration: none !important;
             }
 
-            .leaflet-control-layers-expanded .leaflet-control-layers-toggle::before {
-                content: "✕" !important;
-                font-size: 1.2rem !important;
-                color: var(--accent-color) !important;
-                line-height: 1 !important;
-                font-weight: 600 !important;
-                margin-top: 5px !important;
-                display: block !important;
-            }
-
             .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
-                background-image: none !important;
-                display: flex !important;
-                position: absolute !important;
-                top: 15px !important;
-                right: 15px !important;
-                width: 52px !important;
-                height: 52px !important;
-                border: 1px solid var(--glass-border) !important;
-                background-color: var(--panel-bg) !important;
-                backdrop-filter: blur(10px) !important;
-                border-radius: 12px !important;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
-                justify-content: center !important;
-                align-items: center !important;
-                z-index: 10002 !important;
-                box-sizing: border-box !important;
-                color: var(--accent-color) !important;
-                transition: all 0.2s !important;
-                padding-bottom: 0 !important;
+                display: none !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
             }
 
             .leaflet-control-layers-expanded .leaflet-control-layers-toggle:hover {
@@ -1726,11 +1856,13 @@
             }
 
             .leaflet-control-layers-expanded {
-                background: var(--panel-bg) !important;
-                backdrop-filter: blur(20px) !important;
-                border: 1px solid var(--glass-border) !important;
+                background: #111827 !important;
+                /* Solid dark background */
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: 1px solid var(--accent-color) !important;
                 border-radius: 16px !important;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
                 padding: 15px !important;
                 margin-top: 0 !important;
                 position: relative !important;
@@ -1936,19 +2068,21 @@
 
         /* Coordinate Search: Centered Top */
         #coord-search-container {
-            position: absolute !important;
+            position: fixed !important;
             top: 20px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
-            z-index: 500 !important;
-            /* CRITICAL: Lowered to 500 to ensure it is BELOW popup pane (40000) */
+            z-index: 2147483647 !important;
             display: flex !important;
             align-items: center !important;
             width: calc(100% - 40px) !important;
             max-width: 500px !important;
             box-sizing: border-box !important;
             background: #111827 !important;
-            /* Definitive solid background */
+            border-radius: 12px !important;
+            border: none !important;
+            padding: 8px 12px !important;
+            box-shadow: none !important;
         }
 
         /* Desktop Controls (Kart/Flyfoto): Top Right */
@@ -1960,6 +2094,8 @@
             display: flex !important;
             gap: 15px !important;
             z-index: 30000 !important;
+            transform: translateZ(0) !important;
+            backface-visibility: hidden !important;
         }
 
         #flyfoto-menu {
@@ -1967,8 +2103,7 @@
             top: 85px !important;
             right: 20px !important;
             z-index: 30001 !important;
-            background: var(--panel-bg);
-            backdrop-filter: blur(20px) saturate(180%);
+            background: #111827;
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
@@ -1999,29 +2134,88 @@
         /* Mobile Adjustments (Override) */
         @media (max-width: 1024px) {
             #mobile-toggle {
-                position: absolute !important;
+                position: fixed !important;
                 top: 95px !important;
-                /* Increased air */
                 left: 15px !important;
-                z-index: 10000 !important;
+                z-index: 2147483647 !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: #111827 !important;
             }
 
             #coord-search-container {
-                width: calc(100% - 30px) !important;
+                left: 15px !important;
+                right: 15px !important;
+                width: auto !important;
                 top: 20px !important;
+                transform: none !important;
                 max-width: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: #111827 !important;
+                z-index: 2147483647 !important;
+                transform: translate3d(0, 0, 0) !important;
+                box-shadow: none !important;
+                border: none !important;
             }
 
             #desktop-controls {
+                position: fixed !important;
                 top: 95px !important;
-                /* Increased air */
                 right: 15px !important;
+                z-index: 2147483647 !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: #111827 !important;
+                border-radius: 12px !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            #desktop-controls .desktop-btn {
+                background: transparent !important;
+                backdrop-filter: none !important;
+                box-shadow: none !important;
+                border: none !important;
             }
 
             #flyfoto-menu {
                 top: 154px !important;
                 /* Adjusted for buttons move */
                 right: 15px !important;
+            }
+
+            #mobile-slider-wrapper {
+                display: none;
+                position: fixed !important;
+                top: 95px !important;
+                left: 82px !important;
+                right: 149px !important;
+                height: auto !important;
+                min-height: 52px !important;
+                z-index: 2147483647 !important;
+                background: #111827 !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                transform: translate3d(0, 0, 0) !important;
+                border: none !important;
+                border-radius: 12px !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 10px !important;
+                box-sizing: border-box !important;
+                flex-direction: column !important;
+                box-shadow: none !important;
+            }
+
+            #mobile-slider-wrapper:empty {
+                display: none;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            #mobile-slider-wrapper {
+                display: none;
             }
         }
 
@@ -2285,8 +2479,8 @@
 
             <!-- Sidebar Footer with Sync Info -->
             <?php
-            $kml_file = 'full_data.kml';
-            $last_updated = file_exists($kml_file) ? filemtime($kml_file) : 0;
+            $data_file = 'full_data.json';
+            $last_updated = file_exists($data_file) ? filemtime($data_file) : 0;
             $needs_sync = (time() - $last_updated) > (7 * 24 * 60 * 60);
             ?>
             <div
@@ -2294,7 +2488,7 @@
                 Kartdata sist oppdatert: <span
                     id="last-sync-time"><?php echo date("d.m.Y H:i", $last_updated); ?></span>
                 <?php if ($needs_sync): ?>
-                    <script>                     // Lazy sync: Trigger background update since it's > 7 days                     setTimeout(() => {                         fetch('sync.php').then(r => r.json()).then(data => {                             if (data.success) {                                 console.log("Automatic KML sync completed.");                                 const syncLabel = document.getElementById('last-sync-time');                                 if (syncLabel) syncLabel.innerText = "Nettopp nå (oppdatert)";                             }                         }).catch(e => console.error("Sync failed", e));                     }, 2000);
+                    <script>                     // Lazy sync: Trigger background update since it's > 7 days                     setTimeout(() => {                         fetch('sync_smart.php?key=vox_cron_auto_7734').then(r => r.text()).then(data => {                             console.log("Automatic KML sync triggered.");                             // Verify success by checking if output contains "Done" or "Success"                             if (data.includes("Done") || data.includes("Success")) {                                 const syncLabel = document.getElementById('last-sync-time');                                 if (syncLabel) syncLabel.innerText = "Nettopp nå (oppdatert)";                             }                         }).catch(e => console.error("Sync failed", e));                     }, 2000);
                     </script>
                 <?php endif; ?>
 
@@ -2309,73 +2503,54 @@
                 <?php endif; ?>
 
                 <div style="margin-top: 5px; opacity: 0.6;">Automatisk synkronisering hver uke</div>
+                <div style="margin-top: 25px; opacity: 0.2; cursor: pointer; display: inline-block; padding: 5px; font-weight: 800; font-size: 0.7rem; letter-spacing: 0.05em;"
+                    id="georef-secret-trigger" onclick="handleSecretGeoref()" title="Georef-verktøy">GeoRef</div>
+                <div style="margin-top: 5px; opacity: 0.2; cursor: pointer; display: inline-block; padding: 5px; font-weight: 800; font-size: 0.7rem; letter-spacing: 0.05em;"
+                    onclick="handleAdminSecret()" title="Admin-verktøy">Admin</div>
+                <div style="margin-top: 15px; cursor: pointer; display: inline-block; padding: 8px 14px; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.03em; background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; border-radius: 8px; opacity: 0.85;"
+                    onclick="showGuestInfoModal()" title="Foreslå et nytt punkt til kartet">📍 Legg til punkt</div>
             </div>
 
-        </div>
-        <div id="map">
-            <!-- UI Overlays (Managed by viewer.js ui-pane) -->
-            <button id="mobile-toggle" onclick="toggleSidebar()" title="Vis/skjul meny">☰</button>
-            <button id="finish-tool-btn">✅ Ferdig</button>
-            <button id="install-app-btn">
-                <span id="install-btn-text">📲 Installer
-                    App</span>
-                <span class="install-close-x"
-                    onclick="event.stopPropagation(); document.getElementById('install-app-btn').style.display='none';"
-                    title="Skjul">✕</span>
-            </button>
-
-
-            <div id="coord-search-container">
-                <button id="coord-picker-btn"
-                    title="Koordinathenter: Klikk i kartet for å hente koordinater">📍</button>
-                <button id="measure-btn"
-                    title="Måleverktøy: Klikk flere punkter for å måle avstand og areal. Avslutt med dobbeltklikk.">📏</button>
-                <button id="elevation-btn"
-                    title="Høydeprofil: Tegn en rute i kartet og dobbeltklikk for å se profil og stigning.">⛰️</button>
-                <input type="text" id="coord-search-input" placeholder="Søk adresse eller koordinater..."
-                    aria-label="Søk etter steder eller koordinater">
-                <div id="search-help-toggle"
-                    style="cursor:pointer; margin: 0 5px; color: white; background: rgba(56, 189, 248, 0.4); border: 1px solid rgba(56, 189, 248, 0.6); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 15px; transition: all 0.2s; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);"
-                    onclick="toggleSearchHelp()" title="Søke-hjelp">?</div>
-                <button id="coord-search-btn">🔍 Søk</button>
-            </div>
-            <!-- Desktop Map Buttons -->
-            <div id="desktop-controls">
-                <button class="desktop-btn" id="desktop-map-btn" title="Velg kartlag">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        style="margin-bottom: 4px;">
-                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
-                        <line x1="8" y1="2" x2="8" y2="18"></line>
-                        <line x1="16" y1="6" x2="16" y2="22"></line>
-                    </svg>
-                    <span>Kart</span>
-                </button>
-                <button class="desktop-btn" id="desktop-flyfoto-btn" title="Historiske flyfoto">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        style="margin-bottom: 4px;">
-                        <path d="M22 2 L11 13"></path>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                    <span>Flyfoto</span>
-                </button>
-            </div>
-
-            <!-- Flyfoto Menu -->
-            <div id="flyfoto-menu">
-                <div id="flyfoto-list">
-                    <!-- Populated by JS -->
+            <!-- Guest info modal -->
+            <div id="guest-info-modal"
+                style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:20000; align-items:center; justify-content:center; backdrop-filter:blur(6px);">
+                <div
+                    style="background:#111827; width:90%; max-width:520px; border-radius:14px; border:1px solid #0ea5e9; padding:28px; box-shadow:0 20px 50px rgba(0,0,0,0.6); font-family:'Outfit',sans-serif; color:#e2e8f0;">
+                    <h3 style="margin:0 0 16px 0; color:#0ea5e9; font-size:1.2rem;">📍 Legg til nytt punkt</h3>
+                    <p style="line-height:1.7; font-size:0.95rem; margin-bottom:12px;">
+                        Har du funnet noe interessant i Skiensmarka? En gammel gruve, en hustuft, en hule eller noe
+                        annet spennende?
+                        Her kan du foreslå et nytt punkt til kartet.
+                    </p>
+                    <p style="line-height:1.7; font-size:0.95rem; margin-bottom:12px;">
+                        <strong>Slik fungerer det:</strong>
+                    </p>
+                    <ul style="line-height:1.7; font-size:0.9rem; padding-left:20px; margin-bottom:16px;">
+                        <li>Du klikker på kartet for å plassere punktet</li>
+                        <li>Du fyller inn navn, kategori og eventuelt bilder/beskrivelse</li>
+                        <li>Punktet sendes til administrator for godkjenning</li>
+                        <li>Etter godkjenning blir det synlig for alle</li>
+                    </ul>
+                    <p style="line-height:1.7; font-size:0.85rem; color:#94a3b8; margin-bottom:20px;">
+                        Ditt navn lagres sammen med punktet som kreditering.
+                    </p>
+                    <div style="display:flex; gap:10px;">
+                        <button onclick="startGuestMode()"
+                            style="flex:1; padding:12px; background:linear-gradient(135deg,#0ea5e9,#0284c7); border:none; color:white; border-radius:8px; cursor:pointer; font-weight:700; font-size:0.95rem;">
+                            OK, jeg forstår – start
+                        </button>
+                        <button onclick="document.getElementById('guest-info-modal').style.display='none'"
+                            style="padding:12px 18px; background:rgba(239,68,68,0.1); border:1px solid #ef4444; color:#ef4444; border-radius:8px; cursor:pointer; font-size:0.9rem;">
+                            Avbryt
+                        </button>
+                    </div>
                 </div>
             </div>
 
+        </div>
 
-            <!-- Loading indicator for map layers -->
-            <div id="map-loader"
-                style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(15, 23, 42, 0.8); padding: 8px 16px; border-radius: 20px; display: none; align-items: center; gap: 10px; border: 1px solid var(--accent-color); backdrop-filter: blur(4px);">
-                <div class="spinner" style="width: 20px; height: 20px; border-width: 3px;"></div>
-                <span style="color: white; font-size: 0.85rem; font-weight: 600;">Henter eiendomsdata...</span>
-            </div>
+        <div id="map">
+            <!-- Map content managed by Leaflet -->
         </div>
     </div>
 
@@ -2385,7 +2560,11 @@
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span id="modal-title" style="font-weight: 700; color: var(--accent-color);">Innhold</span>
                 </div>
-                <button class="modal-close" id="mobile-close-btn" onclick="closeModal()">Lukk</button>
+                <div style="display: flex; gap: 10px;">
+                    <button id="modal-back-btn" class="modal-back" onclick="modalBack()"
+                        style="display: none;">Tilbake</button>
+                    <button class="modal-close" id="mobile-close-btn" onclick="closeModal()">Lukk</button>
+                </div>
             </div>
             <div id="modal-content-wrapper"
                 style="flex-grow: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; background: #000;">
@@ -2502,6 +2681,25 @@
                     Instagram for utvalgte bilder fra turene.</p>
             </div>
         </div>
+
+    </div>
+    </div>
+
+    <!-- ATTRIBUTION MODAL -->
+    <div id="attribution-modal"
+        style="display:none; position:fixed !important; top:0; left:0; width:100% !important; height:100% !important; background:rgba(0,0,0,0.85) !important; z-index:999999 !important; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); align-items:center; justify-content:center; pointer-events: auto !important;">
+        <div class="modal-container"
+            style="width:95% !important; height:92% !important; max-width:1400px; background:#111827; border:1px solid var(--accent-color); border-radius:16px; overflow:hidden; display:flex !important; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.8); pointer-events: auto !important;">
+            <div
+                style="padding:15px 25px; background:rgba(30,41,59,0.5); border-bottom:1px solid var(--glass-border); display:flex !important; justify-content:space-between; align-items:center;">
+                <span id="attribution-modal-title"
+                    style="font-weight:700; color:var(--accent-color); font-size:1.1rem; letter-spacing:0.02em;">Kildedokumentasjon</span>
+                <button class="modal-back" onclick="window.closeAttributionModal()"
+                    style="background:#ef4444 !important; border:none; color:white !important; padding:6px 16px; border-radius:8px; cursor:pointer; font-weight:700; font-size:0.9rem; margin:0">Lukk</button>
+            </div>
+            <iframe id="attribution-iframe"
+                style="width:100%; flex-grow:1; border:none; background:white; pointer-events: auto !important;"></iframe>
+        </div>
     </div>
 
     <!-- SITE LIST MODAL -->
@@ -2522,21 +2720,6 @@
         </div>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-    <!-- Leaflet Grouped Layer Control JS/CSS (Must be after Leaflet) -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.css" />
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.js"></script>
-
-    <!-- Proj4 and Proj4Leaflet for CRS support (UTM32) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
-
-    <script src="viewer.js?v=<?php echo time(); ?>" charset="UTF-8"></script>
     <!-- PWA Install Button (Hidden by default) -->
     <button id="pwa-install-btn"
         style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #38bdf8; color: #0b0f19; border: none; padding: 12px 20px; border-radius: 30px; font-weight: 700; box-shadow: 0 4px 15px rgba(56,189,248,0.5); cursor: pointer; align-items: center; gap: 8px;">
@@ -2571,9 +2754,107 @@
         </div>
     </div>
 
+    <!-- UI Overlays (Relocated to bottom of body to fix stacking context issues) -->
+    <div id="mobile-slider-wrapper"></div>
+    <button id="mobile-toggle" onclick="toggleSidebar()" title="Vis/skjul meny">☰</button>
+    <button id="finish-tool-btn">✅ Ferdig</button>
+    <button id="install-app-btn">
+        <span id="install-btn-text">📲 Installer App</span>
+        <span class="install-close-x"
+            onclick="event.stopPropagation(); document.getElementById('install-app-btn').style.display='none';"
+            title="Skjul">✕</span>
+    </button>
+
+    <!-- Admin PIN Modal -->
+    <div id="admin-pin-modal" class="modal"
+        style="display:none; position:fixed; inset:0; z-index: 1000000; align-items:center; justify-content:center; background:rgba(0,0,0,0.8); backdrop-filter:blur(5px);">
+        <div class="modal-container"
+            style="width:300px; height:auto; padding:20px; background:#1f2937; border:1px solid #374151; border-radius:12px; display:flex; flex-direction:column; gap:15px; position:relative; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+            <button class="modal-close" onclick="closeAdminPinModal()"
+                style="position:absolute; top:10px; right:12px; padding:5px; background:transparent; border:none; color:white; font-size:1.2rem; cursor:pointer;">✕</button>
+            <h3 style="margin:0; text-align:center; color:white;">Admin Login</h3>
+            <input type="password" id="admin-pin-input-field" placeholder="PIN" inputmode="numeric"
+                style="padding:10px; border-radius:4px; border:1px solid #4b5563; background:#374151; color:white; width:100%; box-sizing:border-box; text-align:center; font-size:1.5rem; letter-spacing:5px;"
+                autofocus>
+            <button onclick="submitAdminPin()"
+                style="padding:10px; background:#38bdf8; border:none; border-radius:4px; color:#0b0f19; font-weight:bold; cursor:pointer; font-size:1rem;">Logg
+                Inn</button>
+        </div>
+    </div>
+
+    <div id="coord-search-container">
+        <button id="coord-picker-btn" title="Koordinathenter: Klikk i kartet for å hente koordinater">📍</button>
+        <button id="measure-btn"
+            title="Måleverktøy: Klikk flere punkter for å måle avstand og areal. Avslutt med dobbeltklikk.">📏</button>
+        <button id="elevation-btn"
+            title="Høydeprofil: Tegn en rute i kartet og dobbeltklikk for å se profil og stigning.">⛰️</button>
+        <div style="flex-grow: 1; position: relative; display: flex; align-items: center;">
+            <input type="text" id="coord-search-input" placeholder="Søk adresse eller koordinater..."
+                aria-label="Søk etter steder eller koordinater">
+            <div id="search-results-list"></div>
+        </div>
+        <div id="search-help-toggle"
+            style="cursor:pointer; margin: 0 5px; color: white; background: rgba(56, 189, 248, 0.4); border: 1px solid rgba(56, 189, 248, 0.6); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 15px; transition: all 0.2s; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);"
+            onclick="toggleSearchHelp()" title="Søke-hjelp">?</div>
+        <button id="coord-search-btn">🔍 Søk</button>
+    </div>
+
+    <div id="desktop-controls"
+        style="position: absolute; top: 20px; right: 20px; z-index: 2000; display: flex; gap: 10px;">
+        <div class="desktop-btn" id="desktop-map-btn" title="Velg kartlag">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                <line x1="8" y1="2" x2="8" y2="18"></line>
+                <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+            <span>Kart</span>
+        </div>
+        <div class="desktop-btn" id="desktop-flyfoto-btn" title="Historiske flyfoto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 2 L11 13"></path>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            <span>Flyfoto</span>
+        </div>
+    </div>
+
+    <div id="flyfoto-menu">
+        <div id="flyfoto-list"></div>
+    </div>
+
+    <div id="map-loader"
+        style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2000000; background: #111827; padding: 8px 16px; border-radius: 20px; display: none; align-items: center; gap: 10px; border: 1px solid var(--accent-color);">
+        <div class="spinner" style="width: 20px; height: 20px; border-width: 3px;"></div>
+        <span style="color: white; font-size: 0.85rem; font-weight: 600;">Henter eiendomsdata...</span>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-toolbar@0.4.0-alpha.2/dist/leaflet.toolbar.js"></script>
+    <script src="https://unpkg.com/leaflet-distortableimage@0.21.7/dist/vendor.js"></script>
+    <script src="https://unpkg.com/leaflet-distortableimage@0.21.7/dist/leaflet.distortableimage.js"></script>
+
+    <!-- Leaflet Grouped Layer Control JS/CSS (Must be after Leaflet) -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.css" />
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-groupedlayercontrol/0.6.1/leaflet.groupedlayercontrol.min.js"></script>
+
+    <!-- Proj4 and Proj4Leaflet for CRS support (UTM32) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
+
+    <script src="viewer.js?v=v119"></script>
+    <div id="version-tag"
+        style="display:block; position:fixed; bottom:5px; right:5px; color:rgba(255,255,255,0.03); font-size:8px; z-index:99999; font-family:sans-serif; pointer-events:none;">
+        v117</div>
+    <script>document.title = document.title.replace(/\[v\d+\]\s*/, '');</script>
+    <script src="admin_tools.js?v=2" charset="UTF-8"></script>
     <!-- PWA Install Logic -->
     <script>
-        // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')

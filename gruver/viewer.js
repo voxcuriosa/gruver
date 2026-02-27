@@ -1446,6 +1446,7 @@ function initMap() {
     // --- LAZY LOADING AV MARKØRER ---
     map.on('moveend', () => debounce(updateVisibleMarkers, 200)());
     map.on('zoomend', () => debounce(updateVisibleMarkers, 200)());
+    map.on('zoomend', updateMarkerSizes);
 
     // --- FIRST TIME WELCOME MODAL ---
     // Sjekk om dette er første gang brukeren besøker kartet på denne enheten
@@ -2508,6 +2509,25 @@ function focusSite(id) {
     }
 }
 
+
+// --- ZOOM-DEPENDENT MARKER SIZING ---
+// Returns a scale factor (0.5 to 1.0) based on current zoom level
+// To disable: simply return 1 from this function
+function getMarkerScale(zoom) {
+    const minZoom = 10, maxZoom = 16;
+    const minScale = 0.5, maxScale = 1.0;
+    if (zoom <= minZoom) return minScale;
+    if (zoom >= maxZoom) return maxScale;
+    return minScale + (maxScale - minScale) * (zoom - minZoom) / (maxZoom - minZoom);
+}
+
+function updateMarkerSizes() {
+    const scale = getMarkerScale(map.getZoom());
+    document.querySelectorAll('.emoji-marker').forEach(el => {
+        el.style.transform = 'scale(' + scale + ')';
+    });
+}
+
 function addMarker(site) {
     let marker;
     if (site.isLine) {
@@ -2516,7 +2536,7 @@ function addMarker(site) {
         handle.bindTooltip(`${site.name} (Tras\u00e9)`); handle.on('click', () => marker.openPopup());
         site.lineHandle = handle;
     } else {
-        const emojiIcon = L.divIcon({ className: 'emoji-marker', html: `<div style="color: ${site.category.color}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">${site.category.icon}</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+        const emojiIcon = L.divIcon({ className: 'emoji-marker', style: 'transition: transform 0.3s ease; transform: scale(' + getMarkerScale(map.getZoom()) + ')', html: `<div style="color: ${site.category.color}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">${site.category.icon}</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
         marker = L.marker([site.lat, site.lng], { icon: emojiIcon, interactive: true, riseOnHover: true });
     }
     marker.bindTooltip(`${site.displayName || site.name}<br><span style="font-size: 0.8em; color: #aaa;">${site.lat.toFixed(5)}, ${site.lng.toFixed(5)}</span>`, { direction: 'top', offset: [0, -20], opacity: 0.9, className: 'custom-tooltip' });

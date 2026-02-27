@@ -2561,8 +2561,8 @@ function getPopupHTML(site) {
         html += `<div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 5px; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px dashed #f59e0b;">
             <button onclick="map.closePopup()" style="padding: 8px; background: #f59e0b; border: 1px solid #f59e0b; color: #111827; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;">🎯 Flytt</button>
             <button onclick="editSiteLabel(${site.id})" style="padding: 8px; background: #111827; border: 1px solid #38bdf8; color: #38bdf8; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">✏️ Rediger</button>
-            <button onclick="hideSite('${site.name.replace(/'/g, "\\'")}', ${site.lat}, ${site.lng})" style="padding: 8px; background: #111827; border: 1px solid #f59e0b; color: #f59e0b; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">🙈 Skjul</button>
-            <button onclick="deleteSite('${site.name.replace(/'/g, "\\'")}', ${site.lat}, ${site.lng})" style="padding: 8px; background: #111827; border: 1px solid #ef4444; color: #ef4444; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">🗑️ Slett</button>
+                        <button onclick="hideSiteById(${site.id})" style="padding: 8px; background: #111827; border: 1px solid #f59e0b; color: #f59e0b; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">🙈 Skjul</button>
+                        <button onclick="deleteSiteById(${site.id})" style="padding: 8px; background: #111827; border: 1px solid #ef4444; color: #ef4444; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">🗑️ Slett</button>
         </div>`;
     }
 

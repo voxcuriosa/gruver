@@ -1447,6 +1447,7 @@ function initMap() {
     map.on('moveend', () => debounce(updateVisibleMarkers, 200)());
     map.on('zoomend', () => debounce(updateVisibleMarkers, 200)());
     map.on('zoomend', updateMarkerSizes); // Zoom-dependent marker sizing
+    map.on('moveend', updateMarkerSizes); // Also after lazy-load
 
     // --- FIRST TIME WELCOME MODAL ---
     // Sjekk om dette er første gang brukeren besøker kartet på denne enheten
@@ -2518,8 +2519,8 @@ var MARKER_ZOOM_SCALING_ENABLED = true;
 function getMarkerSize(zoom) {
     if (!MARKER_ZOOM_SCALING_ENABLED) return { size: 28, fontSize: 18 };
     var minZoom = 10, maxZoom = 16;
-    var minSize = 18, maxSize = 28;
-    var minFont = 10, maxFont = 18;
+    var minSize = 12, maxSize = 28;
+    var minFont = 6, maxFont = 18;
     if (zoom <= minZoom) return { size: minSize, fontSize: minFont };
     if (zoom >= maxZoom) return { size: maxSize, fontSize: maxFont };
     var t = (zoom - minZoom) / (maxZoom - minZoom);

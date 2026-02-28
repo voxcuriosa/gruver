@@ -2811,7 +2811,7 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
 
-    <script src="viewer.js?v=v121"></script>
+    <script src="viewer.js?v=v122"></script>
     <div id="version-tag"
         style="display:block; position:fixed; bottom:5px; right:5px; color:rgba(255,255,255,0.03); font-size:8px; z-index:99999; font-family:sans-serif; pointer-events:none;">
         v117</div>

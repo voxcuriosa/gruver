@@ -1446,7 +1446,7 @@ function initMap() {
     // --- LAZY LOADING AV MARKØRER ---
     map.on('moveend', () => debounce(updateVisibleMarkers, 200)());
     map.on('zoomend', () => debounce(updateVisibleMarkers, 200)());
-    map.on('zoomend', updateMarkerSizes);
+    map.on('zoomend', updateMarkerSizes); // Zoom-dependent marker sizing
 
     // --- FIRST TIME WELCOME MODAL ---
     // Sjekk om dette er første gang brukeren besøker kartet på denne enheten
@@ -2345,6 +2345,7 @@ async function loadData() {
 
         // Start lazy loading initielt
         updateVisibleMarkers();
+        updateMarkerSizes(); // Set initial marker sizes
 
         summarizeStats();
         displayDailyHighlight();
@@ -2510,21 +2511,34 @@ function focusSite(id) {
 }
 
 
-// --- ZOOM-DEPENDENT MARKER SIZING ---
-// Returns a scale factor (0.5 to 1.0) based on current zoom level
-// To disable: simply return 1 from this function
-function getMarkerScale(zoom) {
-    const minZoom = 10, maxZoom = 16;
-    const minScale = 0.5, maxScale = 1.0;
-    if (zoom <= minZoom) return minScale;
-    if (zoom >= maxZoom) return maxScale;
-    return minScale + (maxScale - minScale) * (zoom - minZoom) / (maxZoom - minZoom);
+// --- ZOOM-DEPENDENT MARKER SIZING (v2) ---
+// To disable entirely: set MARKER_ZOOM_SCALING_ENABLED = false
+var MARKER_ZOOM_SCALING_ENABLED = true;
+
+function getMarkerSize(zoom) {
+    if (!MARKER_ZOOM_SCALING_ENABLED) return { size: 28, fontSize: 18 };
+    var minZoom = 10, maxZoom = 16;
+    var minSize = 18, maxSize = 28;
+    var minFont = 10, maxFont = 18;
+    if (zoom <= minZoom) return { size: minSize, fontSize: minFont };
+    if (zoom >= maxZoom) return { size: maxSize, fontSize: maxFont };
+    var t = (zoom - minZoom) / (maxZoom - minZoom);
+    return {
+        size: Math.round(minSize + (maxSize - minSize) * t),
+        fontSize: Math.round(minFont + (maxFont - minFont) * t)
+    };
 }
 
 function updateMarkerSizes() {
-    const scale = getMarkerScale(map.getZoom());
-    document.querySelectorAll('.emoji-marker').forEach(el => {
-        el.style.transform = 'scale(' + scale + ')';
+    if (!MARKER_ZOOM_SCALING_ENABLED) return;
+    var ms = getMarkerSize(map.getZoom());
+    document.querySelectorAll('.emoji-marker').forEach(function(el) {
+        el.style.width = ms.size + 'px';
+        el.style.height = ms.size + 'px';
+        el.style.marginLeft = (-ms.size / 2) + 'px';
+        el.style.marginTop = (-ms.size / 2) + 'px';
+        var inner = el.querySelector('div');
+        if (inner) inner.style.fontSize = ms.fontSize + 'px';
     });
 }
 
@@ -2536,7 +2550,7 @@ function addMarker(site) {
         handle.bindTooltip(`${site.name} (Tras\u00e9)`); handle.on('click', () => marker.openPopup());
         site.lineHandle = handle;
     } else {
-        const emojiIcon = L.divIcon({ className: 'emoji-marker', style: 'transition: transform 0.3s ease; transform: scale(' + getMarkerScale(map.getZoom()) + ')', html: `<div style="color: ${site.category.color}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">${site.category.icon}</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+        const emojiIcon = L.divIcon({ className: 'emoji-marker', html: `<div style="color: ${site.category.color}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">${site.category.icon}</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
         marker = L.marker([site.lat, site.lng], { icon: emojiIcon, interactive: true, riseOnHover: true });
     }
     marker.bindTooltip(`${site.displayName || site.name}<br><span style="font-size: 0.8em; color: #aaa;">${site.lat.toFixed(5)}, ${site.lng.toFixed(5)}</span>`, { direction: 'top', offset: [0, -20], opacity: 0.9, className: 'custom-tooltip' });

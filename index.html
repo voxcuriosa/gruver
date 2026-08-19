@@ -2,20 +2,58 @@
 <html lang="no">
 
 <head>
+    <!-- v1.0.1 - voxkunnskap linked -->
+    <!-- Anti-Cache Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Global site tag (gtag.js) - Google Analytics (Conditionally loaded) -->
+    <script id="gtag-init"></script>
+    <script>
+        function loadGA() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-YYPRYXPN70";
+            document.head.appendChild(script);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-YYPRYXPN70');
+            console.log("Google Analytics loaded.");
+        }
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoxCuriosa - Utforsk Nysgjerrigheten</title>
 
-    <!-- PWA Meta Tags -->
+    <!-- SEO & Social Media -->
     <meta name="description"
         content="VoxCuriosa: Utforsk nysgjerrigheten din! En portal for interaktive kart over gruver i Skiensmarka, historie-quizer, retro spill og læringsressurser.">
-    <meta name="google-site-verification" content="OotJN4Z_uvC4h2EfwEqHmBu0p5zr16j5DYWKBHWqZHM" />
     <meta name="keywords"
-        content="Skien, Gruver, Skiensmarka, Historie, Quiz, Kart, VoxCuriosa, Telemark, Gruvevandring">
+        content="Skien, Gruver, Skiensmarka, Historie, Quiz, Kart, VoxCuriosa, Telemark, Gruvevandring, Christian Borchgrevink-Vigeland">
     <meta name="author" content="Christian Borchgrevink-Vigeland">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://voxcuriosa.no/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://voxcuriosa.no/">
+    <meta property="og:title" content="VoxCuriosa - Utforsk Nysgjerrigheten">
+    <meta property="og:description" content="Interaktive kart over gruver, historie-quizer, spill og læringsressurser.">
+    <meta property="og:image" content="https://voxcuriosa.no/icon-512.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://voxcuriosa.no/">
+    <meta property="twitter:title" content="VoxCuriosa - Utforsk Nysgjerrigheten">
+    <meta property="twitter:description"
+        content="Interaktive kart over gruver, historie-quizer, spill og læringsressurser.">
+    <meta property="twitter:image" content="https://voxcuriosa.no/icon-512.png">
+
     <meta name="theme-color" content="#00f2ff">
-    <link rel="canonical" href="https://www.voxcuriosa.no/">
     <link rel="manifest" href="/manifest.json">
 
     <!-- Favicons -->
@@ -191,10 +229,183 @@
                 gap: 15px;
             }
         }
+
+        /* Donation Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #111216;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-content h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .pay-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            margin-top: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s, filter 0.2s;
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .stripe-btn {
+            background: #635bff;
+        }
+
+        .vipps-btn {
+            background: #ff5b24;
+            color: white !important;
+        }
+
+        /* Cookie Consent Styles */
+        .cookie-banner {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(18, 20, 25, 0.95);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 20px;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .cookie-banner.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .cookie-content h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cookie-content p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .cookie-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .cookie-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .cookie-btn.accept {
+            background: var(--primary);
+            color: #0a0b0d;
+        }
+
+        .cookie-btn.decline {
+            background: rgba(255, 255, 255, 0.05);
+            color: #aaa;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cookie-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        @media (max-width: 600px) {
+            .cookie-banner {
+                bottom: 15px;
+                padding: 20px;
+            }
+
+            .cookie-actions {
+                flex-direction: column;
+            }
+
+            .cookie-btn {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <a href="/history/admin_visit_stats.php"
+        style="position: fixed; top: 15px; right: 15px; opacity: 0.6; color: rgba(255,255,255,0.7); font-size: 0.8rem; text-decoration: none; z-index: 999999; font-weight: 800; letter-spacing: 0.05em; padding: 5px; border-radius: 4px; background: rgba(0,0,0,0.2);">Stats</a>
     <div class="blob"></div>
     <div class="hero">
         <h1>Vox<span></span>Curiosa</span></h1>
@@ -202,21 +413,51 @@
     </div>
 
     <div class="grid">
-        <!-- Snake -->
-        <a href="/snake/" class="card">
+        <!-- Kunnskap - Historie -->
+        <a href="https://curiosa.no" class="card" onclick="logAppVisit('voxkunnskap')" target="_blank">
             <div class="card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="4" ry="4"></rect>
-                    <path d="M8 12h4m2 0h2m-6 4h.01M9 8h6"></path>
-                    <path d="M10 16a2 2 0 1 0 4 0"></path>
-                    <!-- Abstract snake/game shape -->
-                    <path d="M8 13a2 2 0 1 0 4 0 2 2 0 0 0 -4 0" fill="currentColor" opacity="0.3"></path>
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                 </svg>
             </div>
-            <h2>Neon Snake</h2>
-            <p>Den klassiske slangen i en moderne, fargerik drakt. Spill alene eller utfordre venner!</p>
-            <span class="btn" onclick="logAppVisit('snake')">SPILL NÅ →</span>
+            <h2>Curiosa</h2>
+            <p>AI-assistert læringsplattform som lar lærere enkelt forvandle valgfritt kildemateriale til skreddersydde og interaktive oppgaver for elevene sine.</p>
+            <span class="btn">GÅ TIL CURIOSA →</span>
+        </a>
+
+        <!-- Gruver i Skien / Skiensmarka -->
+        <a href="gruver/index.php" class="card" onclick="logAppVisit('gruver')">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21 3 6"></polygon>
+                    <line x1="9" y1="3" x2="9" y2="18"></line>
+                    <line x1="15" y1="6" x2="15" y2="21"></line>
+                </svg>
+            </div>
+            <h2>Skiensmarka</h2>
+            <p>Utforsk gruver, skjerp, bygdeborger og andre kulturminner i Skiensmarka. Se bilder og info fra mine
+                turer.</p>
+            <span class="btn">SE KARTET →</span>
+        </a>
+
+
+        <!-- Roma -->
+        <a href="roma/index.html" class="card" onclick="logAppVisit('roma')">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                    <path d="M2 12h20"></path>
+                </svg>
+            </div>
+            <h2>Roma</h2>
+            <p>Utforsk det antikke Roma gjennom dette interaktive kartet. Se bygninger, infrastruktur og kulturminner.
+            </p>
+            <span class="btn">SE KARTET →</span>
         </a>
 
         <!-- History Quiz -->
@@ -230,7 +471,7 @@
             </div>
             <h2>History Quiz</h2>
             <p>Test dine kunnskaper om historiens største begivenheter. Klarer du alle merkene?</p>
-            <span class="btn" onclick="logAppVisit('history')">START QUIZ →</span>
+            <span class="btn" onclick="logAppVisit('historyquiz')">START QUIZ →</span>
         </a>
 
         <!-- Historienotater -->
@@ -247,20 +488,21 @@
             <span class="btn">LES NOTATER →</span>
         </a>
 
-        <!-- Gruver i Skien -->
-        <a href="gruver/index.php" class="card" onclick="logAppVisit('gruver')">
+        <!-- Snake -->
+        <a href="/snake/" class="card">
             <div class="card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21 3 6"></polygon>
-                    <line x1="9" y1="3" x2="9" y2="18"></line>
-                    <line x1="15" y1="6" x2="15" y2="21"></line>
+                    <rect x="2" y="2" width="20" height="20" rx="4" ry="4"></rect>
+                    <path d="M8 12h4m2 0h2m-6 4h.01M9 8h6"></path>
+                    <path d="M10 16a2 2 0 1 0 4 0"></path>
+                    <!-- Abstract snake/game shape -->
+                    <path d="M8 13a2 2 0 1 0 4 0 2 2 0 0 0 -4 0" fill="currentColor" opacity="0.3"></path>
                 </svg>
             </div>
-            <h2>Skiensmarka</h2>
-            <p>Utforsk gruver, skjerp, bygdeborger og andre kulturminner i Skiensmarka. Se bilder og info fra mine
-                turer.</p>
-            <span class="btn">SE KARTET →</span>
+            <h2>Neon Snake</h2>
+            <p>Den klassiske slangen i en moderne, fargerik drakt. Spill alene eller utfordre venner!</p>
+            <span class="btn" onclick="logAppVisit('snake')">SPILL NÅ →</span>
         </a>
 
         <!-- LMGTFY -->
@@ -293,6 +535,21 @@
             <span class="btn" onclick="logAppVisit('flervalgsgenerator')">ÅPNE APP →</span>
         </a>
 
+        <!-- Læringsanimator -->
+        <a href="/animator/" class="card">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+            </div>
+            <h2>Læringsanimator</h2>
+            <p>Transformer tekst og PDF til interaktive 3D-animasjoner, tidslinjer og simuleringslaboratorier for samfunnsfag og historie.</p>
+            <span class="btn" onclick="logAppVisit('animator')">ÅPNE ANIMATOR →</span>
+        </a>
+
         <!-- SRT/VTT Oversetter -->
         <a href="/translator/" class="card">
             <div class="card-icon">
@@ -319,38 +576,54 @@
                 </svg>
             </div>
             <h2>Karakterutregner</h2>
-            <p>Bergen karakterer basert på poengsummer. Enkel og nøyaktig utregning. Krever PIN.</p>
+            <p>Beregn karakterer basert på poengsummer. Enkel og nøyaktig utregning. Krever PIN.</p>
             <span class="btn" onclick="logAppVisit('grades')">ÅPNE UTREGNER →</span>
         </a>
 
         <!-- Energy Monitor -->
 
-        <a href="https://cbvenergy.streamlit.app/" class="card" target="_blank">
+        <a href="/okonomi/" class="card" target="_blank">
             <div class="card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg>
             </div>
-            <h2>Energy Monitor</h2>
-            <p>Overvåk energiforbruk og strømpriser med sanntidsdata. (Privat app)</p>
+            <h2>Økonomi</h2>
+            <p>Din personlige økonomiske oversikt over portefølje og energiforbruk. (Privat app)</p>
             <span class="btn" onclick="logAppVisit('energy')">ÅPNE APP →</span>
         </a>
 
 
 
-        <!-- Kunnskap - Historie -->
-        <a href="/Kunnskap/" class="card" onclick="logAppVisit('kunnskap')">
+
+        <!-- Doner / Støtt prosjektet -->
+        <a href="#" class="card" onclick="openDonationModal(); return false;">
             <div class="card-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                    </path>
                 </svg>
             </div>
-            <h2>Kunnskap</h2>
-            <p>Historie På Tvers. Læringsstier og gamified oppgaver. (Krever kode)</p>
-            <span class="btn">GÅ TIL LÆRING →</span>
+            <h2>Støtt VoxCuriosa</h2>
+            <p>Liker du det du ser? Bidra gjerne med en liten donasjon for å holde serveren i gang!</p>
+            <span class="btn">GI ET BIDRAG →</span>
+        </a>
+
+        <!-- Vox IQ -->
+        <a href="/iq/" class="card" onclick="logAppVisit('iq')">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <circle cx="12" cy="11" r="3"></circle>
+                </svg>
+            </div>
+            <h2>Vox IQ</h2>
+            <p>Test din reaksjonsevne, logiske sans og hukommelse. Hvor høy score får du?</p>
+            <span class="btn">TA TESTEN →</span>
         </a>
 
         <!-- Coming Soon -->
@@ -368,18 +641,103 @@
         </div>
     </div>
 
-    <!-- PWA Install Button (Hidden by default) -->
-    <button id="pwa-install-btn"
-        style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #00f2ff; color: #0a0b0d; border: none; padding: 15px 30px; border-radius: 50px; font-weight: 800; box-shadow: 0 0 20px rgba(0, 242, 255, 0.6); cursor: pointer; align-items: center; gap: 10px; font-family: 'Outfit', sans-serif; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s;">
-        <span style="font-size: 1.4rem;">⬇️</span> INSTALLER APP
-    </button>
+    <!-- PWA Install Toast (Hidden by default) -->
+    <div id="pwa-toast"
+        style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #00f2ff; color: #0a0b0d; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); font-family: 'Outfit', sans-serif; align-items: center; overflow: hidden; transition: transform 0.3s ease, opacity 0.3s ease; transform: translateY(100px); opacity: 0;">
+        <button id="pwa-install-btn"
+            style="background: none; border: none; padding: 10px 15px; color: #0a0b0d; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+            <span style="font-size: 1.1rem;">⬇️</span> Installer App
+        </button>
+        <button id="pwa-close-btn"
+            style="background: rgba(0,0,0,0.1); border: none; padding: 10px 12px; color: #0a0b0d; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s;"
+            onclick="hidePwaPrompt()">
+            &times;
+        </button>
+    </div>
+
+    <!-- Donation Modal Structure -->
+    <div id="donationModal" class="modal-overlay" onclick="if(event.target === this) closeDonationModal()">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDonationModal()">&times;</button>
+            <p style="margin-bottom: 5px; margin-top: 20px;">Tusen takk for støtten!</p>
+
+            <a href="https://qr.vipps.no/box/c3a7d2c3-c538-4da2-9cc9-7f87e92a25c9/pay-in" class="pay-btn vipps-btn"
+                target="_blank" onclick="logAppVisit('doner_vipps'); closeDonationModal()">
+                📱 Betal med Vipps
+            </a>
+
+            <p style="font-size: 0.9rem; color: #ccc; margin-top: 20px; line-height: 1.4; margin-bottom: 20px;">
+                Eller vipps direkte til mobilnr: <strong style="color: #ff5b24; white-space: nowrap;">40 20 22 22</strong>
+            </p>
+
+            <div style="margin-top: 20px; display: flex; justify-content: center;">
+                <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+                <script type='text/javascript'>
+                    kofiwidget2.init('Støtt meg på Ko-fi', '#72a4f2', 'A1U22089L6');
+                    kofiwidget2.draw();
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="cookie-content">
+            <h4><span>🍪</span> Informasjonskapsler</h4>
+            <p>Vi bruker informasjonskapsler for å analysere trafikk og forbedre din opplevelse på VoxCuriosa. Du kan
+                velge å godta eller avslå valgfri sporing.</p>
+        </div>
+        <div class="cookie-actions">
+            <button class="cookie-btn decline" onclick="setCookieConsent(false)">Kun nødvendige</button>
+            <button class="cookie-btn accept" onclick="setCookieConsent(true)">Godta alle</button>
+        </div>
+    </div>
 
     <!-- Service Worker Registration & PWA Logic -->
     <script>
-        function logAppVisit(appName) {
+        // Modal Logic
+        function openDonationModal() {
+            document.getElementById('donationModal').classList.add('active');
+        }
+
+        function closeDonationModal() {
+            document.getElementById('donationModal').classList.remove('active');
+        }
+
+        function getVisitorId() {
+            let id = localStorage.getItem('vox_visitor_id');
+            if (!id) {
+                id = 'v-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('vox_visitor_id', id);
+            }
+            return id;
+        }
+
+        async function logAppVisit(appName) {
+            let currentCountry = 'Unknown';
+            try {
+                const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: "force-cache" });
+                if (geoRes.ok) {
+                    const geoData = await geoRes.json();
+                    if (geoData && geoData.country) currentCountry = geoData.country;
+                } else throw new Error("geojs not ok");
+            } catch (e) {
+                try {
+                    const fbRes = await fetch('https://api.country.is/', { cache: "force-cache" });
+                    if (fbRes.ok) {
+                        const fbData = await fbRes.json();
+                        if (fbData && fbData.country) currentCountry = fbData.country;
+                    }
+                } catch (fbErr) {
+                    console.warn("Geoloc fetch failed", fbErr);
+                }
+            }
+
             const payload = {
                 action: 'log_visit',
                 app: appName,
+                visitor_id: getVisitorId(),
+                country: currentCountry,
                 device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
                 screen_resolution: window.screen.width + "x" + window.screen.height,
                 referrer: document.referrer || 'Direct',
@@ -396,34 +754,78 @@
         // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js?v=7')
+                navigator.serviceWorker.register('/sw.js?v=8')
                     .then(reg => console.log('Service Worker registered:', reg))
                     .catch(err => console.log('Service Worker registration failed:', err));
             });
         }
 
+        // Cookie Consent Logic
+        function checkCookieConsent() {
+            const consent = localStorage.getItem('vox_cookie_consent');
+            const banner = document.getElementById('cookieBanner');
+
+            if (consent === null) {
+                setTimeout(() => {
+                    banner.classList.add('active');
+                }, 1000);
+            } else if (consent === 'true') {
+                loadGA();
+            }
+        }
+
+        function setCookieConsent(accepted) {
+            localStorage.setItem('vox_cookie_consent', accepted);
+            document.getElementById('cookieBanner').classList.remove('active');
+            if (accepted) {
+                loadGA();
+            }
+        }
+
+        // Run checks on load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkCookieConsent();
+        });
+
         // PWA Install Logic
         let deferredPrompt;
+        const pwaToast = document.getElementById('pwa-toast');
         const installBtn = document.getElementById('pwa-install-btn');
+
+        function hidePwaPrompt() {
+            pwaToast.style.transform = 'translateY(100px)';
+            pwaToast.style.opacity = '0';
+            setTimeout(() => pwaToast.style.display = 'none', 300);
+            localStorage.setItem('vox_hide_pwa', 'true');
+        }
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installBtn.style.display = 'flex';
+
+            if (localStorage.getItem('vox_hide_pwa') !== 'true') {
+                pwaToast.style.display = 'flex';
+                // Small delay to allow display:flex to apply before animating
+                setTimeout(() => {
+                    pwaToast.style.transform = 'translateY(0)';
+                    pwaToast.style.opacity = '1';
+                }, 10);
+            }
         });
 
         installBtn.addEventListener('click', (e) => {
-            installBtn.style.display = 'none';
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the A2HS prompt');
-                }
-                deferredPrompt = null;
-            });
+            hidePwaPrompt();
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
         });
     </script>
-
 </body>
 
 </html>

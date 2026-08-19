@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedagogisk Læringsanimator - VoxCuriosa</title>
+    <meta name="description" content="Transformer kildetekst og PDF til avanserte interaktive grafiske 3D/2D animasjoner for historie og samfunnsfag.">
+    
+    <!-- Anti-Cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Three.js CDN for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- PDF.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        if (window.pdfjsLib) {
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        }
+    </script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <header class="app-header">
+            <a href="../index.html" class="back-link">← Tilbake til Portalen</a>
+            <div class="header-badge">✨ Pedagogisk AI & 3D/2D Animasjon</div>
+            <h1 class="main-title">Pedagogisk <span>Læringsanimator</span></h1>
+            <p class="main-desc">Lim inn tekster eller last opp PDF innen samfunnsfag, historie eller naturfag. Systemet analyserer årsakssammenhenger og genererer avanserte grafiske 3D-animasjoner, tidslinjer og simuleringslaboratorier.</p>
+        </header>
+
+        <!-- Input & Configuration Card -->
+        <section class="input-card">
+            <div class="input-card-header">
+                <div class="presets-wrapper">
+                    <label for="preset-select">Velg ferdig fagtekst:</label>
+                    <select id="preset-select" class="custom-select"></select>
+                </div>
+                <div class="upload-wrapper">
+                    <label for="file-input" class="upload-btn">
+                        📁 Last opp PDF / Tekstfil
+                    </label>
+                    <input type="file" id="file-input" accept=".pdf,.txt" style="display: none;">
+                </div>
+            </div>
+
+            <div id="file-name-display" class="file-name-info"></div>
+
+            <div class="textarea-container">
+                <textarea id="input-text" placeholder="Lim inn kildetekst her... (f.eks. et kapittel om 1814, Den franske revolusjon, maktfordeling eller internasjonale kriser)"></textarea>
+            </div>
+
+            <div class="action-bar">
+                <button id="generate-btn" class="primary-btn">
+                    🚀 Generer Interaktiv Animasjon
+                </button>
+            </div>
+        </section>
+
+        <!-- Results & Animation Section -->
+        <section id="results-section" class="results-section">
+            <!-- Dynamic Metadata Bar -->
+            <div class="metadata-banner">
+                <div class="meta-left">
+                    <span id="theme-category" class="category-pill">Historie & Samfunnsfag</span>
+                    <h2 id="theme-title" class="theme-heading">1814 & Den norske Grunnloven</h2>
+                    <p id="theme-subtitle" class="theme-sub">Fra Kielfreden til Eidsvoll og selvstendighet</p>
+                </div>
+                <div class="meta-right">
+                    <span id="theme-stats" class="meta-stats">280 ord • ~2 min lesetid</span>
+                </div>
+            </div>
+
+            <!-- View Mode Tabs -->
+            <nav class="view-tabs">
+                <button class="tab-btn active" data-tab="scene">🎬 1. Scene & Storyboard</button>
+                <button class="tab-btn" data-tab="timeline">⏳ 2. Interaktiv Tidslinje</button>
+                <button class="tab-btn" data-tab="network">🕸️ 3. Aktør- & Begrepsnettverk</button>
+                <button class="tab-btn" data-tab="lab">🎛️ 4. Simuleringslab & Læringssjekk</button>
+            </nav>
+
+            <!-- Tab 1: Storyboard & Scene Visualizer -->
+            <div id="scene-tab-pane" class="tab-content active">
+                <div class="viewer-card" id="storyboard-viewer-card">
+                    
+                    <div class="render-mode-toggle">
+                        <span class="toggle-label">Visningsmodus:</span>
+                        <button id="mode-3d-btn" class="mode-btn active">🌐 3D Holo-Scene</button>
+                        <button id="mode-2d-btn" class="mode-btn">🎨 2D Vektor-Scene</button>
+                    </div>
+
+                    <div class="canvas-wrapper">
+                        <!-- 3D Container -->
+                        <div id="scene-3d-container" class="scene-3d-view"></div>
+                        <!-- 2D Canvas -->
+                        <canvas id="scene-canvas" class="scene-2d-view hidden"></canvas>
+                    </div>
+
+                    <div class="playback-toolbar">
+                        <button id="prev-step-btn" class="ctrl-btn">⏮ Forrige</button>
+                        <button id="play-pause-btn" class="ctrl-btn play-btn">▶ Spill av</button>
+                        <button id="next-step-btn" class="ctrl-btn">Neste ⏭</button>
+
+                        <div class="speed-wrapper">
+                            <label for="speed-select">Fart:</label>
+                            <select id="speed-select" class="mini-select">
+                                <option value="0.5">0.5x</option>
+                                <option value="1.0" selected>1.0x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="2.0">2.0x</option>
+                            </select>
+                        </div>
+
+                        <button id="speak-narrative-btn" class="ctrl-btn speak-ctrl">🔊 Les opp</button>
+                        <button id="fullscreen-btn" class="ctrl-btn">⛶ Fullskjerm</button>
+                    </div>
+
+                    <div class="narrative-box">
+                        <div id="story-step-label" class="step-badge">Steg 1: Bakgrunn</div>
+                        <p id="story-narrative" class="narrative-text">Laster fortelling...</p>
+                        <div id="story-prompt" class="pedagogical-callout">
+                            <strong>💡 Pedagogisk refleksjon:</strong> Hvilke årsaker skapte denne situasjonen?
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Timeline View -->
+            <div id="timeline-tab-pane" class="tab-content">
+                <div id="timeline-container" class="timeline-container"></div>
+            </div>
+
+            <!-- Tab 3: Concept & Actor Network -->
+            <div id="network-tab-pane" class="tab-content">
+                <div class="network-card">
+                    <div class="network-header">
+                        <h3>Interaktivt Konsept- og Aktørnettverk</h3>
+                        <p>Dra og flytt i nodene for å utforske dynamikken mellom aktører, institusjoner og nøkkelbegreper.</p>
+                    </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="network-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4: Simulation Lab -->
+            <div id="lab-tab-pane" class="tab-content">
+                <div id="lab-container" class="lab-container"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>VoxCuriosa Pedagogisk Læringsanimator • Utviklet for dyp læring, historie og samfunnsfag</p>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loading-text">Behandler pedagogisk data...</p>
+    </div>
+
+    <!-- App Scripts (ES Modules) -->
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

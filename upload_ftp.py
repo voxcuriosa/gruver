@@ -51,11 +51,13 @@ if __name__ == "__main__":
 
         base_remote = f"{REMOTE_DIR_BASE}/{remote_subdir}".strip("/")
         
-        # If uploading a directory, we need to append the directory name to remote path unless it's root
+        # If local_target ends with a slash or is '.', upload contents directly
+        # Otherwise, create the directory on remote
         if os.path.isdir(local_target):
-             final_remote = f"{base_remote}/{os.path.basename(local_target)}".strip("/")
-             # Check if we want to merge contents or put dir inside. The simple way is:
-             # python upload_ftp.py notebooks -> public_html/notebooks
+             if local_target.endswith('/') or local_target.endswith('\\') or local_target == '.':
+                 final_remote = base_remote
+             else:
+                 final_remote = f"{base_remote}/{os.path.basename(local_target)}".strip("/")
              upload_path(local_target, final_remote, ftp)
         else:
              final_remote = f"{base_remote}/{os.path.basename(local_target)}".strip("/")

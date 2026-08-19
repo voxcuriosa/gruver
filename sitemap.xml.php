@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/xml; charset=utf-8");
 
-$base_url = "https://www.voxcuriosa.no/";
+$base_url = "https://voxcuriosa.no/";
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

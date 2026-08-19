@@ -1979,7 +1979,7 @@ ligger i grenda. (Kilde Stein Finmarks masteroppgave. Se link for mer info) </v
     </Placemark>
     <Placemark>
       <name>Århus sluse</name>
-      <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ALCsBoo4wfjX199t4XzXCgVOya-HLWYc8ZD5EHqQOF6xp_qwtoDrd-Rb23PpFc3a7ZGNzlmhoouOdp5f-j-manSB4FJp3TTOrZo0r2XAWuu50dndGVI5hjEDIPn6o6NZNv1v_hunFlyapqiNGMtGd54twRxeoTxDuDA43FSFHh2huno1mg3KzlH3DQYjYvxOa_0TsnonYFOzwIIrJhE?fife=s16383" height="200" width="auto" /><br><br>Posisjon: 59.2253939, 9.572125<br>Informasjon: Sluseanlegget var del av Løvenskiold Fossums kanalanlegg.<br>Nettside: http://kanaler.arnholm.nu/skandinavien/norge/fossums.shtml]]></description>
+      <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3ALCsBoo4wfjX199t4XzXCgVOya-HLWYc8ZD5EHqQOF6xp_qwtoDrd-Rb23PpFc3a7ZGNzlmhoouOdp5f-j-manSB4FJp3TTOrZo0r2XAWuu50dndGVI5hjEDIPn6o6NZNv1v_hunFlyapqiNGMtGd54twRxeoTxDuDA43FSFHh2huno1mg3KzlH3DQYjYvxOa_0TsnonYFOzwIIrJhE?fife=s16383" height="200" width="auto" /><br><br>Posisjon: 59.2253939, 9.572125<br>Informasjon: Sluseanlegget var del av Løvenskiold Fossums kanalanlegg.]]></description>
       <styleUrl>#icon-1899-0288D1-labelson</styleUrl>
       <ExtendedData>
         <Data name="Posisjon">
@@ -1989,7 +1989,7 @@ ligger i grenda. (Kilde Stein Finmarks masteroppgave. Se link for mer info) </v
           <value>Sluseanlegget var del av Løvenskiold Fossums kanalanlegg.</value>
         </Data>
         <Data name="Nettside">
-          <value>http://kanaler.arnholm.nu/skandinavien/norge/fossums.shtml</value>
+          <value>kanalanlegg_utf8.html</value>
         </Data>
         <Data name="gx_media_links">
           <value>https://mymaps.usercontent.google.com/hostedimage/m/*/3ALCsBoo4wfjX199t4XzXCgVOya-HLWYc8ZD5EHqQOF6xp_qwtoDrd-Rb23PpFc3a7ZGNzlmhoouOdp5f-j-manSB4FJp3TTOrZo0r2XAWuu50dndGVI5hjEDIPn6o6NZNv1v_hunFlyapqiNGMtGd54twRxeoTxDuDA43FSFHh2huno1mg3KzlH3DQYjYvxOa_0TsnonYFOzwIIrJhE?fife=s16383</value>
@@ -2003,7 +2003,7 @@ ligger i grenda. (Kilde Stein Finmarks masteroppgave. Se link for mer info) </v
     </Placemark>
     <Placemark>
       <name>Kutterød sluse</name>
-      <description><![CDATA[Posisjon: 59.2602457, 9.5682197<br>Informasjon: Sluseanlegget var del av Løvenskiold Fossums kanalanlegg.<br>Nettside: http://kanaler.arnholm.nu/skandinavien/norge/fossums.shtml]]></description>
+      <description><![CDATA[Posisjon: 59.2602457, 9.5682197<br>Informasjon: Sluseanlegget var del av Løvenskiold Fossums kanalanlegg.]]></description>
       <styleUrl>#icon-1899-0288D1-labelson</styleUrl>
       <ExtendedData>
         <Data name="Posisjon">
@@ -2013,7 +2013,7 @@ ligger i grenda. (Kilde Stein Finmarks masteroppgave. Se link for mer info) </v
           <value>Sluseanlegget var del av Løvenskiold Fossums kanalanlegg.</value>
         </Data>
         <Data name="Nettside">
-          <value>http://kanaler.arnholm.nu/skandinavien/norge/fossums.shtml</value>
+          <value>kanalanlegg_utf8.html</value>
         </Data>
       </ExtendedData>
       <Point>

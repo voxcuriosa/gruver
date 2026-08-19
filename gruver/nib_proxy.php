@@ -6,7 +6,13 @@ error_reporting(E_ALL);
 
 // --- CONFIGURATION ---
 $geoid_user = 'uhjalmarjohansen_vigchr';
-$geoid_pass = 'tw2!eFhkkZBAZrt';
+
+// PASSORD FOR 'nib-prosjekter' (WMS / Historiske) - Oppdatert 19.02.2026
+$pass_wms = 'fT4dKsmcxXdEmQMG';
+
+// PASSORD FOR 'nib' (WMTS / Token API) - Gammelt passord virker fortsatt her!
+$pass_token = 'tw2!eFhkkZBAZrt';
+
 $token_url = 'https://backend-api.klienter-prod-k8s2.norgeibilder.no/token/tilecache';
 $token_file = sys_get_temp_dir() . '/nib_token_cache_v3.json';
 
@@ -66,14 +72,15 @@ function getToken($user, $pass, $url, $file)
 $svc = $_GET['svc'] ?? 'nib';
 
 // 1. Get Token (only needed for modern WMTS orthophotos)
+// Bruk GAMMELT passord for Token API
 $token = null;
 if ($svc === 'nib') {
-    $token = getToken($geoid_user, $geoid_pass, $token_url, $token_file);
+    $token = getToken($geoid_user, $pass_token, $token_url, $token_file);
 }
 
 // 2. Determine Service Target
 if ($svc === 'nib-prosjekter') {
-    // Legacy WMS for historical aerial photo projects (uses basic auth)
+    // Legacy WMS for historical aerial photo projects (uses new password)
     $baseUrl = 'https://wms.geonorge.no/skwms1/wms.nib-prosjekter';
     $useBasicAuth = true;
 } else {
@@ -99,11 +106,18 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-curl_setopt($ch, CURLOPT_USERAGENT, 'VoxPortal/1.0');
+curl_setopt($ch, CURLOPT_ENCODING, ""); // Handle gzip/deflate
+curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1); // Force HTTP/1.1 to avoid stream errors
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+// DNS BYPASS for wms.geonorge.no (Fix for 159.162.23.149 firewall issue 19.02.2026)
+if (strpos($targetUrl, 'wms.geonorge.no') !== false) {
+    curl_setopt($ch, CURLOPT_RESOLVE, array("wms.geonorge.no:443:159.162.23.149"));
+}
 
 if ($useBasicAuth) {
-    // Legacy servers often check IP + Basic Auth
-    curl_setopt($ch, CURLOPT_USERPWD, "$geoid_user:$geoid_pass");
+    // Legacy servers often check IP + Basic Auth (NEW PASSWORD)
+    curl_setopt($ch, CURLOPT_USERPWD, "$geoid_user:$pass_wms");
     curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
     curl_setopt($ch, CURLOPT_REFERER, 'https://www.norgeibilder.no/');
 } else {
@@ -114,6 +128,7 @@ if ($useBasicAuth) {
 $data = curl_exec($ch);
 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+$error = curl_error($ch);
 curl_close($ch);
 
 // 5. Return Response
@@ -122,9 +137,15 @@ if ($code == 200) {
     echo $data;
 } else {
     http_response_code($code ?: 500);
-    // Silent fail for tiles to avoid broken UI
-    if (strpos($type, 'image') === false) {
-        echo "Proxy Error: HTTP $code ($baseUrl)";
+    // Silent fail for tiles to avoid broken UI, UNLESS debug is on
+    if (isset($_GET['REQUEST']) && $_GET['REQUEST'] === 'GetMap' && !isset($_GET['debug'])) {
+        exit;
     }
+
+    header("Content-Type: text/plain");
+    echo "Proxy Error: HTTP $code\n";
+    echo "CURL Error: $error\n";
+    echo "Target URL: $targetUrl\n";
+    echo "Service: $svc\n";
 }
 ?>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YYPRYXPN70"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YYPRYXPN70');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bok & PDF Skanner - VoxCuriosa</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="blob"></div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Tilbake til Portal</a>
+        <h1>Bok & PDF Skanner</h1>
+        <p class="subtitle">ScanExtension - Automatisk sideskanning og søkbar PDF</p>
+
+        <!-- PIN Screen -->
+        <div id="auth-screen" class="auth-screen">
+            <p style="text-align: center; color: #ccc;">Skriv inn PIN-kode for å få tilgang til utvidelsen.</p>
+            <input type="password" id="pin-input" placeholder="PIN (4 siffer)" maxlength="4" autocomplete="one-time-code">
+            <button id="unlock-btn">Lås opp</button>
+            <div class="contact-info">
+                Kontakt oss på
+                <span id="email-placeholder" class="email-reveal" onclick="revealEmail()">[klikk for å vise e-post]</span>
+                for å få PIN-kode.
+            </div>
+        </div>
+
+        <!-- App Screen -->
+        <div id="app-screen" class="app-card hidden">
+            <div>
+                <h2 style="margin-top: 0; color: var(--primary);">ScanExtension MV3</h2>
+                <p style="color: #cbd5e1; line-height: 1.5; margin-bottom: 20px;">
+                    En profesjonell Chrome-utvidelse for automatisk blaing, høyoppløselig skjermopptak og direkte kompilering av søkbare PDF-bøker med usynlig tekstlag.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>Søkbar PDF</h3>
+                    <p>Innebygd usynlig tekstlag gjør at all tekst kan markeres, kopieres og søkes i med Cmd+F.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Smart deteksjon</h3>
+                    <p>Oppdager automatisk overskrifter, delkapitler og rulle- vs. blamodus.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>100% Lokalt</h3>
+                    <p>Ingen data sendes til eksterne servere. Alt samles og genereres trygt i nettleseren.</p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 15px 0;">
+                <a href="ScanExtension.zip" download="ScanExtension.zip" class="action-btn" style="flex: 1; min-width: 200px;">
+                    Last ned ScanExtension.zip
+                </a>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <h3 style="color: #fff; margin-bottom: 12px;">Slik installerer du på 1 minutt:</h3>
+                
+                <div class="guide-step">
+                    <div class="step-num">1</div>
+                    <div class="step-text">Last ned <b>ScanExtension.zip</b> over og pakk den ut på maskinen din.</div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">2</div>
+                    <div class="step-text">Åpne Chrome og gå til <code>chrome://extensions</code> i adressefeltet.</div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">3</div>
+                    <div class="step-text">Slå på <b>Utviklermodus</b> (øverst til høyre) og trykk <b>Last inn uemballert</b> (øverst til venstre).</div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">4</div>
+                    <div class="step-text">Velg mappen du pakket ut. Åpne e-boken din og trykk <b>Start Skanning</b>!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

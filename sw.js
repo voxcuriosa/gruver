@@ -1,4 +1,4 @@
-const CACHE_NAME = 'voxcuriosa-v7';
+const CACHE_NAME = 'voxcuriosa-v8';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -17,25 +17,38 @@ self.addEventListener('install', event => {
     self.skipWaiting();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - Network First strategy for HTML/PHP, Cache First for others
 self.addEventListener('fetch', event => {
-    // Only intercept same-origin requests to prevent CORS/External fetch issues
     if (!event.request.url.startsWith(self.location.origin)) {
         return;
     }
 
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                if (response) {
+    const isHtml = event.request.url.endsWith('/') || 
+                   event.request.url.endsWith('.html') || 
+                   event.request.url.endsWith('.php');
+
+    if (isHtml) {
+        // Network First for HTML to ensure latest version
+        event.respondWith(
+            fetch(event.request)
+                .then(response => {
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then(cache => {
+                        cache.put(event.request, responseClone);
+                    });
                     return response;
-                }
-                return fetch(event.request).catch(err => {
-                    console.error('SW fetch failed:', err);
-                    // Fallback or just let it fail gracefully
-                });
-            })
-    );
+                })
+                .catch(() => caches.match(event.request))
+        );
+    } else {
+        // Cache First for assets
+        event.respondWith(
+            caches.match(event.request)
+                .then(response => {
+                    return response || fetch(event.request);
+                })
+        );
+    }
 });
 
 // Activate event - clean up old caches

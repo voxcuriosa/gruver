@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gruvekart-v4';
+const CACHE_NAME = 'gruvekart-v20';
 const ASSETS_TO_CACHE = [
     './',
     'index.php',
@@ -14,7 +14,6 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            // We don't want to fail install if some external asset fails, so we handle them
             return cache.addAll(ASSETS_TO_CACHE).catch(err => console.warn('Failed to cache some assets', err));
         })
     );
@@ -39,15 +38,19 @@ self.addEventListener('activate', (event) => {
 
 // Fetch Strategy: Network First for content, Cache First for static assets
 self.addEventListener('fetch', (event) => {
+    if (event.request.method !== 'GET') return;
+    if (!event.request.url.startsWith('http')) return;
+
     const url = new URL(event.request.url);
 
-    // For tiles and map data, use Network Only (don't cache huge map tiles)
+    // Tiles and map data: Network Only
     if (url.pathname.includes('/wmts/') || url.pathname.includes('/wms')) {
         return;
     }
 
-    // For static assets (images, css, js), try Cache first
-    if (event.request.destination === 'image' || event.request.destination === 'style' || event.request.destination === 'script') {
+    // Static assets (images, css): Try Cache first
+    // JS is excluded here to force Network First (via the rule below) to avoid stale broken code
+    if (event.request.destination === 'image' || event.request.destination === 'style') {
         event.respondWith(
             caches.match(event.request).then((response) => {
                 return response || fetch(event.request);
@@ -56,11 +59,10 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // For everything else (HTML, main app), try Network first, then Cache
+    // For everything else (JS, HTML, main app), try Network first, then Cache
     event.respondWith(
         fetch(event.request)
             .then((response) => {
-                // Update cache with new version
                 const responseClone = response.clone();
                 caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, responseClone);

@@ -1,4 +1,4 @@
-﻿let map;
+let map;
 let allSites = [];
 let imageRegistry = [];
 let currentAlbumImages = []; // Global for navigation
@@ -157,6 +157,8 @@ const categoryMap = {
     'HULE': { name: 'Huler / Grotter', icon: '⛰️', color: '#d946ef' }, // Fuchsia
     'VEI': { name: 'Veier', icon: '🛣️', color: '#84cc16' }, // Lime
     'DIVERSE': { name: 'Diverse / Kultur', icon: '📦', color: '#6366f1' }, // Indigo
+    'IKKE_VERIFISERT': { name: 'Ikke Verifisert', icon: '❓', color: '#f97316' }, // Orange Admin
+    'SJEKKET_IKKE_FUNN': { name: 'Sjekket (Ikke Funn)', icon: '❌', color: '#4b5563' }, // Gray Admin
     'DEFAULT': { name: 'Interessepunkter', icon: '📍', color: '#14b8a6' }  // Teal
 };
 
@@ -542,12 +544,42 @@ function initMap() {
         maxZoom: 22,
         zoomControl: false,
         fadeAnimation: !isMobileDevice // Deaktiver fade på mobil for "brutal" (raskere) innlasting
-    }).setView([59.23, 9.53], 13);
+    });
+
+    // Handle deep-linking from URL (lat, lng)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLat = parseFloat(urlParams.get('lat'));
+    const urlLng = parseFloat(urlParams.get('lng'));
+    const urlZoom = parseInt(urlParams.get('zoom')) || 18;
+
+    if (!isNaN(urlLat) && !isNaN(urlLng)) {
+        map.setView([urlLat, urlLng], urlZoom);
+    } else {
+        map.setView([59.23, 9.53], 13);
+    }
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
     // Auto-zoom og persistence-fix ved aktivering av lag
     map.on('overlayadd', function (e) {
+        console.log("overlayadd fired:", e.name, e);
+
+        // Map interaction tracking
+        if (typeof trackMapInteraction === 'function') {
+            trackMapInteraction('layer_toggle', e.name || 'Ukjent lag');
+        }
+
+        // GA4 Sporing
+        if (typeof window.gtag === 'function') {
+            const layerName = e.name || (e.layer && e.layer.options && e.layer.options.layers) || "Ukjent lag";
+            setTimeout(() => {
+                console.log("Sending GA Event 'velg_kartlag' for:", layerName);
+                window.gtag('event', 'velg_kartlag', {
+                    'kartlag_navn': layerName
+                });
+            }, 0);
+        }
+
         // Eksisterende sjekk for minZoom
         const minZoom = e.layer.options.minZoom;
         if (minZoom && map.getZoom() < minZoom) {
@@ -632,6 +664,17 @@ function initMap() {
                     setTimeout(refreshLayer, 100);
                 });
             }
+        }
+    });
+
+    map.on('baselayerchange', function (e) {
+        console.log("baselayerchange fired:", e.name);
+        if (typeof window.gtag === 'function') {
+            setTimeout(() => {
+                window.gtag('event', 'velg_kartlag', {
+                    'kartlag_navn': e.name || "Ukjent bakgrunn"
+                });
+            }, 0);
         }
     });
 
@@ -1059,6 +1102,11 @@ function initMap() {
                         });
                     }
 
+                    // Map interaction tracking
+                    if (typeof trackMapInteraction === 'function') {
+                        trackMapInteraction('flyfoto_toggle', name);
+                    }
+
                     // Fjern alle andre flyfoto-lag og baselag (unntatt topo og labels)
                     Object.values(baseMaps).forEach(bl => {
                         if (map.hasLayer(bl) && bl !== topoLayer && bl !== darkLabels) {
@@ -1077,8 +1125,13 @@ function initMap() {
                         }
                     });
 
+                    console.log("Flyfoto selected:", name);
                     // Legg til valgt flyfoto
-                    flyfotoLayers[name].addTo(map);
+                    if (flyfotoLayers[name]) {
+                        flyfotoLayers[name].addTo(map);
+                    } else {
+                        console.error("Flyfoto layer not found for:", name);
+                    }
 
                     // Visuell oppdatering
                     document.querySelectorAll('.flyfoto-item').forEach(el => el.classList.remove('active'));
@@ -1422,6 +1475,10 @@ function initMap() {
         const isTopo = map.hasLayer(topoLayer);
         const isGatenavn = map.hasLayer(dynamiskeGatenavn);
         const hasStedsnavn = map.hasLayer(darkLabels);
+
+        // Track changes if they are manual (this function is called on every change)
+        // We only want to track if there's a real name available in the event properties from calling functions
+        // But for now, let's keep it simple and rely on the specific listeners.
 
         // If Topo + Gatenavn are both active, hide Stedsnavn
         if (isTopo && isGatenavn) {
@@ -2338,10 +2395,66 @@ async function loadData() {
                 isVisibleByFilter: true // Default synlig
             };
 
-            // Ingen hardkoding her lenger! Alt er flyttet til convert_geojson_v2.php
+            // --- ADMIN VISIBILITY PROTECTION ---
+            // v118: Admin categories now ALWAYS start as hidden by default (user must check them manually)
+            if (site.catKey === 'IKKE_VERIFISERT' || site.catKey === 'SJEKKET_IKKE_FUNN') {
+                site.isVisibleByFilter = false;
+            }
 
+            // Ingen hardkoding her lenger! Alt er flyttet til convert_geojson_v2.php
             allSites.push(site);
             addMarker(site);
+        });
+
+        // Basic Map Interaction Tracking Helper
+        window.trackMapInteraction = function (type, itemName, lat = null, lng = null) {
+            if (!itemName) return;
+            const payload = { action_type: type, item_name: itemName };
+            if (lat !== null) payload.lat = lat;
+            if (lng !== null) payload.lng = lng;
+
+            fetch('log_interaction.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(e => { console.warn("Could not log map interaction", e); });
+        };
+
+        // Track Popup Opens for Points / Lines
+        map.on('popupopen', function (e) {
+            if (e.popup && typeof trackMapInteraction === 'function') {
+                let popupContent = e.popup.getContent();
+                let tempDiv;
+                let lat = null, lng = null;
+
+                const latlng = e.popup.getLatLng();
+                if (latlng) {
+                    lat = latlng.lat;
+                    lng = latlng.lng;
+                }
+
+                // Handle if getContent() returns a function (e.g., () => getPopupHTML(site))
+                if (typeof popupContent === 'function') {
+                    try {
+                        popupContent = popupContent();
+                    } catch (err) {
+                        console.warn("Could not execute popupContent function", err);
+                    }
+                }
+
+                if (typeof popupContent === 'string') {
+                    tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = popupContent;
+                } else if (popupContent instanceof HTMLElement) {
+                    tempDiv = popupContent; // It's already a DOM element!
+                }
+
+                if (tempDiv) {
+                    const titleElement = tempDiv.querySelector('.popup-title, h1, h2, h3, b, strong');
+                    const title = titleElement ? titleElement.innerText.trim() : 'Ukjent punkt';
+                    trackMapInteraction('point_click', title, lat, lng);
+                }
+            }
         });
 
         // Start lazy loading initielt
@@ -2399,7 +2512,8 @@ function updateVisibleMarkers() {
 
         if (isVisible || isOpen) {
             keysToKeep.add(site.id); // Bruk ID for unikhet
-            if (!site.isLine && !markerLayer.hasLayer(site.marker)) {
+            // Always add the main marker (which is the polyline for isLine)
+            if (!markerLayer.hasLayer(site.marker)) {
                 markerLayer.addLayer(site.marker);
             }
             // Skjul handle for tracéer også (bruker ønsker dem skjult fra kartvisningen)
@@ -2449,7 +2563,11 @@ function toggleMarkers(checkbox) {
 
 function renderRecentChanges(count) {
     const container = document.getElementById('recent-changes-container'); container.innerHTML = '';
-    const recent = [...allSites].reverse().slice(0, count);
+    let recent = [...allSites];
+    if (!window.isAdminMode) {
+        recent = recent.filter(s => s.catKey !== 'IKKE_VERIFISERT' && s.catKey !== 'SJEKKET_IKKE_FUNN');
+    }
+    recent = recent.reverse().slice(0, count);
     recent.forEach(site => {
         const item = document.createElement('div'); item.className = 'recent-item';
         item.innerHTML = `<span class="recent-icon">${site.category.icon}</span><span>${site.name}</span>`;
@@ -2533,13 +2651,20 @@ function getMarkerSize(zoom) {
 function updateMarkerSizes() {
     if (!MARKER_ZOOM_SCALING_ENABLED) return;
     var ms = getMarkerSize(map.getZoom());
-    document.querySelectorAll('.emoji-marker').forEach(function(el) {
+    document.querySelectorAll('.emoji-marker').forEach(function (el) {
         el.style.width = ms.size + 'px';
         el.style.height = ms.size + 'px';
         el.style.marginLeft = (-ms.size / 2) + 'px';
         el.style.marginTop = (-ms.size / 2) + 'px';
         var inner = el.querySelector('div');
-        if (inner) inner.style.fontSize = ms.fontSize + 'px';
+        if (inner) {
+            var fontSize = ms.fontSize;
+            // Admin-emojier (❓ og ❌) er visuelt mye større enn de andre, så vi skalerer dem ned her
+            if (inner.innerText === '❓' || inner.innerText === '❌') {
+                fontSize = Math.round(fontSize * 0.7);
+            }
+            inner.style.fontSize = fontSize + 'px';
+        }
     });
 }
 
@@ -2566,11 +2691,13 @@ function addMarker(site) {
     });
     marker.on('popupopen', () => {
         // GA4 Sporing
-        if (typeof gtag === 'function') {
-            gtag('event', 'vis_gruve', {
-                'gruve_navn': site.name,
-                'kategori': site.category.name
-            });
+        if (typeof window.gtag === 'function') {
+            setTimeout(() => {
+                window.gtag('event', 'vis_gruve', {
+                    'gruve_navn': site.name,
+                    'kategori': site.category.name
+                });
+            }, 0);
         }
 
         if (window.isAdminMode) return; // Unngå disorientering ved flytting i admin-modus
@@ -2599,6 +2726,25 @@ function getPopupHTML(site) {
             <button onclick="hideSite('${site.name.replace(/'/g, "\\'")}', ${site.lat}, ${site.lng})" style="padding: 8px; background: #111827; border: 1px solid #f59e0b; color: #f59e0b; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">🙈 Skjul</button>
             <button onclick="deleteSite('${site.name.replace(/'/g, "\\'")}', ${site.lat}, ${site.lng})" style="padding: 8px; background: #111827; border: 1px solid #ef4444; color: #ef4444; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">🗑️ Slett</button>
         </div>`;
+
+        // Admin Hidden Layer specific UI
+        if (site.catKey === 'IKKE_VERIFISERT' || site.catKey === 'SJEKKET_IKKE_FUNN') {
+            html += `<div style="margin-top: 10px; padding: 12px; background: rgba(245, 158, 11, 0.1); border: 1px dashed #f59e0b; border-radius: 8px;">
+                <label style="color: #fcd34d; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; display: block;">Verifiser / Endre status</label>
+                <div style="display: flex; gap: 8px;">
+                    <select id="admin-cat-change-${site.id}" style="flex: 1; padding: 6px; background: #1e293b; color: white; border: 1px solid #475569; border-radius: 4px; font-size: 0.85rem;">
+                        <option value="GRUVE" ${site.catKey === 'IKKE_VERIFISERT' ? 'selected' : ''}>-> Offentlig: Gruve/Skjerp</option>
+                        <option value="HULE">-> Offentlig: Hule / Grotte</option>
+                        <option value="BYGDEBORG">-> Offentlig: Bygdeborg</option>
+                        <option value="HUSTUFT">-> Offentlig: Hustuft</option>
+                        <option value="DIVERSE">-> Offentlig: Diverse</option>
+                        <option value="SJEKKET_IKKE_FUNN" ${site.catKey === 'SJEKKET_IKKE_FUNN' ? 'selected' : ''}>-> Skjult: Ikke funnet</option>
+                        <option value="IKKE_VERIFISERT" ${site.catKey === 'IKKE_VERIFISERT' ? 'selected' : ''}>-> Skjult: Ikke verifisert</option>
+                    </select>
+                    <button onclick="adminChangeCategory(${site.id})" style="padding: 6px 12px; background: #10b981; border: none; color: white; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem;">Lagre</button>
+                </div>
+            </div>`;
+        }
     }
 
     html += `<div style="margin-top: 10px;">`;
@@ -2882,8 +3028,13 @@ window.toggleCatDropdown = function () {
 };
 
 window.selectAllCats = function (bool) {
-    const checkboxes = document.querySelectorAll('#category-checkbox-list input[type="checkbox"]');
-    checkboxes.forEach(cb => cb.checked = bool);
+    const checkboxes = document.querySelectorAll('#category-checkbox-list input[type="checkbox"]:not(#cat-ALL)');
+    checkboxes.forEach(cb => {
+        // Exclude admin categories from the "Select All" / "Select None" logic
+        if (cb.id !== 'cat-IKKE_VERIFISERT' && cb.id !== 'cat-SJEKKET_IKKE_FUNN') {
+            cb.checked = bool;
+        }
+    });
     updateMultiselectLabel();
     applyFilters();
 };
@@ -2891,12 +3042,13 @@ window.selectAllCats = function (bool) {
 window.handleCatChange = function (el) {
     const allCb = document.getElementById('cat-ALL');
     const checkboxes = document.querySelectorAll('#category-checkbox-list input[type="checkbox"]:not(#cat-ALL)');
+    const publicCheckboxes = Array.from(checkboxes).filter(cb => cb.id !== 'cat-IKKE_VERIFISERT' && cb.id !== 'cat-SJEKKET_IKKE_FUNN');
 
     if (el.id === 'cat-ALL') {
-        checkboxes.forEach(cb => cb.checked = el.checked);
+        publicCheckboxes.forEach(cb => cb.checked = el.checked);
     } else {
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        allCb.checked = allChecked;
+        const allPublicChecked = publicCheckboxes.every(cb => cb.checked);
+        allCb.checked = allPublicChecked;
     }
 
     updateMultiselectLabel();
@@ -2905,19 +3057,31 @@ window.handleCatChange = function (el) {
 
 function updateMultiselectLabel() {
     const checkboxes = document.querySelectorAll('#category-checkbox-list input[type="checkbox"]:not(#cat-ALL)');
-    const checked = Array.from(checkboxes).filter(cb => cb.checked);
+    const publicCheckboxes = Array.from(checkboxes).filter(cb => cb.id !== 'cat-IKKE_VERIFISERT' && cb.id !== 'cat-SJEKKET_IKKE_FUNN');
+    const checkedPublic = publicCheckboxes.filter(cb => cb.checked);
+
+    // Also check if admin layers are active to append to label if necessary
+    const checkedAdmin = Array.from(checkboxes).filter(cb => cb.checked && (cb.id === 'cat-IKKE_VERIFISERT' || cb.id === 'cat-SJEKKET_IKKE_FUNN'));
+
     const label = document.getElementById('multiselect-label');
 
-    if (checked.length === checkboxes.length) {
-        label.innerText = "Alle Kategorier";
-    } else if (checked.length === 0) {
-        label.innerText = "Ingen valgt";
-    } else if (checked.length === 1) {
-        const catId = checked[0].value;
-        label.innerText = categoryMap[catId].name;
+    let baseText = "";
+    if (checkedPublic.length === publicCheckboxes.length) {
+        baseText = "Alle Kategorier";
+    } else if (checkedPublic.length === 0) {
+        baseText = "Ingen valgt";
+    } else if (checkedPublic.length === 1) {
+        const catId = checkedPublic[0].value;
+        baseText = categoryMap[catId].name;
     } else {
-        label.innerText = `${checked.length} kategorier valgt`;
+        baseText = `${checkedPublic.length} kategorier valgt`;
     }
+
+    if (checkedAdmin.length > 0) {
+        baseText += ` (+${checkedAdmin.length} admin)`;
+    }
+
+    label.innerText = baseText;
 }
 
 // Close dropdown when clicking outside
@@ -2937,11 +3101,18 @@ function applyFilters() {
     allSites.forEach(s => {
         const matchesSearch = s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q);
         const matchesCat = selectedCats.includes(s.catKey);
-        s.isVisibleByFilter = matchesSearch && matchesCat;
+
+        // Admin-sjekk: Ikke vis admin-kategorier for vanlige brukere selv om de på en eller annen måte skulle bli valgt
+        let visibility = matchesSearch && matchesCat;
+        if (!window.isAdminMode && (s.catKey === 'IKKE_VERIFISERT' || s.catKey === 'SJEKKET_IKKE_FUNN')) {
+            visibility = false;
+        }
+        s.isVisibleByFilter = visibility;
     });
 
     // Trigge oppdatering av visning og statistikk
     updateVisibleMarkers();
+    updateMarkerSizes();
     summarizeStats();
 }
 

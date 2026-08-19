@@ -1,0 +1,25 @@
+{
+    "action": "publish",
+    "name": "Vestmarka 1883",
+    "attributionName": "Det private oppmaalingskontor",
+    "attributionLink": "https:\/\/kartverket.no\/om-kartverket\/historie\/historiske-kart\/soketreff\/mitt-kart?mapId=630",
+    "imagePath": "assets\/Privateoppmaaling1883.jpg",
+    "corners": [
+        {
+            "lat": 59.26482789346738400126923806965351104736328125,
+            "lng": 9.463520050048828125
+        },
+        {
+            "lat": 59.2701351890735708138890913687646389007568359375,
+            "lng": 9.5667743682861328125
+        },
+        {
+            "lat": 59.2284829893400370792733156122267246246337890625,
+            "lng": 9.4688568720526831157258129678666591644287109375
+        },
+        {
+            "lat": 59.22800474341457999116755672730505466461181640625,
+            "lng": 9.5708084106445330263568394002504646778106689453125
+        }
+    ]
+}

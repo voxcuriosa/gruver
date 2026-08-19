@@ -14,3 +14,7 @@ __pycache__/
 # OS files
 Thumbs.db
 .DS_Store
+
+# Stripe CLI
+stripe_cli/
+

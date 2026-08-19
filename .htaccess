@@ -3,6 +3,13 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Force www (optional - only if you want www)
-# RewriteCond %{HTTP_HOST} !^www\. [NC]
-# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Prevent caching of HTML files to ensure users always see the latest version
+<FilesMatch "\.(html|php|json)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+</FilesMatch>
+
+# Force non-www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [L,R=301]

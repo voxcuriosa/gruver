@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Bratsberg Amt 1919",
+        "attributionName": "",
+        "attributionLink": "",
+        "imagePath": "assets/bratsberg1919.png",
+        "corners": [
+            {
+                "lat": 59.2736,
+                "lng": 9.25735
+            },
+            {
+                "lat": 59.2736,
+                "lng": 9.75174
+            },
+            {
+                "lat": 58.99814,
+                "lng": 9.25735
+            },
+            {
+                "lat": 58.99814,
+                "lng": 9.75174
+            }
+        ],
+        "timestamp": 1739396676
+    }
+]

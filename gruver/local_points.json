@@ -1,0 +1,62 @@
+[
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                9.5384630999999995282223608228377997875213623046875,
+                59.2664749999999997953636921010911464691162109375
+            ]
+        },
+        "properties": {
+            "id": 50000,
+            "name": "Gammel gård",
+            "cleanDesc": "",
+            "styleUrl": "#icon-1899-AFB42B-labelson",
+            "catKey": "HUSTUFT",
+            "images": [],
+            "localImages": [],
+            "imageUrl": null,
+            "remoteImageUrl": null,
+            "links": [],
+            "credit": "Christian",
+            "creditUrl": null,
+            "isLine": false,
+            "lat": 59.2664749999999997953636921010911464691162109375,
+            "lng": 9.5384630999999995282223608228377997875213623046875,
+            "isLocalPoint": true,
+            "displayName": "Gammel gård",
+            "displayDesc": "Synlig på flyfoto fra 1937 men ikke på flyfoto fra 1966."
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                9.5339682999999997292661646497435867786407470703125,
+                59.270558399999998755447450093924999237060546875
+            ]
+        },
+        "properties": {
+            "id": 50001,
+            "name": "Gammel gård",
+            "cleanDesc": "Synlig på flyfoto fra 1937",
+            "styleUrl": "#icon-1899-AFB42B-labelson",
+            "catKey": "HUSTUFT",
+            "images": [],
+            "localImages": [],
+            "imageUrl": null,
+            "remoteImageUrl": null,
+            "links": [],
+            "credit": "Christian",
+            "creditUrl": null,
+            "isLine": false,
+            "lat": 59.270558399999998755447450093924999237060546875,
+            "lng": 9.5339682999999997292661646497435867786407470703125,
+            "isLocalPoint": true,
+            "displayName": "Gammel gård",
+            "displayDesc": "Synlig på flyfoto fra 1937 og 1966."
+        }
+    }
+]

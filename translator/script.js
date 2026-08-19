@@ -29,6 +29,34 @@ document.addEventListener('DOMContentLoaded', () => {
     let results = {}; // Stores { 'Lang': 'VTT Content' }
 
     // Auth Logic
+    const checkPersistedPIN = async () => {
+        const savedPIN_local = localStorage.getItem('vox_pin');
+        const expiry = localStorage.getItem('vox_pin_expiry');
+
+        if (savedPIN_local && expiry && Date.now() < parseInt(expiry)) {
+            try {
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        pin: savedPIN_local,
+                        text: 'test',
+                        target_lang: 'Norwegian (Bokmål)'
+                    })
+                });
+
+                if (response.ok) {
+                    savedPIN = savedPIN_local;
+                    authScreen.classList.add('hidden');
+                    appScreen.classList.remove('hidden');
+                }
+            } catch (err) {
+                console.warn("Auto-auth failed", err);
+            }
+        }
+    };
+    checkPersistedPIN();
+
     unlockBtn.addEventListener('click', async () => {
         const pin = pinInput.value;
 
@@ -45,6 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
+                // Save PIN for 1 week
+                localStorage.setItem('vox_pin', pin);
+                localStorage.setItem('vox_pin_expiry', Date.now() + 7 * 24 * 60 * 60 * 1000);
+
                 savedPIN = pin;
                 authScreen.classList.add('hidden');
                 appScreen.classList.remove('hidden');

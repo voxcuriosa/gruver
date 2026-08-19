@@ -19,6 +19,15 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'];
 <html lang="no">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YYPRYXPN70"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-YYPRYXPN70');
+    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historienotater - VoxCuriosa</title>
@@ -119,7 +128,7 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'];
     <header>
         <h1>Historienotater
             <?php if ($isAdmin)
-                echo '<span class="admin-badge">ADMIN</span>'; ?>
+    echo '<span class="admin-badge">ADMIN</span>'; ?>
         </h1>
         <p class="subtitle">Samling av NotebookLM notatblokker</p>
     </header>
@@ -249,21 +258,59 @@ $isAdmin = isset($_SESSION['loggedin']) && $_SESSION['loggedin'];
         document.addEventListener('DOMContentLoaded', () => {
             loadContent();
 
-            // --- VISIT LOGGING ---
-            const payload = {
-                action: 'log_visit',
-                app: 'notebooks',
-                device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
-                screen_resolution: window.screen.width + "x" + window.screen.height,
-                referrer: document.referrer || 'Direct',
-                language: navigator.language || 'en'
-            };
+            // --- LINK INTERACTION LOGGING ---
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('a.link-item');
+                if (link) {
+                    const titleElement = link.querySelector('.link-title');
+                    const title = titleElement ? titleElement.innerText.trim() : link.href;
+                    
+                    fetch('../gruver/log_interaction.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action_type: 'notebook_click', item_name: title })
+                    }).catch(err => console.warn("Could not log notebook click", err));
+                }
+            });
 
-            fetch('../history/auth_v2.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).catch(err => console.log("Analytics skipped."));
+            // --- VISIT LOGGING ---
+            async function logVisit() {
+                let currentCountry = 'Unknown';
+                try {
+                    const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: "force-cache" });
+                    if (geoRes.ok) {
+                        const geoData = await geoRes.json();
+                        if (geoData && geoData.country) currentCountry = geoData.country;
+                    } else throw new Error("geojs not ok");
+                } catch (e) { 
+                    try {
+                        const fbRes = await fetch('https://api.country.is/', { cache: "force-cache" });
+                        if (fbRes.ok) {
+                            const fbData = await fbRes.json();
+                            if (fbData && fbData.country) currentCountry = fbData.country;
+                        }
+                    } catch (fbErr) {
+                        console.warn("Geoloc error", fbErr); 
+                    }
+                }
+
+                const payload = {
+                    action: 'log_visit',
+                    app: 'notebooks',
+                    country: currentCountry,
+                    device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
+                    screen_resolution: window.screen.width + "x" + window.screen.height,
+                    referrer: document.referrer || 'Direct',
+                    language: navigator.language || 'en'
+                };
+
+                fetch('../history/auth_v2.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(err => console.log("Analytics skipped."));
+            }
+            logVisit();
         });
     </script>
 </body>

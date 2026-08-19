@@ -17,6 +17,35 @@ function initAdminTools() {
     // Inject Admin Toolbar
     injectAdminToolbar();
 
+    // Reveal Hidden Admin Categories in the Sidebar Filters
+    let adminCategoriesBox = document.getElementById('admin-categories');
+
+    // Fallback: If for some reason the HTML element is stripped, recreate it.
+    if (!adminCategoriesBox) {
+        adminCategoriesBox = document.createElement('div');
+        adminCategoriesBox.id = 'admin-categories';
+        adminCategoriesBox.innerHTML = `
+            <div style="font-size: 0.75rem; color: #ef4444; font-weight: bold; margin-bottom: 5px; padding-left: 8px;">ADMIN KARTLAG</div>
+            <div class="category-checkbox-item">
+                <input type="checkbox" id="cat-IKKE_VERIFISERT" value="IKKE_VERIFISERT" onchange="handleCatChange(this)">
+                <label for="cat-IKKE_VERIFISERT">❓ Ikke verifiserte punkter</label>
+            </div>
+            <div class="category-checkbox-item">
+                <input type="checkbox" id="cat-SJEKKET_IKKE_FUNN" value="SJEKKET_IKKE_FUNN" onchange="handleCatChange(this)">
+                <label for="cat-SJEKKET_IKKE_FUNN">❌ Sjekket ut men ikke funn</label>
+            </div>
+        `;
+    }
+
+    // Force visible with !important via cssText
+    adminCategoriesBox.style.cssText = 'display: block !important; border-top: 1px solid rgba(239, 68, 68, 0.4); margin-top: 10px; padding-top: 10px;';
+
+    // Explicitly place it at the end of the checkbox list inside the dropdown
+    const checkboxList = document.getElementById('category-checkbox-list');
+    if (checkboxList && adminCategoriesBox.parentElement !== checkboxList) {
+        checkboxList.appendChild(adminCategoriesBox);
+    }
+
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
@@ -54,35 +83,7 @@ function initAdminTools() {
     map.on('click', handleAdminMapClick);
 }
 
-function injectAdminToolbar() {
-    const existing = document.getElementById('admin-toolbar');
-    if (existing) existing.remove();
 
-    const toolbar = document.createElement('div');
-    toolbar.id = 'admin-toolbar';
-    toolbar.style.cssText = `
-        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-        background: #111827; color: white; padding: 10px 20px; border-radius: 50px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 1500;
-        display: flex; gap: 15px; align-items: center; border: 1px solid #374151;
-        font-family: 'Outfit', sans-serif; font-size: 0.9rem;
-    `;
-
-    toolbar.innerHTML = `
-        <div id="admin-status" style="font-weight: 600; color: #10b981;">Klar</div>
-        <div style="width: 1px; height: 20px; background: #374151;"></div>
-        <button onclick="undoLastMove()" id="btn-undo" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
-            <span style="font-size:1.2em;">↩</span> Angre
-        </button>
-        <button onclick="showChangelog()" style="background:none; border:none; color:#38bdf8; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
-            <span style="font-size:1.2em;">📜</span> Logg
-        </button>
-        <button onclick="exitAdminMode()" style="background:none; border:none; color:#ef4444; cursor:pointer; font-weight:bold;">
-            Avslutt
-        </button>
-    `;
-    document.body.appendChild(toolbar);
-}
 
 // ... existing code ...
 
@@ -480,12 +481,43 @@ function undoLastMove() {
         });
 }
 
+function forceGoogleSync() {
+    if (!confirm("Vil du laste ned kartet fra Google My Maps på nytt nå? Dette kan ta 1-2 minutter.")) return;
+
+    showAdminStatus("Laster ned fra Google...", "warn");
+    fetch('sync_smart.php?key=vox_cron_auto_7734')
+        .then(r => r.text())
+        .then(data => {
+            if (data.includes("Done") || data.includes("Success")) {
+                showAdminStatus("Sync Fullført!", "ok");
+                alert("Synkronisering fullført! Laster siden på nytt for å vise oppdaterte data.");
+                location.reload();
+            } else {
+                console.error("Sync output:", data);
+                showAdminStatus("Sync feilet", "error");
+                alert("Feil under synkronisering. Se konsollen for detaljer.");
+            }
+        })
+        .catch(err => {
+            console.error("Sync error", err);
+            showAdminStatus("Nettverksfeil", "error");
+            alert("Nettverksfeil under synkronisering.");
+        });
+}
+
 function exitAdminMode() {
-    isAdminMode = false;
-    deselectMarker();
-    const toolbar = document.getElementById('admin-toolbar');
-    if (toolbar) toolbar.remove();
-    alert("Admin-modus avsluttet.");
+    fetch('admin_check.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'logout' })
+    }).finally(() => {
+        isAdminMode = false;
+        deselectMarker();
+        const toolbar = document.getElementById('admin-toolbar');
+        if (toolbar) toolbar.remove();
+        alert("Admin-modus avsluttet.");
+        location.reload(); // Refresh to ensure clean slate
+    });
 }
 
 // --- ADMIN SECRET HANDLERS ---
@@ -687,6 +719,30 @@ function clearSiteLabel(siteId) {
     document.getElementById('edit-label-modal').remove();
 }
 
+function adminChangeCategory(siteId) {
+    const site = allSites.find(s => s.id === siteId);
+    if (!site) return;
+
+    const selectEl = document.getElementById(`admin-cat-change-${siteId}`);
+    if (!selectEl) return;
+
+    const newCat = selectEl.value;
+
+    if (!confirm(`Er du sikker på at du vil sette kategorien for "${site.name}" til ${newCat}?\nDette vil bli lagret permanent og lastes automatisk for alle brukere.`)) return;
+
+    // We reuse the 'rename' action but now we also pass 'category'
+    // Ensure we keep any existing display names if they exist
+    const currentName = site.displayName || site.name;
+    const currentDesc = site.displayDesc || site.description;
+
+    saveOverride(site.name, site.lat, site.lng, 'rename', {
+        displayName: currentName,
+        displayDesc: currentDesc,
+        category: newCat
+    });
+}
+
+
 // ============================================================
 // FASE 2: Legg til nytt punkt + Gjeste-modus + Godkjenning
 // ============================================================
@@ -725,9 +781,9 @@ function injectGuestToolbar() {
     toolbar.id = 'admin-toolbar';
     toolbar.style.cssText = `
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-        background: #111827; color: white; padding: 10px 20px; border-radius: 50px;
+        background: #111827; color: white; padding: 10px 20px; border-radius: 24px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 1500;
-        display: flex; gap: 15px; align-items: center; border: 1px solid #0ea5e9;
+        display: flex; flex-wrap: wrap; justify-content: center; width: 90%; max-width: 600px; gap: 10px; align-items: center; border: 1px solid #0ea5e9;
         font-family: 'Outfit', sans-serif; font-size: 0.9rem;
     `;
     toolbar.innerHTML = `
@@ -786,7 +842,7 @@ function showAddPointModal(lat, lng) {
     const role = isGuestMode ? 'guest' : 'admin';
     const submitLabel = isGuestMode ? '📩 Send til godkjenning' : '💾 Lagre punkt';
 
-    const categories = [
+    let categories = [
         { key: 'GRUVE', label: 'Gruve / Skjerp' },
         { key: 'HULE', label: 'Hule' },
         { key: 'BYGDEBORG', label: 'Bygdeborg' },
@@ -798,6 +854,12 @@ function showAddPointModal(lat, lng) {
         { key: 'GRENSESTEIN', label: 'Grensestein' },
         { key: 'GRAVHAUG', label: 'Gravhaug' },
     ];
+
+    if (role === 'admin') {
+        categories.push({ key: 'IKKE_VERIFISERT', label: '❓ (Admin) Ikke verifisert' });
+        categories.push({ key: 'SJEKKET_IKKE_FUNN', label: '❌ (Admin) Sjekket ut - intet funn' });
+    }
+
     const catOptions = categories.map(c => `<option value="${c.key}">${c.label}</option>`).join('');
 
     const modal = document.createElement('div');
@@ -1065,8 +1127,7 @@ async function checkPendingCount() {
 
 // --- Override admin toolbar to include new buttons ---
 
-const _originalInjectAdminToolbar = injectAdminToolbar;
-injectAdminToolbar = function () {
+function injectAdminToolbar() {
     const existing = document.getElementById('admin-toolbar');
     if (existing) existing.remove();
 
@@ -1074,9 +1135,9 @@ injectAdminToolbar = function () {
     toolbar.id = 'admin-toolbar';
     toolbar.style.cssText = `
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-        background: #111827; color: white; padding: 10px 20px; border-radius: 50px;
+        background: #111827; color: white; padding: 10px 20px; border-radius: 24px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 1500;
-        display: flex; gap: 15px; align-items: center; border: 1px solid #374151;
+        display: flex; flex-wrap: wrap; justify-content: center; width: 90%; max-width: 600px; gap: 10px; align-items: center; border: 1px solid #374151;
         font-family: 'Outfit', sans-serif; font-size: 0.9rem;
     `;
 
@@ -1088,6 +1149,9 @@ injectAdminToolbar = function () {
         </button>
         <button onclick="showChangelog()" style="background:none; border:none; color:#38bdf8; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
             <span style="font-size:1.2em;">📜</span> Logg
+        </button>
+        <button onclick="forceGoogleSync()" style="background:none; border:none; color:#facc15; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
+            <span style="font-size:1.2em;">🔄</span> Sync
         </button>
         <button onclick="startAddPointMode()" style="background:none; border:none; color:#0ea5e9; cursor:pointer; font-weight:bold; display:flex; align-items:center; gap:5px;">
             <span style="font-size:1.2em;">➕</span> Nytt punkt

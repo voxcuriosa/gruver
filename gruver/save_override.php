@@ -67,6 +67,9 @@ if (file_put_contents($overridesFile, json_encode($overrides, JSON_PRETTY_PRINT 
                         // Set or clear local display overrides
                         $p['displayName'] = !empty($value['displayName']) ? $value['displayName'] : null;
                         $p['displayDesc'] = !empty($value['displayDesc']) ? $value['displayDesc'] : null;
+                        if (!empty($value['category'])) {
+                            $p['category'] = $value['category'];
+                        }
                     }
                     break;
                 }
@@ -93,6 +96,9 @@ if (file_put_contents($overridesFile, json_encode($overrides, JSON_PRETTY_PRINT 
                     } elseif ($action === 'rename' && is_array($value)) {
                         $p['displayName'] = !empty($value['displayName']) ? $value['displayName'] : null;
                         $p['displayDesc'] = !empty($value['displayDesc']) ? $value['displayDesc'] : null;
+                        if (!empty($value['category'])) {
+                            $p['category'] = $value['category'];
+                        }
                         $changed = true;
                     }
                     break;

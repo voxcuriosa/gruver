@@ -2,6 +2,15 @@
 <html lang="no">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YYPRYXPN70"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-YYPRYXPN70');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karakterutregner (Snillere) - VoxCuriosa</title>
@@ -84,10 +93,30 @@
     <script src="script.js"></script>
     <script>
         // Analytics
-        function logVisit() {
+        async function logVisit() {
+            let currentCountry = 'Unknown';
+            try {
+                const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: "force-cache" });
+                if (geoRes.ok) {
+                    const geoData = await geoRes.json();
+                    if (geoData && geoData.country) currentCountry = geoData.country;
+                } else throw new Error("geojs not ok");
+            } catch (e) {
+                try {
+                    const fbRes = await fetch('https://api.country.is/', { cache: "force-cache" });
+                    if (fbRes.ok) {
+                        const fbData = await fbRes.json();
+                        if (fbData && fbData.country) currentCountry = fbData.country;
+                    }
+                } catch (fbErr) {
+                    console.warn("Geoloc fetch failed", fbErr);
+                }
+            }
+
             const payload = {
                 action: 'log_visit',
                 app: 'grades_snill',
+                country: currentCountry,
                 device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
                 screen_resolution: window.screen.width + "x" + window.screen.height,
                 referrer: document.referrer || 'Direct',

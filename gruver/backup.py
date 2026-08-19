@@ -63,19 +63,22 @@ FILES_TO_BACKUP = [
     'delete_local_point.php',
     'extract_bounds.py',
     'nib_bounds.json',
+    'last_sync.txt',
     'assets' # Directory
 ]
 
 BACKUP_DIR = 'backup'
 
 def get_next_version_dir(base_dir):
-    """Finds the next available v1, v2, etc. directory."""
-    i = 1
-    while True:
-        v_dir = os.path.join(base_dir, f'v{i}')
-        if not os.path.exists(v_dir):
-            return v_dir
-        i += 1
+    """Finds the next version by incrementing the highest existing version number."""
+    existing_versions = []
+    if os.path.exists(base_dir):
+        for d in os.listdir(base_dir):
+            if d.startswith('v') and d[1:].isdigit():
+                existing_versions.append(int(d[1:]))
+    
+    next_v = max(existing_versions) + 1 if existing_versions else 1
+    return os.path.join(base_dir, f'v{next_v}')
 
 def sync_assets_from_ftp():
     """Downloads missing or newer files from FTP assets folder to local assets folder."""
@@ -132,7 +135,7 @@ def sync_assets_from_ftp():
         
         # 3. Sync data JSONs from root (overrides and changelog)
         ftp.cwd(f"/{REMOTE_GRUVER_DIR}")
-        for filename in ['overrides.json', 'changelog.json', 'local_points.json', 'pending_points.json']:
+        for filename in ['overrides.json', 'changelog.json', 'local_points.json', 'pending_points.json', 'last_sync.txt']:
             try:
                 if filename in ftp.nlst():
                     should_dl = False

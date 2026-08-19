@@ -13,6 +13,10 @@
  */
 
 // Configuration
+ini_set('memory_limit', '512M');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $kmlDataUrl = "https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=1GNd6tZb_il76nsonvH7Oe0SKrX2Qp8B2";
 $jsonOutputFile = 'full_data.json';
 $imagesDir = 'bilder';
@@ -33,9 +37,14 @@ header('Content-Type: text/plain; charset=utf-8');
 
 function logMsg($msg)
 {
-    echo "[" . date('H:i:s') . "] " . $msg . "\n";
+    $formatted = "[" . date('H:i:s') . "] " . $msg . "\n";
+    echo $formatted;
+    file_put_contents('sync_log.txt', $formatted, FILE_APPEND);
     flush();
 }
+
+// Clear log at start
+file_put_contents('sync_log.txt', "--- Sync Start: " . date('Y-m-d H:i:s') . " ---\n");
 
 // 1. Prepare Directories
 if (!file_exists($imagesDir)) {
@@ -44,26 +53,110 @@ if (!file_exists($imagesDir)) {
 }
 
 // 2. Download KML
-logMsg("Downloading KML...");
-$kmlContent = @file_get_contents($kmlDataUrl);
-if ($kmlContent === false) {
-    die("Error: Failed to download KML from Google.");
+logMsg("Downloading KML via cURL...");
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $kmlDataUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+$kmlContent = curl_exec($ch);
+$curlError = curl_error($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+if ($kmlContent === false || $httpCode !== 200) {
+    die("Error: Failed to download KML. HTTP Code: $httpCode, Error: $curlError");
 }
+logMsg("KML Downloaded successfully (" . strlen($kmlContent) . " bytes)");
 
 // 3. Parse KML
 $xml = simplexml_load_string($kmlContent);
-if ($xml === false) {
-    die("Error: Failed to parse KML XML.");
+if (!$xml) {
+    $err = libxml_get_last_error();
+    die("Error: Failed to parse KML. " . ($err ? $err->message : ""));
 }
 $xml->registerXPathNamespace('kml', 'http://www.opengis.net/kml/2.2');
-$placemarks = $xml->xpath('//kml:Placemark');
 
-logMsg("Found " . count($placemarks) . " placemarks. Processing...");
+logMsg("Locating relevant folders recursively...");
+$dom = new DOMDocument();
+libxml_use_internal_errors(true);
+if (!$dom->loadXML($kmlContent)) {
+    die("Error: Failed to load KML into DOM.");
+}
+$xpath = new DOMXPath($dom);
+$xpath->registerNamespace('kml', 'http://www.opengis.net/kml/2.2');
+
+// Try with namespace first, then without
+$folderNodes = $xpath->query('//kml:Folder');
+if ($folderNodes->length === 0) {
+    logMsg("XPath '//kml:Folder' returned 0 results. Trying local-name fallback...");
+    $folderNodes = $xpath->query("//*[local-name()='Folder']");
+}
+
+logMsg("Found " . $folderNodes->length . " folders in KML.");
+
+$placemarks = [];
+
+foreach ($folderNodes as $folderNode) {
+    // Robust name extraction
+    $nameNode = $xpath->query("kml:name", $folderNode)->item(0)
+        ?: $xpath->query("*[local-name()='name']", $folderNode)->item(0);
+
+    $folderName = $nameNode ? $nameNode->nodeValue : "Unknown Folder";
+    logMsg("Inspecting folder: '$folderName'");
+
+    $is_match = false;
+    $admin_cat = null;
+
+    if (stripos($folderName, 'verifiserte') !== false) {
+        $is_match = true;
+        $admin_cat = 'IKKE_VERIFISERT';
+        logMsg(" -> Matched hidden admin layer: Ikke verifiserte");
+    } else if (stripos($folderName, 'ikke funn') !== false) {
+        $is_match = true;
+        $admin_cat = 'SJEKKET_IKKE_FUNN';
+        logMsg(" -> Matched hidden admin layer: Sjekket ut men ikke funn");
+    } else if (stripos($folderName, 'Gulset') !== false) {
+        $is_match = true;
+        $admin_cat = null;
+        logMsg(" -> Matched standard layer: Gulsetmarka");
+    }
+
+    if ($is_match) {
+        $pmNodes = $xpath->query("kml:Placemark", $folderNode)
+            ?: $xpath->query("*[local-name()='Placemark']", $folderNode);
+
+        if ($pmNodes->length === 0) {
+            // Fallback to searching all children for nodes with local-name 'Placemark'
+            $pmNodes = $xpath->query(".//*[local-name()='Placemark']", $folderNode);
+        }
+
+        logMsg("    -> Found " . $pmNodes->length . " placemarks in this folder.");
+        foreach ($pmNodes as $pmNode) {
+            $pmXml = simplexml_import_dom($pmNode);
+            if ($pmXml) {
+                $placemarks[] = ['pm' => $pmXml, 'category' => $admin_cat];
+            }
+        }
+    }
+}
+
+logMsg("Total placemarks identified for processing: " . count($placemarks));
+
+if (empty($placemarks)) {
+    die("Error: No valid folders found in KML.");
+}
+
+logMsg("Found " . count($placemarks) . " placemarks total across layers. Processing...");
 
 $geojson = [
     'type' => 'FeatureCollection',
     'features' => []
 ];
+
+$features = [];
+$idCounter = 0;
 
 $stats = [
     'processed' => 0,
@@ -72,7 +165,10 @@ $stats = [
     'errors' => 0
 ];
 
-foreach ($placemarks as $idx => $pm) {
+foreach ($placemarks as $item) {
+    $pm = $item['pm'];
+    $forcedCategory = $item['category'];
+    $idx = $idCounter;
     // Extract Basic Data
     $name = (string) $pm->name;
     $description = (string) $pm->description;
@@ -142,11 +238,21 @@ foreach ($placemarks as $idx => $pm) {
             $localImages[] = $localPath;
             $stats['images_skipped']++;
         } else {
-            // DOWNLOAD AND OPTIMIZE
-            // logMsg("Downloading new image: $filename");
+            // DOWNLOAD AND OPTIMIZE via cURL (file_get_contents blocked by Google)
             try {
-                $imgData = @file_get_contents($remoteUrl);
-                if ($imgData) {
+                $ch = curl_init($remoteUrl);
+                curl_setopt_array($ch, [
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    CURLOPT_HTTPHEADER => ['Referer: https://www.google.com/maps/d/'],
+                ]);
+                $imgData = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($imgData && $httpCode === 200) {
                     $srcImg = @imagecreatefromstring($imgData);
                     if ($srcImg) {
                         $width = imagesx($srcImg);
@@ -172,7 +278,7 @@ foreach ($placemarks as $idx => $pm) {
                         $stats['errors']++;
                     }
                 } else {
-                    logMsg("Error: Failed to fetch $remoteUrl");
+                    logMsg("Error: Failed to fetch $remoteUrl (HTTP $httpCode)");
                     $stats['errors']++;
                 }
             } catch (Exception $e) {
@@ -197,16 +303,37 @@ foreach ($placemarks as $idx => $pm) {
     $lat = 0;
     $lng = 0;
 
-    if (isset($pm->Point)) {
-        $coords = explode(',', (string) $pm->Point->coordinates);
+    // Try direct access first (most placemarks), then namespace-aware fallback
+    $kmlNs = 'http://www.opengis.net/kml/2.2';
+    $pmPoint = isset($pm->Point) ? $pm->Point : null;
+    $pmLineString = isset($pm->LineString) ? $pm->LineString : null;
+
+    // Namespace-aware fallback using children()
+    if (!$pmPoint && !$pmLineString) {
+        $children = $pm->children($kmlNs);
+        if (isset($children->Point)) {
+            $pmPoint = $children->Point;
+        } elseif (isset($children->LineString)) {
+            $pmLineString = $children->LineString;
+        }
+    }
+
+    if ($pmPoint) {
+        $coordStr = (string) $pmPoint->coordinates;
+        if (!$coordStr) {
+            // Try namespace-aware coordinates
+            $c = $pmPoint->children($kmlNs);
+            $coordStr = isset($c->coordinates) ? (string) $c->coordinates : '';
+        }
+        $coords = explode(',', trim($coordStr));
         if (count($coords) >= 2) {
             $lng = (float) $coords[0];
             $lat = (float) $coords[1];
             $geometry = ['type' => 'Point', 'coordinates' => [$lng, $lat]];
         }
-    } elseif (isset($pm->LineString)) {
+    } elseif ($pmLineString) {
         $isLine = true;
-        $coordsRaw = trim((string) $pm->LineString->coordinates);
+        $coordsRaw = trim((string) $pmLineString->coordinates);
         $lines = preg_split('/\s+/', $coordsRaw);
         $points = [];
         foreach ($lines as $line) {
@@ -222,64 +349,159 @@ foreach ($placemarks as $idx => $pm) {
     }
 
     if ($geometry) {
+        // Blacklisted domains for filtering links and descriptions
+        $blacklistedDomains = [
+            'googleusercontent.com',
+            'usercontent.google.com',
+            'photos.app.goo.gl',
+            'photos.google.com',
+            'google.com/share'
+        ];
+
         // Clean Description
         $cleanDesc = $description;
+        // Remove KML CDATA tags
+        $cleanDesc = str_replace(['<![CDATA[', ']]>'], '', $cleanDesc);
         $cleanDesc = preg_replace('/<img[^>]+>/i', '', $cleanDesc);
         $cleanDesc = preg_replace('/<br\s*\/?>/i', "\n", $cleanDesc);
-        $cleanDesc = preg_replace('/Nettside:?[\s\xa0]*(\n|$)/iu', '$1', $cleanDesc);
-        $cleanDesc = preg_replace('/Posisjon:?[\s\xa0]*(\n|$)/iu', '$1', $cleanDesc);
-        $cleanDesc = preg_replace('/Informasjon:?[\s\xa0]*(\n|$)/iu', '$1', $cleanDesc);
-        $cleanDesc = preg_replace('/<a\s+[^>]*href=""[^>]*>.*?<\/a>/i', '', $cleanDesc);
-        $cleanDesc = trim($cleanDesc);
 
-        // Links
-        $links = [];
+        // Links extraction for both array and text cleaning
         preg_match_all('/href="([^"]+)"|((?:https?:\/\/|www\.)[^\s<"\']+)/i', $description, $m);
-        $rawLinks = array_merge($m[1], $m[2]);
-        foreach ($rawLinks as $l)
-            if ($l && !in_array($l, $links))
-                $links[] = $l;
+        $rawLinks = array_unique(array_merge($m[1], $m[2]));
 
-        // Category Logic (Simplified Port)
+        foreach ($rawLinks as $l) {
+            if (!$l)
+                continue;
+            $cleanL = rtrim($l, ']> ');
+
+            $isBlacklisted = false;
+            foreach ($blacklistedDomains as $domain) {
+                if (strpos($cleanL, $domain) !== false) {
+                    $isBlacklisted = true;
+                    break;
+                }
+            }
+
+            if ($isBlacklisted) {
+                // Safety: NEVER strip local assets or mining maps
+                if (strpos($cleanL, 'assets/') !== false || strpos($cleanL, 'mining_map') !== false) {
+                    continue;
+                }
+
+                // Remove the link (and its containing <a> tag if it exists) from cleanDesc
+                // 1. Remove <a> tags containing this link
+                $cleanDesc = preg_replace('/<a\s+[^>]*href="' . preg_quote($l, '/') . '"[^>]*>.*?<\/a>/i', '', $cleanDesc);
+                // 2. Remove the literal URL if it's still there
+                $cleanDesc = str_replace($l, '', $cleanDesc);
+                $cleanDesc = str_replace($cleanL, '', $cleanDesc);
+            }
+        }
+
+        // Final cleanup of description labels and empty lines
+        $cleanDesc = preg_replace('/\s+og\s*$/mu', '', $cleanDesc); // Remove trailing 'og'
+        $cleanDesc = preg_replace('/\s+og\s+/iu', ' ', $cleanDesc); // Remove internal 'og'
+        $cleanDesc = preg_replace('/(Nettside|Posisjon|Informasjon):?\s*$/mu', '', $cleanDesc); // Remove labels at end of lines
+        $cleanDesc = strip_tags($cleanDesc); // Remove any remaining HTML tags
+        $cleanDesc = trim($cleanDesc);
+        $cleanDesc = preg_replace('/\n\n+/', "\n", $cleanDesc); // Collapse multiple newlines
+
+        // Links Array Building
+        $links = [];
+        foreach ($rawLinks as $l) {
+            if (!$l)
+                continue;
+            $cleanL = rtrim($l, ']> ');
+
+            $isBlacklisted = false;
+            foreach ($blacklistedDomains as $domain) {
+                if (strpos($cleanL, $domain) !== false) {
+                    $isBlacklisted = true;
+                    break;
+                }
+            }
+            if ($isBlacklisted) {
+                // Safety: NEVER strip local assets or mining maps
+                if (strpos($cleanL, 'assets/') !== false || strpos($cleanL, 'mining_map') !== false) {
+                    // fall through to allowed
+                } else {
+                    continue;
+                }
+            }
+            if (in_array($cleanL, $imageUrlList))
+                continue;
+
+            if (!in_array($cleanL, $links))
+                $links[] = $cleanL;
+        }
+
+        // Category Logic (Refined to match Gulsetmarka styles)
         $catKey = 'DEFAULT';
-        $fullText = mb_strtolower($name . " " . $description);
-        if (strpos($styleUrl, 'E65100') !== false || strpos($styleUrl, 'C2185B') !== false)
-            $catKey = 'GRUVE';
-        elseif (strpos($styleUrl, '01579B') !== false)
-            $catKey = 'BYGDEBORG';
-        elseif (strpos($styleUrl, '4E342E') !== false)
-            $catKey = 'GAPAHUK';
-        elseif (strpos($styleUrl, 'BDBDBD') !== false)
-            $catKey = 'VANN';
-        elseif (strpos($styleUrl, 'FFEA00') !== false)
-            $catKey = 'UTSIKT';
-        elseif (strpos($styleUrl, 'AFB42B') !== false)
-            $catKey = 'HUSTUFT';
-        elseif (strpos($styleUrl, '097138') !== false)
-            $catKey = 'GRENSESTEIN';
-        elseif (strpos($styleUrl, '1A237E') !== false)
-            $catKey = 'HULE';
-        else {
-            // Keyword fallback
-            if (preg_match('/gruve|skjerp|stoll|synk/', $fullText))
+
+        if ($forcedCategory !== null) {
+            $catKey = $forcedCategory;
+        } else {
+            $fullText = mb_strtolower($name . " " . $description);
+
+            if (strpos($styleUrl, 'E65100') !== false || strpos($styleUrl, 'C2185B') !== false)
                 $catKey = 'GRUVE';
-            elseif (strpos($fullText, 'bygdeborg') !== false)
-                $catKey = 'BYGDEBORG';
-            elseif (strpos($fullText, 'hustuft') !== false)
-                $catKey = 'HUSTUFT';
-            elseif (strpos($fullText, 'hule') !== false)
+            elseif (strpos($styleUrl, '01579B') !== false || strpos($styleUrl, '1A237E') !== false || strpos($styleUrl, '3949AB') !== false)
                 $catKey = 'HULE';
-            elseif (strpos($fullText, 'utsikt') !== false)
+            elseif (strpos($styleUrl, '9C27B0') !== false)
+                $catKey = 'BYGDEBORG';
+            elseif (strpos($styleUrl, '795548') !== false || strpos($styleUrl, '4E342E') !== false)
+                $catKey = 'GAPAHUK';
+            elseif (strpos($styleUrl, 'BDBDBD') !== false)
+                $catKey = 'VANN';
+            elseif (strpos($styleUrl, '0288D1') !== false)
+                $catKey = 'DIVERSE';
+            elseif (strpos($styleUrl, 'FFEA00') !== false || strpos($styleUrl, 'FFD600') !== false)
                 $catKey = 'UTSIKT';
-            elseif (preg_match('/vei|stier/', $fullText))
-                $catKey = 'VEI';
+            elseif (strpos($styleUrl, 'AFB42B') !== false)
+                $catKey = 'HUSTUFT';
+            elseif (strpos($styleUrl, '097138') !== false)
+                $catKey = 'GRENSESTEIN';
+            elseif (strpos($styleUrl, '000000') !== false)
+                $catKey = 'GRAVHAUG';
+            else {
+                // Keyword fallback
+                if (preg_match('/gruve|skjerp|stoll|synk/', $fullText))
+                    $catKey = 'GRUVE';
+                elseif (strpos($fullText, 'bygdeborg') !== false)
+                    $catKey = 'BYGDEBORG';
+                elseif (strpos($fullText, 'hustuft') !== false)
+                    $catKey = 'HUSTUFT';
+                elseif (strpos($fullText, 'hule') !== false)
+                    $catKey = 'HULE';
+                elseif (strpos($fullText, 'utsikt') !== false)
+                    $catKey = 'UTSIKT';
+                elseif (strpos($fullText, 'gapahuk') !== false)
+                    $catKey = 'GAPAHUK';
+                elseif (preg_match('/vei|stier/', $fullText))
+                    $catKey = 'VEI';
+            }
+        }
+
+        // Local Overrides (User requested: Replace external canal link with local file)
+        if ($idCounter == 76 || $idCounter == 77) {
+            $extLink = "http://kanaler.arnholm.nu/skandinavien/norge/fossums.shtml";
+            $localFile = "kanalanlegg_utf8.html";
+            $cleanDesc = str_replace($extLink, "", $cleanDesc);
+            $cleanDesc = trim($cleanDesc);
+            // Remove from links if present
+            if (($key = array_search($extLink, $links)) !== false) {
+                unset($links[$key]);
+            }
+            // Add local file to links for "Les mer" button
+            if (!in_array($localFile, $links)) {
+                $links[] = $localFile;
+            }
         }
 
         $geojson['features'][] = [
             'type' => 'Feature',
             'geometry' => $geometry,
             'properties' => [
-                'id' => $idx,
+                'id' => $idCounter,
                 'name' => $name,
                 'cleanDesc' => $cleanDesc,
                 'styleUrl' => $styleUrl,
@@ -296,12 +518,166 @@ foreach ($placemarks as $idx => $pm) {
         ];
         $stats['processed']++;
     }
+    $idCounter++;
+}
+
+// 3b. Apply Local Overrides from Changelog
+// This ensures that Admin Tool moves are NOT overwritten by Google My Maps
+$changelogFile = 'changelog.json';
+if (file_exists($changelogFile)) {
+    $changelog = json_decode(file_get_contents($changelogFile), true);
+    if (is_array($changelog) && count($changelog) > 0) {
+        logMsg("Applying " . count($changelog) . " local overrides from changelog...");
+
+        $overriddenCount = 0;
+        foreach ($geojson['features'] as &$feature) {
+            $p = &$feature['properties'];
+            $currentLat = $p['lat'];
+            $currentLng = $p['lng'];
+            $hasChanged = false;
+
+            // Process changelog entries in order to handle sequential moves
+            foreach ($changelog as $entry) {
+                // Match by name and current coordinates (rounded to 6 decimals to handle precision)
+                if (
+                    $entry['name'] === $p['name'] &&
+                    round($entry['oldLat'], 6) === round($currentLat, 6) &&
+                    round($entry['oldLng'], 6) === round($currentLng, 6)
+                ) {
+
+                    $currentLat = floatval($entry['newLat']);
+                    $currentLng = floatval($entry['newLng']);
+                    $hasChanged = true;
+                }
+            }
+
+            if ($hasChanged) {
+                $p['lat'] = $currentLat;
+                $p['lng'] = $currentLng;
+                $p['local_override'] = true;
+
+                if ($feature['geometry']['type'] === 'Point') {
+                    $feature['geometry']['coordinates'] = [$currentLng, $currentLat];
+                    $overriddenCount++;
+                }
+            }
+        }
+        logMsg("Applied overrides to $overriddenCount features.");
+    }
+}
+
+// 3c. Apply Persistent Overrides (Visibility, Manual Images)
+// This handles "Hide", "Delete" and manual image additions from Admin Tool
+$overridesFile = 'overrides.json';
+if (file_exists($overridesFile)) {
+    $overrides = json_decode(file_get_contents($overridesFile), true);
+    if (is_array($overrides) && count($overrides) > 0) {
+        logMsg("Applying cumulative persistent overrides from overrides.json...");
+
+        // Map overrides by name + coordinates
+        // We collect ALL overrides for each feature to apply them cumulatively
+        $overM = [];
+        foreach ($overrides as $o) {
+            $key = $o['name'] . '|' . round($o['lat'], 4) . '|' . round($o['lng'], 4);
+            if (!isset($overM[$key]))
+                $overM[$key] = [];
+            $overM[$key][] = $o;
+        }
+
+        $newFeatures = [];
+        foreach ($geojson['features'] as &$feature) {
+            $p = &$feature['properties'];
+            $key = $p['name'] . '|' . round($p['lat'] ?? 0, 4) . '|' . round($p['lng'] ?? 0, 4);
+
+            $featureOverrides = null;
+            if (isset($overM[$key])) {
+                $featureOverrides = $overM[$key];
+            } else {
+                // Fuzzy matching fallback: same name + distance < 0.0001 (~11 meters)
+                // This handles cases where Google My Maps shifted the point slightly.
+                foreach ($overrides as $o) {
+                    if ($o['name'] === $p['name']) {
+                        $pLat = $p['lat'] ?? 0;
+                        $pLng = $p['lng'] ?? 0;
+                        $dist = sqrt(pow($o['lat'] - $pLat, 2) + pow($o['lng'] - $pLng, 2));
+                        if ($dist < 0.00015) { // ~15 meters tolerance
+                            // Collect matching overrides
+                            if ($featureOverrides === null)
+                                $featureOverrides = [];
+                            $featureOverrides[] = $o;
+                        }
+                    }
+                }
+                if ($featureOverrides) {
+                    logMsg("Fuzzy match found for '{$p['name']}' using vicinity search (" . count($featureOverrides) . " overrides)");
+                }
+            }
+
+            if ($featureOverrides) {
+
+                // 1. Check for Deletion (if any action is delete, we skip this feature)
+                $isDeleted = false;
+                foreach ($featureOverrides as $o) {
+                    if ($o['action'] === 'delete') {
+                        $isDeleted = true;
+                        break;
+                    }
+                }
+                if ($isDeleted) {
+                    logMsg("Skipping deleted feature: " . $p['name']);
+                    continue;
+                }
+
+                // 2. Apply other overrides cumulatively
+                foreach ($featureOverrides as $o) {
+                    if ($o['action'] === 'hide') {
+                        $p['hidden'] = true;
+                    }
+                    if ($o['action'] === 'add_image' && !empty($o['value'])) {
+                        $img = $o['value'];
+                        if (!isset($p['images']))
+                            $p['images'] = [];
+                        if (!isset($p['localImages']))
+                            $p['localImages'] = [];
+
+                        if (!in_array($img, $p['images']))
+                            $p['images'][] = $img;
+                        if (!in_array($img, $p['localImages']))
+                            $p['localImages'][] = $img;
+                        if (!$p['imageUrl'])
+                            $p['imageUrl'] = $img;
+                    }
+                    if ($o['action'] === 'rename' && is_array($o['value'])) {
+                        $p['displayName'] = !empty($o['value']['displayName']) ? $o['value']['displayName'] : null;
+                        $p['displayDesc'] = !empty($o['value']['displayDesc']) ? $o['value']['displayDesc'] : null;
+                        if (!empty($o['value']['category'])) {
+                            $p['catKey'] = $o['value']['category'];
+                            $p['category'] = $o['value']['category'];
+                        }
+                    }
+                }
+            }
+
+            // --- HARDCODED LINE VISIBILITY RULE ---
+            // Hide all LineStrings except Åsmund Nordgårds vannledning
+            if ($feature['geometry']['type'] === 'LineString') {
+                if (stripos($p['name'], 'Nordgård') === false) {
+                    $p['hidden'] = true;
+                    // logMsg("Hiding non-Nordgård line: " . $p['name']);
+                }
+            }
+
+            $newFeatures[] = $feature;
+        }
+        $geojson['features'] = $newFeatures;
+    }
 }
 
 // 4. Save JSON
 $jsonStr = json_encode($geojson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 if (file_put_contents($jsonOutputFile, $jsonStr)) {
     logMsg("Success! Saved $jsonOutputFile.");
+    file_put_contents('last_sync.txt', time());
 } else {
     logMsg("Error: Could not write $jsonOutputFile");
 }

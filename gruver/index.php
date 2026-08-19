@@ -16,7 +16,7 @@ session_start();
 
     <script>
         // Inject Admin Status from PHP Session
-        window.isAdminMode = <?php echo (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) ? 'true' : 'false'; ?>;
+        window.isAdminMode = <?php echo(isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) ? 'true' : 'false'; ?>;
     </script>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -44,7 +44,7 @@ session_start();
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;600&display=swap"
         rel="stylesheet">
-    <link rel="canonical" href="https://www.voxcuriosa.no/gruver/">
+    <link rel="canonical" href="https://voxcuriosa.no/gruver/">
 
     <style>
         :root {
@@ -74,7 +74,8 @@ session_start();
 
         #app-container {
             display: flex;
-            height: 100vh;
+            height: 100%; /* Fallback */
+            height: 100dvh; /* Fix for mobile browser URL bar / navigation overlap */
             width: 100vw;
             position: relative;
             /* CRITICAL for absolute children outside #map */
@@ -730,15 +731,39 @@ session_start();
             }
 
             /* Målestokk og attributasjon nede på mobil – samme linje */
+            .leaflet-bottom.leaflet-left,
+            .leaflet-bottom.leaflet-right {
+                margin-bottom: 15px !important;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                pointer-events: none; /* Let clicks pass through the container */
+            }
+            
             .leaflet-bottom.leaflet-left {
                 margin-left: 10px !important;
-                margin-bottom: 0 !important;
+                z-index: 1000 !important;
             }
 
             .leaflet-bottom.leaflet-right {
-                margin-right: 0 !important;
-                margin-bottom: 0 !important;
+                margin-right: 10px !important;
             }
+            
+            /* Sørg for at innholdet inni kan klikkes på (f.eks attributeringslenker) */
+            .leaflet-control {
+                pointer-events: auto;
+            }
+
+            /* Unngå at iPhone bunnfane dekker elementer */
+            .leaflet-bottom {
+                padding-bottom: env(safe-area-inset-bottom);
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                bottom: 0;
+            }
+
 
             /* Flytt Fullfør-knappen høyere på mobil for å unngå nettleser-UI */
             #finish-tool-btn {
@@ -1716,15 +1741,19 @@ session_start();
                 padding: 0 5px !important;
             }
 
-            /* Flytt zoom- og locate-knapper opp slik at de ikke dekker attributasjon/målestokk */
-            .leaflet-control-location,
+            /* Flytt locate-knappen over på høyre side over zoom-inn/ut på mobil */
             .leaflet-control-locate {
-                margin-bottom: 30px !important;
-                /* Clear the 22px attribution + 8px margin */
+                position: absolute !important;
+                right: 10px !important;
+                bottom: 100px !important; /* Løftes opp over zoom-kontrollen + attributeringen */
+                margin: 0 !important;
             }
 
             .leaflet-control-zoom {
-                margin-bottom: 10px !important;
+                position: absolute !important;
+                right: 10px !important;
+                bottom: 25px !important; /* Ligger over tekst-attributeringen */
+                margin: 0 !important;
             }
 
             /* Disable heavy effects for better performance on mobile */
@@ -2436,6 +2465,24 @@ session_start();
                             <div class="category-checkbox-item"><input type="checkbox" id="cat-DEFAULT" value="DEFAULT"
                                     checked onchange="handleCatChange(this)"><label for="cat-DEFAULT">📍
                                     Interessepunkter</label></div>
+
+                            <!-- Admin Hidden Layers (Only visible when logged in) -->
+                            <div id="admin-categories"
+                                style="display: none; border-top: 1px solid rgba(239, 68, 68, 0.4); margin-top: 10px; padding-top: 10px;">
+                                <div
+                                    style="font-size: 0.75rem; color: #ef4444; font-weight: bold; margin-bottom: 5px; padding-left: 8px;">
+                                    ADMIN KARTLAG</div>
+                                <div class="category-checkbox-item">
+                                    <input type="checkbox" id="cat-IKKE_VERIFISERT" value="IKKE_VERIFISERT"
+                                        onchange="handleCatChange(this)">
+                                    <label for="cat-IKKE_VERIFISERT">❓ Ikke verifiserte punkter</label>
+                                </div>
+                                <div class="category-checkbox-item">
+                                    <input type="checkbox" id="cat-SJEKKET_IKKE_FUNN" value="SJEKKET_IKKE_FUNN"
+                                        onchange="handleCatChange(this)">
+                                    <label for="cat-SJEKKET_IKKE_FUNN">❌ Sjekket ut men ikke funn</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2479,10 +2526,18 @@ session_start();
 
             <!-- Sidebar Footer with Sync Info -->
             <?php
-            $data_file = 'full_data.json';
-            $last_updated = file_exists($data_file) ? filemtime($data_file) : 0;
-            $needs_sync = (time() - $last_updated) > (7 * 24 * 60 * 60);
-            ?>
+$sync_file = 'last_sync.txt';
+$data_file = 'full_data.json';
+
+if (file_exists($sync_file)) {
+    $last_updated = (int)file_get_contents($sync_file);
+}
+else {
+    $last_updated = file_exists($data_file) ? filemtime($data_file) : 0;
+}
+
+$needs_sync = (time() - $last_updated) > (7 * 24 * 60 * 60);
+?>
             <div
                 style="padding: 15px 24px; border-top: 1px solid var(--glass-border); font-size: 0.75rem; color: var(--text-dim); text-align: center; background: rgba(0,0,0,0.2);">
                 Kartdata sist oppdatert: <span
@@ -2490,17 +2545,19 @@ session_start();
                 <?php if ($needs_sync): ?>
                     <script>                     // Lazy sync: Trigger background update since it's > 7 days                     setTimeout(() => {                         fetch('sync_smart.php?key=vox_cron_auto_7734').then(r => r.text()).then(data => {                             console.log("Automatic KML sync triggered.");                             // Verify success by checking if output contains "Done" or "Success"                             if (data.includes("Done") || data.includes("Success")) {                                 const syncLabel = document.getElementById('last-sync-time');                                 if (syncLabel) syncLabel.innerText = "Nettopp nå (oppdatert)";                             }                         }).catch(e => console.error("Sync failed", e));                     }, 2000);
                     </script>
-                <?php endif; ?>
+                <?php
+endif; ?>
 
                 <?php
-                $last_img_sync_file = 'last_image_sync.txt';
-                $last_img_sync = file_exists($last_img_sync_file) ? (int) file_get_contents($last_img_sync_file) : 0;
-                if ((time() - $last_img_sync) > (7 * 24 * 60 * 60)):
-                    file_put_contents($last_img_sync_file, time());
-                    ?>
+$last_img_sync_file = 'last_image_sync.txt';
+$last_img_sync = file_exists($last_img_sync_file) ? (int)file_get_contents($last_img_sync_file) : 0;
+if ((time() - $last_img_sync) > (7 * 24 * 60 * 60)):
+    file_put_contents($last_img_sync_file, time());
+?>
                     <script>                     fetch('sync_images_trigger.php').catch(e => console.error("Image sync failed", e));
                     </script>
-                <?php endif; ?>
+                <?php
+endif; ?>
 
                 <div style="margin-top: 5px; opacity: 0.6;">Automatisk synkronisering hver uke</div>
                 <div style="margin-top: 25px; opacity: 0.2; cursor: pointer; display: inline-block; padding: 5px; font-weight: 800; font-size: 0.7rem; letter-spacing: 0.05em;"
@@ -2737,8 +2794,9 @@ session_start();
             <button class="modal-close" onclick="closeAdminPinModal()"
                 style="position:absolute; top:10px; right:12px; padding:5px; background:transparent; border:none; color:white; font-size:1.2rem; cursor:pointer;">✕</button>
             <h3 style="margin:0; text-align:center; color:white;">Admin Login</h3>
-            <input type="password" id="admin-pin-input-field" placeholder="PIN" inputmode="numeric"
-                style="padding:10px; border-radius:4px; border:1px solid #4b5563; background:#374151; color:white; width:100%; box-sizing:border-box; text-align:center; font-size:1.5rem; letter-spacing:5px;"
+            <input type="text" id="admin-pin-input-field" placeholder="PIN" inputmode="numeric" autocomplete="off"
+                data-lpignore="true" data-form-type="other" spellcheck="false"
+                style="padding:10px; border-radius:4px; border:1px solid #4b5563; background:#374151; color:white; width:100%; box-sizing:border-box; text-align:center; font-size:1.5rem; letter-spacing:5px; -webkit-text-security: disc;"
                 autofocus>
             <button onclick="submitAdminPin()"
                 style="padding:10px; background:#38bdf8; border:none; border-radius:4px; color:#0b0f19; font-weight:bold; cursor:pointer; font-size:1rem;">Logg
@@ -2811,12 +2869,12 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
 
-    <script src="viewer.js?v=v123"></script>
+    <script src="viewer.js?v=v124"></script>
     <div id="version-tag"
         style="display:block; position:fixed; bottom:5px; right:5px; color:rgba(255,255,255,0.03); font-size:8px; z-index:99999; font-family:sans-serif; pointer-events:none;">
         v117</div>
     <script>document.title = document.title.replace(/\[v\d+\]\s*/, '');</script>
-    <script src="admin_tools.js?v=5" charset="UTF-8"></script>
+    <script src="admin_tools.js?v=7" charset="UTF-8"></script>
     <!-- PWA Install Logic -->
     <script>
         if ('serviceWorker' in navigator) {

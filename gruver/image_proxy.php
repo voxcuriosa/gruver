@@ -1,85 +1,113 @@
 <?php
-// image_proxy.php - Fetches images securely to bypass Mixed Content warnings + Adds Caching
+/**
+ * image_proxy.php - Serves a resized version of an image for mobile performance.
+ * Supports caching to minimize CPU usage.
+ */
 
-// Enable error reporting for debugging (disable in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
+// Basic configuration
+$max_dimension = 2560; // Max width or height for mobile
+$cache_dir = 'assets/cache/';
+$quality = 85;
 
-// Basic security check: Require a 'url' parameter
-if (!isset($_GET['url']) || empty($_GET['url'])) {
+// Ensure cache directory exists
+if (!file_exists($cache_dir)) {
+    mkdir($cache_dir, 0777, true);
+}
+
+// Get requested image
+$img_path = isset($_GET['img']) ? $_GET['img'] : null;
+if (!$img_path || !file_exists($img_path)) {
+    header("HTTP/1.1 404 Not Found");
+    exit("Image not found.");
+}
+
+// Security: Ensure the image is in the assets/ directory
+$real_path = realpath($img_path);
+$allowed_dir = realpath('assets/');
+if (strpos($real_path, $allowed_dir) !== 0) {
+    header("HTTP/1.1 403 Forbidden");
+    exit("Access denied.");
+}
+
+// Get image info
+$info = getimagesize($img_path);
+if (!$info) {
     header("HTTP/1.1 400 Bad Request");
-    die("Error: No URL provided.");
+    exit("Invalid image file.");
 }
 
-$url = $_GET['url'];
+$width = $info[0];
+$height = $info[1];
+$mime = $info['mime'];
 
-// Validate URL (basic check)
-if (!filter_var($url, FILTER_VALIDATE_URL)) {
-    header("HTTP/1.1 400 Bad Request");
-    die("Error: Invalid URL.");
-}
-
-// CACHING SETUP
-$cacheDir = __DIR__ . '/cache'; // Create a 'cache' folder in the same directory
-if (!file_exists($cacheDir)) {
-    mkdir($cacheDir, 0755, true);
-}
-
-// Create a unique filename for the cache based on the URL
-$cacheKey = md5($url);
-$cacheFile = $cacheDir . '/' . $cacheKey;
-$cacheTime = 60 * 60 * 24 * 7; // Cache for 1 week (seconds)
-
-// CHECK CACHE
-if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)) {
-    // Serve from cache
-    $contentType = mime_content_type($cacheFile);
-    header("Content-Type: $contentType");
-    header("X-Cache: HIT");
-    readfile($cacheFile);
+// If image is already small enough, serve it directly
+if ($width <= $max_dimension && $height <= $max_dimension) {
+    header("Content-Type: " . $mime);
+    readfile($img_path);
     exit;
 }
 
-// IF NOT IN CACHE, FETCH IT
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Handle potential SSL issues with old sources
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-$imageData = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
-$curlError = curl_error($ch);
-
-curl_close($ch);
-
-if ($httpCode == 200 && $imageData) {
-    // Save to cache
-    file_put_contents($cacheFile, $imageData);
-
-    // Set proper headers and output image
-    header("Content-Type: $contentType");
-    header("X-Cache: MISS");
-    echo $imageData;
-
-    // --- GARBAGE COLLECTION (1% chance) ---
-    if (rand(1, 100) === 1) {
-        $files = glob($cacheDir . '/*');
-        $now = time();
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                if ($now - filemtime($file) > (60 * 60 * 24 * 30)) { // 30 days
-                    unlink($file);
-                }
-            }
-        }
-    }
+// Calculate new dimensions
+$ratio = $width / $height;
+if ($width > $height) {
+    $new_width = $max_dimension;
+    $new_height = round($max_dimension / $ratio);
 } else {
-    // Return a placeholder or error
-    header("HTTP/1.1 404 Not Found");
-    echo "Error fetching image: HTTP $httpCode. " . ($curlError ? "Curl Error: $curlError" : "");
+    $new_height = $max_dimension;
+    $new_width = round($max_dimension * $ratio);
 }
+
+// Cache file name based on original path and max dimension
+$cache_name = md5($img_path . $max_dimension) . (strpos($mime, 'png') !== false ? '.png' : '.jpg');
+$cache_file = $cache_dir . $cache_name;
+
+// Serve from cache if it exists and is newer than source
+if (file_exists($cache_file) && filemtime($cache_file) > filemtime($img_path)) {
+    header("Content-Type: " . ($new_width === $width ? $mime : (strpos($cache_name, '.png') !== false ? 'image/png' : 'image/jpeg')));
+    readfile($cache_file);
+    exit;
+}
+
+// Resize using GD
+ini_set('memory_limit', '512M'); // Increase memory limit for giant images
+
+$src = null;
+if ($mime == 'image/jpeg') {
+    $src = imagecreatefromjpeg($img_path);
+} elseif ($mime == 'image/png') {
+    $src = imagecreatefrompng($img_path);
+} elseif ($mime == 'image/webp') {
+    $src = imagecreatefromwebp($img_path);
+}
+
+if (!$src) {
+    header("HTTP/1.1 500 Internal Server Error");
+    exit("Failed to process image.");
+}
+
+$dst = imagecreatetruecolor($new_width, $new_height);
+
+// Preserve transparency for PNG
+if ($mime == 'image/png') {
+    imagealphablending($dst, false);
+    imagesavealpha($dst, true);
+    $transparent = imagecolorallocatealpha($dst, 255, 255, 255, 127);
+    imagefilledrectangle($dst, 0, 0, $new_width, $new_height, $transparent);
+}
+
+imagecopyresampled($dst, $src, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+// Save and serve
+if (strpos($cache_name, '.png') !== false) {
+    header("Content-Type: image/png");
+    imagepng($dst, $cache_file, 8); // PNG compression 0-9
+    imagepng($dst);
+} else {
+    header("Content-Type: image/jpeg");
+    imagejpeg($dst, $cache_file, $quality);
+    imagejpeg($dst, null, $quality);
+}
+
+imagedestroy($src);
+imagedestroy($dst);
 ?>

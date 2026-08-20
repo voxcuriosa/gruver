@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScanExtension - Brukerveiledning & Hjelpesenter</title>
+  <link rel="stylesheet" href="help.css">
+</head>
+<body>
+  <header class="help-header">
+    <div class="header-container">
+      <div class="header-left">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+            <path d="M6 6h10"></path>
+            <path d="M6 10h10"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 data-i18n="docTitle">ScanExtension Hjelpesenter</h1>
+          <p class="subtitle" data-i18n="docSubtitle">Komplett guide, tastatursnarveier og tips for digital skanning</p>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="lang-switch">
+          <button type="button" id="lang-no" class="lang-btn active">NO</button>
+          <button type="button" id="lang-en" class="lang-btn">EN</button>
+        </div>
+        <button id="btn-close-help" class="btn-close" data-i18n="btnClose">Lukk</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="help-content">
+    <!-- Quick Start -->
+    <section class="help-section">
+      <h2 data-i18n="secQuickStart">⚡ Hurtigstart (3 enkle steg)</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3 data-i18n="step1Title">Åpne boken i nettleseren</h3>
+          <p data-i18n="step1Desc">Gå til Smartbok, Unibok, Pendel, Brettboka, Kindle eller dokumentet du vil skanne i Chrome.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3 data-i18n="step2Title">Velg modus & trykk Start</h3>
+          <p data-i18n="step2Desc">Åpne ScanExtension fra verktøylinjen, velg ønsket modus (f.eks. «Helt kapittel») og trykk <b>Start Skanning</b>.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3 data-i18n="step3Title">Ferdig PDF lagres automatisk</h3>
+          <p data-i18n="step3Desc">Skanneren blar automatisk gjennom boken og laster ned en ferdig, søkbar PDF med usynlig tekstlag direkte til datamaskinen din.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scan Modes -->
+    <section class="help-section">
+      <h2 data-i18n="secModes">🎯 De 4 Skannemodusene</h2>
+      <div class="modes-grid">
+        <div class="mode-info-card">
+          <div class="mode-badge" data-i18n="modeAutoChapBadge">Helt kapittel</div>
+          <h3 data-i18n="modeAutoChapTitle">Automatisk kapittelskanning</h3>
+          <p data-i18n="modeAutoChapDesc">Ruller eller blar gjennom hele kapittelet og stopper automatisk når bunnen eller neste hovedkapittel nås. Kutter automatisk bort starten på neste kapittel slik at PDF-en slutter 100% rent.</p>
+        </div>
+        <div class="mode-info-card">
+          <div class="mode-badge" data-i18n="modeContinuousBadge">Løpende</div>
+          <h3 data-i18n="modeContinuousTitle">Manuell start / stopp</h3>
+          <p data-i18n="modeContinuousDesc">Skanner sammenhengende i eget tempo til du selv trykker på den store røde <b>«STOPP & LAST NED PDF»</b>-knappen.</p>
+        </div>
+        <div class="mode-info-card">
+          <div class="mode-badge" data-i18n="modeSubchapBadge">Undertema</div>
+          <h3 data-i18n="modeSubchapTitle">Stopp ved undertittel</h3>
+          <p data-i18n="modeSubchapDesc">Skanner gjennom et bestemt avsnitt eller delkapittel og avslutter automatisk når neste store overskrift dukker opp.</p>
+        </div>
+        <div class="mode-info-card">
+          <div class="mode-badge" data-i18n="modeFixedBadge">Fast antall</div>
+          <h3 data-i18n="modeFixedTitle">Spesifikt sideantall</h3>
+          <p data-i18n="modeFixedDesc">Lar deg oppgi et nøyaktig antall opptak (f.eks. 15 sider) for kontrollerte utdrag.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keyboard Shortcuts -->
+    <section class="help-section">
+      <h2 data-i18n="secShortcuts">⌨️ Globale Tastatursnarveier</h2>
+      <div class="shortcuts-table-wrapper">
+        <table class="shortcuts-table">
+          <thead>
+            <tr>
+              <th data-i18n="thAction">Handling</th>
+              <th>Windows & Linux</th>
+              <th>Mac</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="actionStartStop">Start / Stopp skanning</td>
+              <td><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd></td>
+              <td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> eller <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd></td>
+            </tr>
+            <tr>
+              <td data-i18n="actionPause">Pause / Fortsett</td>
+              <td><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></td>
+              <td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> eller <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd></td>
+            </tr>
+            <tr>
+              <td data-i18n="actionGallery">Åpne Galleri / Forhåndsvisning</td>
+              <td><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd></td>
+              <td><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> eller <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note" data-i18n="shortcutNote">Tips: Du kan alltids endre snarveiene ved å åpne <code>chrome://extensions/shortcuts</code> i nettleseren din.</p>
+    </section>
+
+    <!-- Supported Platforms -->
+    <section class="help-section">
+      <h2 data-i18n="secPlatforms">📚 Støttede Plattformer</h2>
+      <div class="platform-list">
+        <div class="platform-item">
+          <strong>Smartbok (Gyldendal / Kitaboo):</strong>
+          <span data-i18n="platSmartbok">2-siders oppslag støttes med automatisk beskjæring av nettlesermarger, kapittelgjenkjenning og isolerte tekstspalter.</span>
+        </div>
+        <div class="platform-item">
+          <strong>Unibok (Cappelen Damm):</strong>
+          <span data-i18n="platUnibok">Vertikal rulling med sømløs overlapping og matematisk piksel-søm.</span>
+        </div>
+        <div class="platform-item">
+          <strong>Pendel.no & Skolestudio:</strong>
+          <span data-i18n="platPendel">Gyldendals nye læringsplattformer gjenkjennes automatisk med optimal vertikal rulling.</span>
+        </div>
+        <div class="platform-item">
+          <strong>Brettboka.no:</strong>
+          <span data-i18n="platBrettboka">Automatisk blaing og tilpasset side-ramme for e-bøker på Brettboka.</span>
+        </div>
+        <div class="platform-item">
+          <strong>Amazon Kindle Cloud Reader:</strong>
+          <span data-i18n="platKindle">Støtter automatisk blaing i Kindle Cloud Reader (`read.amazon.com`).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ & Troubleshooting -->
+    <section class="help-section">
+      <h2 data-i18n="secFAQ">❓ Ofte Stilte Spørsmål (FAQ)</h2>
+      <div class="faq-accordion">
+        <details class="faq-item">
+          <summary data-i18n="faq1Q">Hvorfor er PDF-en søkbar med Cmd+F / Ctrl+F?</summary>
+          <div class="faq-ans" data-i18n="faq1A">ScanExtension legger inn et mikroskopisk, usynlig tekstlag nøyaktig der ordene står på boksiden. Dette gjør at du kan søke i teksten, markere enkeltkolonner og kopiere tekst til Word akkurat som i et vanlig digitalt dokument.</div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq2Q">Hvordan velger jeg mindre filstørrelse?</summary>
+          <div class="faq-ans" data-i18n="faq2A">I menyen eller Galleriet kan du velge <b>«⚡ Kompakt (150 DPI)»</b>. Dette reduserer filstørrelsen med opptil 80-90%, perfekt for deling på e-post, Teams eller Google Classroom.</div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq3Q">Hvordan sletter jeg en side før PDF lagres?</summary>
+          <div class="faq-ans" data-i18n="faq3A">Huk av for <i>«Forhåndsvis og slett sider før PDF lagres»</i> i popup-menyen, eller trykk på <b>«[👁 Se / Rediger opptak]»</b> underveis. I Galleriet trykker du bare på den røde <b>Slett</b>-knappen på siden du vil fjerne.</div>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq4Q">Lagres noe data eksternt?</summary>
+          <div class="faq-ans" data-i18n="faq4A">Nei, absolutt ingenting. ScanExtension kjører 100% lokalt i din egen nettleser. Ingen bilder, tekster eller filer sendes noen gang til eksterne servere.</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Support Footer -->
+    <section class="help-section support-box">
+      <h3 data-i18n="secSupportTitle">Trenger du hjelp eller har forslag?</h3>
+      <p data-i18n="secSupportDesc">Ta gjerne kontakt med oss direkte via e-post:</p>
+      <a href="mailto:borchgrevink@gmail.com" class="support-email-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+        borchgrevink@gmail.com
+      </a>
+      <p style="margin-top: 12px; font-size: 0.85rem;">
+        <a href="https://voxcuriosa.no/scanner/privacy.html" target="_blank" style="color: var(--primary); text-decoration: none;" data-i18n="privacyLink">Personvernerklæring</a> • 
+        <a href="https://voxcuriosa.no/scanner/" target="_blank" style="color: var(--primary); text-decoration: none;">ScanExtension Portal</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="help.js"></script>
+</body>
+</html>

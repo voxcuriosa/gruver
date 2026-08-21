@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       faq3A: "Huk av for «Forhåndsvis og slett sider før PDF lagres» i popup-menyen, eller trykk på «[👁 Se / Rediger opptak]» underveis. I Galleriet trykker du bare på den røde Slett-knappen på siden du vil fjerne.",
       faq4Q: "Lagres noe data eksternt?",
       faq4A: "Nei, absolutt ingenting. ScanExtension kjører 100% lokalt i din egen nettleser. Ingen bilder, tekster eller filer sendes noen gang til eksterne servere.",
+      faq5Q: "Hvordan fungerer Klippeverktøyet (Snipping Tool)?",
+      faq5A: "Trykk på «✂️ Klipp» i popup-menyen eller bruk snarveien (Option+Shift+C / Alt+Shift+C). Dra et rektangel over ønsket figur, tabell eller tekst for å kopiere bildet direkte til utklippstavlen (Cmd+V), hente ut kun teksten, eller laste ned som PNG.",
       secSupportTitle: "Trenger du hjelp eller har forslag?",
       secSupportDesc: "Ta gjerne kontakt med oss direkte via e-post:",
       privacyLink: "Personvernerklæring"
@@ -88,6 +90,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       faq3A: "Enable \"Preview and delete pages before saving PDF\" in the popup menu, or click \"[👁 View / Edit Captures]\". In the Gallery, click the red Delete button on any page you wish to remove.",
       faq4Q: "Is any data stored externally?",
       faq4A: "No, absolutely none. ScanExtension runs 100% locally in your own browser session. No images, text extracts, or files are ever sent to external servers.",
+      faq5Q: "How does the Snippet Tool work?",
+      faq5A: "Click \"✂️ Clip\" in the popup menu or use the shortcut (Option+Shift+C / Alt+Shift+C). Drag a selection box over any diagram, table, or text to copy the image straight to your clipboard (Cmd+V), copy only the selected text, or download as PNG.",
       secSupportTitle: "Need help or have suggestions?",
       secSupportDesc: "Feel free to reach out to us directly via email:",
       privacyLink: "Privacy Policy"

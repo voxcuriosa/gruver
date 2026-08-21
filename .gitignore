@@ -18,3 +18,8 @@ Thumbs.db
 # Stripe CLI
 stripe_cli/
 
+# Sensitive config and secrets
+gruver/config.php
+config.php
+.env
+*.env

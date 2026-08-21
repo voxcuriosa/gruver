@@ -1106,9 +1106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(["error" => "Unauthorized"]);
             exit;
         }
+        if (file_exists(__DIR__ . '/config.php')) {
+            require_once __DIR__ . '/config.php';
+        }
 
-        $geminiKey = "AIzaSyC1Wsd417FPQ7DHR0EaXrQGu6O_bzgX7ZU";
-        $openaiKey = "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";
+        $geminiKey = defined('GEMINI_API_KEY') ? GEMINI_API_KEY : (getenv('GEMINI_API_KEY') ?: '');
+        $openaiKey = defined('OPENAI_API_KEY') ? OPENAI_API_KEY : (getenv('OPENAI_API_KEY') ?: '');
 
         $prompt = $input['prompt'];
         $model = isset($input['model']) ? $input['model'] : 'gemini-1.5-pro';

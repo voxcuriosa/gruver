@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       faq4Q: "Lagres noe data eksternt?",
       faq4A: "Nei, absolutt ingenting. ScanExtension kjører 100% lokalt i din egen nettleser. Ingen bilder, tekster eller filer sendes noen gang til eksterne servere.",
       faq5Q: "Hvordan fungerer Klippeverktøyet (Snipping Tool)?",
-      faq5A: "Trykk på «✂️ Klipp» i popup-menyen eller bruk snarveien (Option+Shift+C / Alt+Shift+C). Dra et rektangel over ønsket figur, tabell eller tekst for å kopiere bildet direkte til utklippstavlen (Cmd+V), hente ut kun teksten, eller laste ned som PNG.",
+      faq5A: "Trykk på «✂️ Klipp» i popup-menyen eller bruk snarveien (Option+Shift+C / Alt+Shift+C). Dra et rektangel over ønsket figur, tabell eller tekst. Du kan sladde personopplysninger med kraftig blur/mosaikk, tegne med rød penn eller markere med gul overstrykingstusj før du kopierer bildet rett til utklippstavlen (Cmd+V), henter ut kun teksten, eller laster ned som PNG.",
       secSupportTitle: "Trenger du hjelp eller har forslag?",
       secSupportDesc: "Ta gjerne kontakt med oss direkte via e-post:",
       privacyLink: "Personvernerklæring"
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       faq4Q: "Is any data stored externally?",
       faq4A: "No, absolutely none. ScanExtension runs 100% locally in your own browser session. No images, text extracts, or files are ever sent to external servers.",
       faq5Q: "How does the Snippet Tool work?",
-      faq5A: "Click \"✂️ Clip\" in the popup menu or use the shortcut (Option+Shift+C / Alt+Shift+C). Drag a selection box over any diagram, table, or text to copy the image straight to your clipboard (Cmd+V), copy only the selected text, or download as PNG.",
+      faq5A: "Click \"✂️ Clip\" in the popup menu or use the shortcut (Option+Shift+C / Alt+Shift+C). Drag a selection box over any diagram, table, or text. You can redact personal info with heavy mosaic blur, sketch with the red pen, or highlight with yellow highlighter before copying the image straight to your clipboard (Cmd+V), extracting text, or saving as PNG.",
       secSupportTitle: "Need help or have suggestions?",
       secSupportDesc: "Feel free to reach out to us directly via email:",
       privacyLink: "Privacy Policy"

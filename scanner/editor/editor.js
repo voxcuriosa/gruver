@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (currentBox) {
         currentBox.remove();
         currentBox = null;
+      }
       const guide = document.getElementById('scanext-snip-guide');
       if (guide) guide.style.opacity = '0';
 

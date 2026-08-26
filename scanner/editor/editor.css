@@ -1,0 +1,67 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #0b0f19;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  user-select: none;
+}
+
+.editor-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.editor-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: fill;
+  pointer-events: none;
+  display: block;
+}
+
+.editor-guide-badge {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(12px);
+  color: #f8fafc;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+  font-weight: 500;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.editor-guide-badge kbd {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 11px;
+}
+
+.editor-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  cursor: crosshair;
+  background: rgba(0, 0, 0, 0.18);
+}

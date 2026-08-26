@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     document.addEventListener('keydown', onKeyDown);
 
-    overlay.addEventListener('mousedown', (e) => {
+    overlay.addEventListener('pointerdown', (e) => {
       if (e.target !== overlay) return;
 
       if (currentToolbar) {
@@ -57,19 +57,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       currentBox = document.createElement('div');
       currentBox.className = 'scanext-snip-selection';
-      currentBox.style.cssText = `position:absolute!important;border:2px solid #38bdf8!important;box-shadow:0 0 0 99999px rgba(0,0,0,0.18)!important;pointer-events:auto!important;border-radius:2px!important;background:transparent!important;left:${startX}px!important;top:${startY}px!important;width:0px!important;height:0px!important;box-sizing:border-box!important;`;
-      currentBox.addEventListener('mousedown', (evt) => evt.stopPropagation());
+      currentBox.style.cssText = `position:absolute!important;border:2px solid #38bdf8!important;box-shadow:0 0 0 99999px rgba(0,0,0,0.18)!important;pointer-events:none!important;border-radius:2px!important;background:transparent!important;left:${startX}px!important;top:${startY}px!important;width:0px!important;height:0px!important;box-sizing:border-box!important;`;
 
       const dim = document.createElement('div');
       dim.className = 'scanext-snip-dimensions';
-      dim.style.cssText = 'position:absolute;top:-24px;left:0;background:#0f172a;color:#38bdf8;font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;border:1px solid rgba(56,189,248,0.4);white-space:nowrap;font-family:-apple-system,sans-serif;';
+      dim.style.cssText = 'position:absolute;top:-24px;left:0;background:#0f172a;color:#38bdf8;font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;border:1px solid rgba(56,189,248,0.4);white-space:nowrap;font-family:-apple-system,sans-serif;pointer-events:none;';
       dim.textContent = '0 x 0 px';
       currentBox.appendChild(dim);
 
       overlay.appendChild(currentBox);
+
+      try { overlay.setPointerCapture(e.pointerId); } catch (err) {}
     });
 
-    overlay.addEventListener('mousemove', (e) => {
+    window.addEventListener('pointermove', (e) => {
       if (!isDrawing || !currentBox) return;
 
       const currentX = e.clientX;
@@ -98,9 +99,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    overlay.addEventListener('mouseup', (e) => {
+    window.addEventListener('pointerup', (e) => {
       if (!isDrawing || !currentBox) return;
       isDrawing = false;
+
+      try { overlay.releasePointerCapture(e.pointerId); } catch (err) {}
 
       const currentX = e.clientX;
       const currentY = e.clientY;
@@ -117,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
+      currentBox.style.pointerEvents = 'auto';
       finalRect = { x, y, w, h };
 
       // Initialize Interactive Canvas Inside Selection Box Wrap

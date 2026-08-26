@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YYPRYXPN70"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YYPRYXPN70');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curiosa Skoleassistent - Chrome-utvidelse</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="blob"></div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Tilbake til Portal</a>
+        <h1>Curiosa Skoleassistent</h1>
+        <p class="subtitle">1-klikks oppgavegenerator, strukturert pensum-PDF og lesestøtte for Chrome</p>
+
+        <!-- App Screen -->
+        <div id="app-screen" class="app-card">
+            <div>
+                <h2 style="margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px;">
+                    Curiosa Skoleassistent 
+                    <span style="font-size: 0.8rem; background: rgba(16,185,129,0.15); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: 600;">v1.0.0</span>
+                </h2>
+                <p style="color: #cbd5e1; line-height: 1.5; margin-bottom: 20px;">
+                    Den offisielle Chrome-utvidelsen for Curiosa. Gjør enhver nettside eller fagartikkel om til skreddersydde flervalgs-, hulltekst-, sorterings- og refleksjonsoppgaver med KI, eller generer strukturerte pensum-PDF-er rett inn i elevenes fagstoffarkiv.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>1-Klikks Oppgaver</h3>
+                    <p>Forvandle artikler på NRK, NDLA og SNL til fagoppgaver direkte i dine Curiosa-temaer.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Pensum-PDF</h3>
+                    <p>Lag lekre, strukturerte PDF-er med figurer og overskrifter for elevenes notatarkiv.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Lesestøtte</h3>
+                    <p>Dobbeltklikk på vanskelige ord på en hvilken som helst nettside for synonymer og opplesing.</p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0;">
+                <a href="https://chromewebstore.google.com/detail/curiosa-skoleassistent" target="_blank" class="action-btn" style="flex: 1.5; min-width: 240px; font-size: 1.05rem;" id="webstore-btn">
+                    Legg til i Chrome (Chrome Web Store)
+                </a>
+                <a href="curiosa-skoleassistent.zip" download="curiosa-skoleassistent.zip" class="action-btn secondary" style="flex: 1; min-width: 180px;">
+                    Last ned .ZIP (v1.0.0)
+                </a>
+                <a href="https://curiosa.no/#/admin?tab=help" class="action-btn secondary" style="flex: 1; min-width: 160px; background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.3);">
+                    📖 Brukerveiledning
+                </a>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <h3 style="color: #fff; margin-bottom: 12px;">Installasjon:</h3>
+                
+                <div class="guide-step">
+                    <div class="step-num">1</div>
+                    <div class="step-text"><b>Fra Chrome Web Store (Kommer snart):</b> Trykk på den grønne knappen over for 1-klikk-installasjon med automatiske oppdateringer i nettleseren.</div>
+                </div>
+
+                <div class="guide-step">
+                    <div class="step-num">2</div>
+                    <div class="step-text"><b>Manuell installasjon (ZIP nå):</b> Last ned <code>curiosa-skoleassistent.zip</code>, pakk ut mappen, åpne <code>chrome://extensions</code> i Chrome, slå på <i>Utviklermodus</i> øverst til høyre, og trykk <i>«Last inn uemballert»</i>.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

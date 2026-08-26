@@ -25,20 +25,8 @@
         <h1>Bok & PDF Skanner</h1>
         <p class="subtitle">ScanExtension - Automatisk sideskanning og søkbar PDF</p>
 
-        <!-- PIN Screen -->
-        <div id="auth-screen" class="auth-screen">
-            <p style="text-align: center; color: #ccc;">Skriv inn PIN-kode for å få tilgang til utvidelsen.</p>
-            <input type="password" id="pin-input" placeholder="PIN (4 siffer)" maxlength="4" autocomplete="one-time-code">
-            <button id="unlock-btn">Lås opp</button>
-            <div class="contact-info">
-                Kontakt oss på
-                <span id="email-placeholder" class="email-reveal" onclick="revealEmail()">[klikk for å vise e-post]</span>
-                for å få PIN-kode.
-            </div>
-        </div>
-
         <!-- App Screen -->
-        <div id="app-screen" class="app-card hidden">
+        <div id="app-screen" class="app-card">
             <div>
                 <h2 style="margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px;">
                     ScanExtension 

@@ -1,20 +1,53 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const bgImg = document.getElementById('editor-bg-img');
   const overlay = document.getElementById('scanext-snipper-overlay');
+  const guide = document.getElementById('scanext-snip-guide');
 
-  const data = await chrome.storage.local.get('desktopCapture');
-  if (!data || !data.desktopCapture) {
-    alert('Ingen skjermdata funnet.');
+  let stream = null;
+  try {
+    stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { cursor: 'never', displaySurface: 'monitor' },
+      audio: false
+    });
+  } catch (err) {
+    // User cancelled the system share dialog
     window.close();
     return;
   }
 
-  const pristineImg = new Image();
-  pristineImg.onload = () => {
-    bgImg.src = data.desktopCapture;
-    initEditorSnipper(pristineImg);
-  };
-  pristineImg.src = data.desktopCapture;
+  if (!stream) {
+    window.close();
+    return;
+  }
+
+  try {
+    const video = document.createElement('video');
+    video.srcObject = stream;
+    await video.play();
+    // Wait for the macOS/Windows share dialog to finish closing completely
+    await new Promise(r => setTimeout(r, 600));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth || window.screen.width;
+    canvas.height = video.videoHeight || window.screen.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0);
+
+    stream.getTracks().forEach(t => t.stop());
+
+    const dataUrl = canvas.toDataURL('image/png');
+    const pristineImg = new Image();
+    pristineImg.onload = () => {
+      bgImg.src = dataUrl;
+      initEditorSnipper(pristineImg);
+    };
+    pristineImg.src = dataUrl;
+  } catch (e) {
+    console.error('Frame capture error:', e);
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    window.close();
+    return;
+  }
 
   function initEditorSnipper(imgSource) {
     let isDrawing = false;
@@ -46,7 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentBox.remove();
         currentBox = null;
       }
-      const guide = document.getElementById('scanext-snip-guide');
       if (guide) guide.style.opacity = '0';
 
       isDrawing = true;

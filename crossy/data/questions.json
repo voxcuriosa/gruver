@@ -1,0 +1,189 @@
+{
+  "topics": [
+    {
+      "id": "antikken",
+      "title": "Antikken (Hellas & Roma)",
+      "description": "Demokratiet i Athen, Romerrikets vekst og fall, og antikkens filosofi.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Hvilken gresk bystat er kjent som demokratiets vugge?",
+          "options": ["Sparta", "Athen", "Korint", "Theben"],
+          "answer": 1
+        },
+        {
+          "id": 2,
+          "question": "Hvem ble utnevnt til diktator på livstid i Roma i 44 f.Kr.?",
+          "options": ["Julius Cæsar", "Augustus", "Nero", "Marcus Aurelius"],
+          "answer": 0
+        },
+        {
+          "id": 3,
+          "question": "Hva het den romerske fredsperioden som varte i ca. 200 år?",
+          "options": ["Pax Romana", "Pax Augusta", "Magna Pax", "Pax Graeca"],
+          "answer": 0
+        },
+        {
+          "id": 4,
+          "question": "Hvilken filosof var læremesteren til Aleksander den store?",
+          "options": ["Sokrates", "Platon", "Aristoteles", "Pythagoras"],
+          "answer": 2
+        },
+        {
+          "id": 5,
+          "question": "Hva het forsamlingen der borgerne i Athen stemte over lover?",
+          "options": ["Folkeforsamlingen (Ekklesia)", "Senatet", "Tribunen", "Oraklet"],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "id": "vikingtid",
+      "title": "Vikingtid & Middelalder",
+      "description": "Vikingtokt, rikssamling i Norge, Svartedauden og høymiddelalderen.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Hvilket årstall regnes tradisjonelt som starten på vikingtiden etter angrepet på Lindisfarne?",
+          "options": ["793", "872", "1066", "995"],
+          "answer": 0
+        },
+        {
+          "id": 2,
+          "question": "Hvilket slag i 872 regnes tradisjonelt som Harald Hårfagres samling av Norge?",
+          "options": ["Slaget ved Stiklestad", "Slaget i Hafrsfjord", "Slaget ved Svolder", "Slaget ved Stamford Bridge"],
+          "answer": 1
+        },
+        {
+          "id": 3,
+          "question": "Hvilken konge falt i slaget ved Stiklestad i 1030 og ble Norges helgenkonge?",
+          "options": ["Olav Tryggvason", "Olav den hellige (Haraldsson)", "Harald Hardråde", "Magnus den gode"],
+          "answer": 1
+        },
+        {
+          "id": 4,
+          "question": "Når ankom Svartedauden Norge (Bergen)?",
+          "options": ["1349", "1214", "1492", "1319"],
+          "answer": 0
+        },
+        {
+          "id": 5,
+          "question": "Hva het unionen mellom Danmark, Norge og Sverige etablert i 1397?",
+          "options": ["Hanseatforbundet", "Kalmarunionen", "Nordisk Råd", "Kieltraktaten"],
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "id": "revolusjoner",
+      "title": "Opplysningstid & 1814",
+      "description": "Den amerikanske og franske revolusjon, den industrielle revolusjon og Grunnloven på Eidsvoll.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Hvilket år ble den amerikanske uavhengighetserklæringen vedtatt?",
+          "options": ["1776", "1789", "1814", "1750"],
+          "answer": 0
+        },
+        {
+          "id": 2,
+          "question": "Hvilken hendelse i Paris regnes som starten på den franske revolusjon i 1789?",
+          "options": ["Henrettelsen av kongen", "Stormingen av Bastillen", "Kvinnetoget til Versailles", "Skrekkveldet"],
+          "answer": 1
+        },
+        {
+          "id": 3,
+          "question": "På hvilken dato ble Norges Grunnlov undertegnet på Eidsvoll?",
+          "options": ["17. mai 1814", "4. november 1814", "7. juni 1905", "14. januar 1814"],
+          "answer": 0
+        },
+        {
+          "id": 4,
+          "question": "Hvilket land startet den industrielle revolusjonen på midten av 1700-tallet?",
+          "options": ["Tyskland", "Storbritannia", "Frankrike", "USA"],
+          "answer": 1
+        },
+        {
+          "id": 5,
+          "question": "Hvem formulerte maktfordelingsprinsippet (lovgivende, utøvende, dømmende)?",
+          "options": ["John Locke", "Montesquieu", "Voltaire", "Rousseau"],
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "id": "verdenskrig",
+      "title": "1. & 2. verdenskrig",
+      "description": "Skyttergravskrig, mellomkrigstid, invasjonen av Norge og frigjøringen.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Hvilket attentat i 1914 utløste første verdenskrig?",
+          "options": ["Skuddene i Sarajevo", "Senkingen av Lusitania", "Kuppet i München", "Angrepet på Pearl Harbor"],
+          "answer": 0
+        },
+        {
+          "id": 2,
+          "question": "Når ble Norge invadert av Nazi-Tyskland under Operasjon Weserübung?",
+          "options": ["9. april 1940", "1. september 1939", "8. mai 1945", "22. juni 1941"],
+          "answer": 0
+        },
+        {
+          "id": 3,
+          "question": "Hvilken festning senket den tyske krysseren 'Blücher' i Drøbaksundet?",
+          "options": ["Akershus festning", "Oscarsborg festning", "Fredriksten festning", "Bergenhus festning"],
+          "answer": 1
+        },
+        {
+          "id": 4,
+          "question": "Hva het den massive allierte invasjonen i Normandie 6. juni 1944?",
+          "options": ["D-dagen (Operation Overlord)", "Operasjon Barbarossa", "Slaget ved Stalingrad", "Operasjon Market Garden"],
+          "answer": 0
+        },
+        {
+          "id": 5,
+          "question": "Hvilken norsk sabotasjeaksjon på Rjukan i 1943 hindret tysk atomvåpenutvikling?",
+          "options": ["Tungtvannsaksjonen", "Gunnarsby-aksjonen", "Pelle-gruppens sabotasje", "Osvald-gruppens angrep"],
+          "answer": 0
+        }
+      ]
+    },
+    {
+      "id": "kaldkrig",
+      "title": "Den kalde krigen & Nyere tid",
+      "description": "Supermaktsrivalisering, Cubakrisen, Berlinmuren og Norges oljealder.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Hva kalte Winston Churchill det symbolske og fysiske skillet gjennom Europa under den kalde krigen?",
+          "options": ["Jernteppet", "Berlinmuren", "Atlanterhavsvollen", "Sikkerhetsbeltet"],
+          "answer": 0
+        },
+        {
+          "id": 2,
+          "question": "Hvilket årstall falt Berlinmuren, som markerte slutten på den kalde krigen?",
+          "options": ["1989", "1991", "1980", "1975"],
+          "answer": 0
+        },
+        {
+          "id": 3,
+          "question": "I hvilket år ble det første store oljefunnet (Ekofisk) gjort på norsk sokkel?",
+          "options": ["1969", "1975", "1960", "1982"],
+          "answer": 0
+        },
+        {
+          "id": 4,
+          "question": "Hvilken forsvarsallianse ble Norge medlem av i 1949?",
+          "options": ["Warszawapakten", "NATO", "FN", "EU"],
+          "answer": 1
+        },
+        {
+          "id": 5,
+          "question": "Hvilken sovjetisk leder innførte reformene 'glasnost' (åpenhet) og 'perestrojka' (omstrukturering)?",
+          "options": ["Mikhail Gorbatsjov", "Nikita Khrusjtsjov", "Leonid Bresjnev", "Vladimir Lenin"],
+          "answer": 0
+        }
+      ]
+    }
+  ]
+}

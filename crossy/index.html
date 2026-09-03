@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tidskrøll - Crossy History | VoxCuriosa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+
+<div class="game-container">
+    <!-- HUD Header -->
+    <div class="hud" id="hud" style="display: none;">
+        <div class="hud-badge">Poeng: <span id="hud-score" style="color: #00f2ff;">0</span></div>
+        <div class="hud-badge" id="hud-lives">❤️❤️❤️</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="game-toast"></div>
+
+    <!-- Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- 1. PIN Lock Screen -->
+    <div class="overlay" id="auth-screen">
+        <h1>🔒 Tidskrøll</h1>
+        <p class="subtitle">Skriv inn PIN-kode for å spille (6666):</p>
+        <div style="width: 100%; max-width: 280px;">
+            <input type="password" id="pin-input" placeholder="Tast 4 siffer..." maxlength="6" 
+                style="width: 100%; padding: 14px; text-align: center; font-size: 1.4rem; letter-spacing: 5px; background: #1a1c24; border: 2px solid var(--primary); border-radius: 10px; color: #fff; margin-bottom: 15px;">
+            <button class="btn-play" id="unlock-btn">LÅS OPP ⚡</button>
+            <p id="pin-error" style="color: #ef4444; font-size: 0.85rem; margin-top: 10px; display: none;">Feil PIN-kode. Prøv igjen.</p>
+        </div>
+    </div>
+
+    <!-- 2. Start / Character Select Screen -->
+    <div class="overlay hidden" id="start-screen">
+        <h1>⏳ TIDSKRØLL</h1>
+        <p class="subtitle">Kryss veier og elver gjennom historien!</p>
+
+        <p style="font-size: 0.85rem; color: #00f2ff; font-weight: bold; margin-bottom: 6px; text-align: left; width: 100%;">1. VELG FIGUR:</p>
+        <div class="char-grid" id="char-grid"></div>
+
+        <p style="font-size: 0.85rem; color: #00f2ff; font-weight: bold; margin-bottom: 6px; text-align: left; width: 100%;">2. VELG PENSUM-TEMA:</p>
+        <select class="topic-select" id="topic-select">
+            <option value="all">🌟 Alle historietemaer (Blandet)</option>
+        </select>
+
+        <button class="btn-play" id="start-btn">START TIDSREISEN 🚀</button>
+        <div style="display: flex; gap: 10px; margin-top: 12px; width: 100%;">
+            <button class="btn-secondary" id="open-hs-btn" style="flex: 1;">🏆 Highscores</button>
+            <a href="admin.php" class="btn-secondary" style="flex: 1;">⚙️ Lærer/Admin</a>
+        </div>
+    </div>
+
+    <!-- 3. Quiz / Freeze Modal -->
+    <div class="quiz-modal" id="quiz-modal">
+        <div class="quiz-header">
+            <span class="quiz-title">❄️ TIDSFRYS! SVAR PÅ SPØRSMÅLET:</span>
+        </div>
+        <div class="quiz-timer"><div class="quiz-timer-bar" id="quiz-timer-bar"></div></div>
+        <div class="quiz-question" id="quiz-question">Spørsmål laster...</div>
+        <div class="quiz-options" id="quiz-options"></div>
+    </div>
+
+    <!-- 4. Game Over Screen -->
+    <div class="overlay hidden" id="gameover-screen">
+        <h1 style="color: #ef4444;">GAME OVER</h1>
+        <p class="subtitle" id="death-reason">Tiden innhentet deg!</p>
+        <div class="hud-badge" style="font-size: 1.4rem; margin-bottom: 20px;">
+            Poengsum: <span id="final-score" style="color: #00f2ff;">0</span>
+        </div>
+
+        <div id="save-score-section" style="width: 100%; max-width: 320px; margin-bottom: 15px;">
+            <input type="text" id="player-name" placeholder="Ditt navn / kallenavn..." maxlength="20"
+                style="width: 100%; padding: 12px; background: #1a1c24; border: 1px solid var(--primary); border-radius: 8px; color: #fff; text-align: center; font-weight: bold; margin-bottom: 10px;">
+            <button class="btn-play" id="save-score-btn" style="font-size: 0.95rem; padding: 10px;">LAGRE HIGHSCORE 🏆</button>
+        </div>
+
+        <button class="btn-play" id="restart-btn">PRØV IGJEN 🔄</button>
+        <button class="btn-secondary" id="exit-btn" style="width: 100%; max-width: 320px;">Hovedmeny</button>
+    </div>
+
+    <!-- 5. Highscores Screen -->
+    <div class="overlay hidden" id="hs-screen">
+        <h1 style="font-size: 1.8rem;">🏆 TOPPLISTEN</h1>
+        <div id="hs-list-container" style="width: 100%; max-height: 280px; overflow-y: auto; margin-bottom: 15px;"></div>
+        <button class="btn-secondary" id="close-hs-btn" style="width: 100%;">Lukk</button>
+    </div>
+</div>
+
+<!-- Mobile On-Screen D-Pad -->
+<div class="mobile-controls">
+    <div></div>
+    <button class="ctrl-btn" id="btn-up">⬆️</button>
+    <div></div>
+    <button class="ctrl-btn" id="btn-left">⬅️</button>
+    <button class="ctrl-btn" id="btn-down">⬇️</button>
+    <button class="ctrl-btn" id="btn-right">➡️</button>
+</div>
+
+<script type="module">
+    import { checkAuth, verifyPin } from './js/auth.js';
+    import { CHARACTERS } from './js/characters.js';
+    import { QuizManager } from './js/quiz.js';
+    import { fetchHighscores, submitHighscore, renderHighscoresList } from './js/highscores.js';
+    import { Game } from './js/game.js';
+
+    let selectedCharacter = 'chicken';
+    let selectedTopic = 'all';
+    let lastScore = 0;
+
+    const quiz = new QuizManager();
+    const canvas = document.getElementById('gameCanvas');
+    const authScreen = document.getElementById('auth-screen');
+    const startScreen = document.getElementById('start-screen');
+    const gameoverScreen = document.getElementById('gameover-screen');
+    const hsScreen = document.getElementById('hs-screen');
+    const hud = document.getElementById('hud');
+
+    const game = new Game(canvas, quiz, (score, reason) => {
+        hud.style.display = 'none';
+        lastScore = score;
+        document.getElementById('final-score').textContent = score;
+        document.getElementById('death-reason').textContent = reason;
+        document.getElementById('save-score-section').style.display = 'block';
+        gameoverScreen.classList.remove('hidden');
+    });
+
+    // Auth Initialization
+    async function init() {
+        const isAuth = await checkAuth();
+        if (isAuth) {
+            authScreen.classList.add('hidden');
+            showStartScreen();
+        }
+    }
+
+    document.getElementById('unlock-btn').onclick = async () => {
+        const pin = document.getElementById('pin-input').value;
+        const ok = await verifyPin(pin);
+        if (ok) {
+            authScreen.classList.add('hidden');
+            showStartScreen();
+        } else {
+            document.getElementById('pin-error').style.display = 'block';
+        }
+    };
+
+    async function showStartScreen() {
+        startScreen.classList.remove('hidden');
+        renderCharacters();
+        const topics = await quiz.loadTopics();
+        const select = document.getElementById('topic-select');
+        select.innerHTML = '';
+        if (topics.length === 0) {
+            select.innerHTML = '<option value="">📚 Ingen pensum-PDF lastet opp ennå (Lærer må laste opp PDF i admin)</option>';
+        } else {
+            if (topics.length > 1) {
+                const allOpt = document.createElement('option');
+                allOpt.value = 'all';
+                allOpt.textContent = '🌟 Alle opplastede pensum (Blandet)';
+                select.appendChild(allOpt);
+            }
+            topics.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = `📄 ${t.title} (${t.questions.length} spm)`;
+                select.appendChild(opt);
+            });
+        }
+    }
+
+    function renderCharacters() {
+        const grid = document.getElementById('char-grid');
+        grid.innerHTML = '';
+        CHARACTERS.forEach(c => {
+            const card = document.createElement('div');
+            card.className = `char-card ${c.id === selectedCharacter ? 'selected' : ''}`;
+            card.innerHTML = `<span class="emoji">${c.emoji}</span><div class="name">${c.name}</div><div class="perk">${c.speedBonus}</div>`;
+            card.onclick = () => {
+                selectedCharacter = c.id;
+                renderCharacters();
+            };
+            grid.appendChild(card);
+        });
+    }
+
+    document.getElementById('start-btn').onclick = () => {
+        selectedTopic = document.getElementById('topic-select').value;
+        quiz.setTopic(selectedTopic);
+        startScreen.classList.add('hidden');
+        hud.style.display = 'flex';
+        game.init(selectedCharacter);
+    };
+
+    document.getElementById('restart-btn').onclick = () => {
+        gameoverScreen.classList.add('hidden');
+        hud.style.display = 'flex';
+        game.init(selectedCharacter);
+    };
+
+    document.getElementById('exit-btn').onclick = () => {
+        gameoverScreen.classList.add('hidden');
+        showStartScreen();
+    };
+
+    const savedName = localStorage.getItem('vox_crossy_name') || '';
+    if (savedName) document.getElementById('player-name').value = savedName;
+
+    const doSaveScore = async () => {
+        const nameInput = document.getElementById('player-name');
+        const name = (nameInput.value || '').trim() || 'Anonym';
+        localStorage.setItem('vox_crossy_name', name);
+        const saveBtn = document.getElementById('save-score-btn');
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Lagrer...';
+
+        await submitHighscore(name, parseInt(lastScore, 10) || 0, selectedCharacter, selectedTopic);
+        document.getElementById('save-score-section').style.display = 'none';
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'LAGRE HIGHSCORE 🏆';
+        game.showFloatingText('🏆 Poengsum registrert!', '#00f2ff');
+
+        const scores = await fetchHighscores();
+        renderHighscoresList(document.getElementById('hs-list-container'), scores);
+        hsScreen.classList.remove('hidden');
+    };
+
+    document.getElementById('save-score-btn').onclick = doSaveScore;
+    document.getElementById('player-name').onkeydown = (e) => {
+        if (e.key === 'Enter') doSaveScore();
+    };
+
+    document.getElementById('open-hs-btn').onclick = async () => {
+        const scores = await fetchHighscores();
+        renderHighscoresList(document.getElementById('hs-list-container'), scores);
+        hsScreen.classList.remove('hidden');
+    };
+    document.getElementById('close-hs-btn').onclick = () => hsScreen.classList.add('hidden');
+
+    // Mobile D-Pad binding
+    document.getElementById('btn-up').onclick = () => game.move(0, 1);
+    document.getElementById('btn-down').onclick = () => game.move(0, -1);
+    document.getElementById('btn-left').onclick = () => game.move(-1, 0);
+    document.getElementById('btn-right').onclick = () => game.move(1, 0);
+
+    init();
+</script>
+</body>
+</html>

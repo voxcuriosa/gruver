@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YYPRYXPN70"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YYPRYXPN70');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MøteSluket - Møtekostnadskalkulator | VoxCuriosa</title>
+    <meta name="description" content="MøteSluket: Se hvor mye møtet koster bedriften i sanntid! Lønnskostnadskalkulator med morsomme sammenligninger.">
+
+    <!-- Fonts & Favicon -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="container">
+        <header class="top-nav">
+            <a href="../index.html" class="back-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Tilbake til Portal
+            </a>
+            <span class="tag-badge">💸 Live Taksameter</span>
+        </header>
+
+        <section class="app-header">
+            <h1>MøteSluket</h1>
+            <p>Se kronene renne i sanntid mens møtet pågår</p>
+        </section>
+
+        <!-- SETUP SCREEN -->
+        <main id="setup-view" class="glass-card">
+            <!-- Deltakere -->
+            <div class="form-row">
+                <label for="participants">
+                    Antall møtedeltakere
+                    <span class="label-hint">inkludert deg selv</span>
+                </label>
+                <div class="input-stepper">
+                    <button type="button" class="step-btn" id="btn-dec-part">−</button>
+                    <input type="number" id="participants" class="custom-input" value="4" min="1" max="250">
+                    <button type="button" class="step-btn" id="btn-inc-part">+</button>
+                </div>
+            </div>
+
+            <!-- Årslønn -->
+            <div class="form-row">
+                <label for="salary">
+                    Gjennomsnittlig brutto årslønn
+                    <span class="label-hint">per deltaker (NOK)</span>
+                </label>
+                <input type="number" id="salary" class="custom-input" value="700000" step="25000" min="50000">
+                <div class="salary-pills">
+                    <button type="button" class="pill-btn" data-val="550000">550 000 kr</button>
+                    <button type="button" class="pill-btn active" data-val="700000">700 000 kr</button>
+                    <button type="button" class="pill-btn" data-val="950000">950 000 kr</button>
+                </div>
+            </div>
+
+            <!-- Sosiale kostnader toggle -->
+            <label class="toggle-row">
+                <div class="toggle-info">
+                    <span>Inkluder sosiale kostnader (+20%)</span>
+                    <small>Arbeidsgiveravgift, obligatorisk tjenestepensjon (OTP) og forsikring</small>
+                </div>
+                <div class="switch">
+                    <input type="checkbox" id="overhead-toggle" checked>
+                    <span class="slider"></span>
+                </div>
+            </label>
+
+            <!-- Burn rate forhåndsvisning -->
+            <div class="burn-preview">
+                <span>Forventet møtekostnad:</span>
+                <span id="burn-preview-text"><strong>...</strong> per minutt</span>
+            </div>
+
+            <!-- Start-knapp -->
+            <button type="button" id="btn-start" class="btn-primary-action">
+                <span>START MØTET</span>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+            </button>
+
+            <!-- Manuell hurtigberegning -->
+            <div class="manual-section">
+                <div class="manual-divider">
+                    <span>ELLER REGN UT FOR ET ALLEREDE AVHOLDT MØTE</span>
+                </div>
+                <div class="manual-grid">
+                    <div class="form-row">
+                        <label for="manual-employees">
+                            Antall ansatte
+                        </label>
+                        <input type="number" id="manual-employees" class="custom-input" value="6" min="1" max="500">
+                    </div>
+                    <div class="form-row">
+                        <label for="manual-hours">
+                            Varighet i timer
+                        </label>
+                        <input type="number" id="manual-hours" class="custom-input" value="1.5" min="0.1" step="0.5">
+                    </div>
+                </div>
+                <button type="button" id="btn-manual-calc" class="btn-manual-action">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                        <line x1="8" y1="6" x2="16" y2="6"></line>
+                        <line x1="16" y1="14" x2="16" y2="18"></line>
+                        <path d="M16 10h.01"></path>
+                        <path d="M12 10h.01"></path>
+                        <path d="M8 10h.01"></path>
+                        <path d="M12 14h.01"></path>
+                        <path d="M8 14h.01"></path>
+                        <path d="M12 18h.01"></path>
+                        <path d="M8 18h.01"></path>
+                    </svg>
+                    <span>Beregn kostnad nå</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- LIVE RUNNING SCREEN -->
+        <main id="live-view" class="live-dashboard hidden">
+            <div class="taxameter-box">
+                <div class="taxameter-label">Påløpt Møtekostnad</div>
+                <div class="cost-odometer" id="live-cost">0,00<span class="currency">kr</span></div>
+                
+                <div class="time-ticker">
+                    <div class="pulse-dot"></div>
+                    <span id="live-time">00:00:00</span>
+                </div>
+            </div>
+
+            <div class="live-metrics-grid">
+                <div class="metric-card">
+                    <div class="title">Brenner per minutt</div>
+                    <div class="val" id="metric-per-min">0 kr</div>
+                </div>
+                <div class="metric-card">
+                    <div class="title">Deltakere i rommet</div>
+                    <div class="val" id="metric-participants">4 personer</div>
+                </div>
+            </div>
+
+            <div class="live-teaser" id="live-teaser">
+                <div class="teaser-icon">☕</div>
+                <div class="teaser-text" id="live-teaser-text">Møtet er i gang! Penger forsvinner ut vinduet...</div>
+            </div>
+
+            <div class="controls-row">
+                <button type="button" id="btn-pause" class="btn-secondary-action">Pause</button>
+                <button type="button" id="btn-stop" class="btn-stop-action">STOPP MØTET</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- SUMMARY MODAL -->
+    <div id="summary-modal" class="modal-overlay">
+        <div class="summary-modal">
+            <div class="modal-header">
+                <span class="emoji-banner">🧾💸</span>
+                <h2>Møtet er hevet!</h2>
+            </div>
+
+            <div class="modal-final-cost">
+                <div class="cost-num" id="modal-cost">0 kr</div>
+                <div class="cost-sub" id="modal-sub">Møtet varte i 00:00 med 4 deltakere</div>
+            </div>
+
+            <div class="equivalents-list">
+                <div class="equivalents-title">
+                    <span>💡 Hva bedriften kunne kjøpt i stedet:</span>
+                </div>
+                <div id="equivalents-container">
+                    <!-- Dynamisk fylt fra equivalents.js -->
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="btn-copy-slack" class="btn-copy">
+                    <span>📋 Kopier oppsummering til Slack / Teams</span>
+                </button>
+                <button type="button" id="btn-restart" class="btn-restart">
+                    Start et nytt møte
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="equivalents.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Logg app-besøk til portal-statistikken via auth_v2.php
+        async function logVisit() {
+            let currentCountry = 'Unknown';
+            try {
+                const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: "force-cache" });
+                if (geoRes.ok) {
+                    const geoData = await geoRes.json();
+                    if (geoData && geoData.country) currentCountry = geoData.country;
+                }
+            } catch (e) {}
+
+            function getVisitorId() {
+                let id = localStorage.getItem('vox_visitor_id');
+                if (!id) {
+                    id = 'v_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+                    localStorage.setItem('vox_visitor_id', id);
+                }
+                return id;
+            }
+
+            const payload = {
+                action: 'log_visit',
+                app: 'motesluket',
+                visitor_id: getVisitorId(),
+                country: currentCountry,
+                device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
+                screen_resolution: window.screen.width + "x" + window.screen.height,
+                referrer: document.referrer || 'Direct',
+                language: navigator.language || 'en'
+            };
+
+            fetch('/history/auth_v2.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(() => {});
+        }
+        window.addEventListener('load', logVisit);
+    </script>
+</body>
+
+</html>

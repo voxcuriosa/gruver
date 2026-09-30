@@ -17,6 +17,7 @@ files_to_upload = [
     "proxy_xml.php",
     "proxy.php",
     "image_proxy.php",
+    "carto_proxy.php",
     "assets/bratsberg1919.png",
     "check_limits.php",
     "check_size.php",

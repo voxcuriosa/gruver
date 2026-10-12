@@ -2884,6 +2884,56 @@ endif; ?>
                     .catch(err => console.log('Service Worker registration failed:', err));
             });
         }
+
+        // Besøkssporing for admin_visit_stats.php
+        (function() {
+            function getVisitorId() {
+                let id = localStorage.getItem('vox_visitor_id');
+                if (!id) {
+                    id = 'v-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                    localStorage.setItem('vox_visitor_id', id);
+                }
+                return id;
+            }
+
+            async function logGruverVisit() {
+                let currentCountry = 'Unknown';
+                try {
+                    const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: 'force-cache' });
+                    if (geoRes.ok) {
+                        const geoData = await geoRes.json();
+                        if (geoData && geoData.country) currentCountry = geoData.country;
+                    }
+                } catch (e) {
+                    try {
+                        const fbRes = await fetch('https://api.country.is/', { cache: 'force-cache' });
+                        if (fbRes.ok) {
+                            const fbData = await fbRes.json();
+                            if (fbData && fbData.country) currentCountry = fbData.country;
+                        }
+                    } catch (fbErr) {}
+                }
+
+                const payload = {
+                    action: 'log_visit',
+                    app: 'gruver',
+                    visitor_id: getVisitorId(),
+                    country: currentCountry,
+                    device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
+                    screen_resolution: window.screen.width + "x" + window.screen.height,
+                    referrer: document.referrer || 'Direct',
+                    language: navigator.language || 'no'
+                };
+
+                fetch('/history/auth_v2.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(function() {});
+            }
+
+            logGruverVisit();
+        })();
     </script>
     <!-- Guest info modal (must be at body level to avoid sidebar stacking context) -->
     <div id="guest-info-modal"

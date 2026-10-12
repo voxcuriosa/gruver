@@ -470,49 +470,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("INSERT INTO visit_logs (user_id, app, username, ip_address, country_code, user_agent, device_type, screen_resolution, referrer, language, visitor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$userId, $app, $username, $ip, $country, $ua, $device, $screenRes, $referrer, $lang, $visitorId]);
 
-            // Auto-cleanup and Aggregation (1 in 50 chance)
-            if (rand(1, 50) == 1) {
-                $cutoffDate = date('Y-m-d H:i:s', strtotime('-30 days'));
-
-                $conn->beginTransaction();
-
-                // 1. Aggregate Country
-                $sqlByCountry = "INSERT INTO analytics_aggregates (log_date, metric_type, metric_value, count)
-                                 SELECT DATE(created_at), 'country', country_code, COUNT(*)
-                                 FROM visit_logs 
-                                 WHERE created_at < :cutoff
-                                 GROUP BY DATE(created_at), country_code
-                                 ON DUPLICATE KEY UPDATE count = count + VALUES(count)";
-                $stmtC = $conn->prepare($sqlByCountry);
-                $stmtC->execute([':cutoff' => $cutoffDate]);
-
-                // 2. Aggregate Device
-                $sqlByDevice = "INSERT INTO analytics_aggregates (log_date, metric_type, metric_value, count)
-                                 SELECT DATE(created_at), 'device', device_type, COUNT(*)
-                                 FROM visit_logs 
-                                 WHERE created_at < :cutoff
-                                 GROUP BY DATE(created_at), device_type
-                                 ON DUPLICATE KEY UPDATE count = count + VALUES(count)";
-                $stmtD = $conn->prepare($sqlByDevice);
-                $stmtD->execute([':cutoff' => $cutoffDate]);
-
-                // 3. Aggregate App
-                $sqlByApp = "INSERT INTO analytics_aggregates (log_date, metric_type, metric_value, count)
-                                 SELECT DATE(created_at), 'app', app, COUNT(*)
-                                 FROM visit_logs 
-                                 WHERE created_at < :cutoff
-                                 GROUP BY DATE(created_at), app
-                                 ON DUPLICATE KEY UPDATE count = count + VALUES(count)";
-                $stmtA = $conn->prepare($sqlByApp);
-                $stmtA->execute([':cutoff' => $cutoffDate]);
-
-                // 4. Delete old logs
-                $stmtDel = $conn->prepare("DELETE FROM visit_logs WHERE created_at < :cutoff");
-                $stmtDel->execute([':cutoff' => $cutoffDate]);
-
-                $conn->commit();
-            }
-
+            // Alle logger beholdes permanent for full statistikk
             echo json_encode(["success" => true]);
         } catch (Exception $e) {
             // Fail silently for analytics

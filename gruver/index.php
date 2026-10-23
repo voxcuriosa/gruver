@@ -558,6 +558,71 @@ session_start();
             font-size: 1.1em;
         }
 
+        .popup-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .share-btn {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 5px 9px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .share-btn:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: #38bdf8;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .share-btn:active {
+            transform: translateY(0);
+        }
+
+        #share-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(15, 23, 42, 0.95);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            padding: 12px 22px;
+            border-radius: 9999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.3);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        #share-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         .popup-title {
             margin: 4px 0 0 0;
             color: #38bdf8;
@@ -2581,7 +2646,11 @@ endif; ?>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span id="modal-title" style="font-weight: 700; color: var(--accent-color);">Innhold</span>
                 </div>
-                <div style="display: flex; gap: 10px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button id="modal-share-btn" class="share-btn" onclick="shareCurrentModal(event)"
+                        style="display: none; padding: 6px 12px;" title="Del dette punktet">
+                        <span>🔗</span> Del
+                    </button>
                     <button id="modal-back-btn" class="modal-back" onclick="modalBack()"
                         style="display: none;">Tilbake</button>
                     <button class="modal-close" id="mobile-close-btn" onclick="closeModal()">Lukk</button>
@@ -2968,6 +3037,10 @@ endif; ?>
                 </button>
             </div>
         </div>
+    </div>
+    <!-- Share toast notification -->
+    <div id="share-toast">
+        <span>🔗</span> <span id="share-toast-text">Lenke kopiert til utklippstavlen!</span>
     </div>
 </body>
 

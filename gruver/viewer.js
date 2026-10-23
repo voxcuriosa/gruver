@@ -1987,7 +1987,11 @@ function openModal(url, title, siteId = null, imgIndex = 0, htmlContent = null) 
     if (siteId === 'album') {
         currentModalSite = { id: 'album', images: currentAlbumImages.map(img => `albumgooglephotos/${img.filename}`), name: "Album" };
     } else {
-        currentModalSite = siteId !== null ? allSites.find(s => s.id === siteId) : null;
+        currentModalSite = siteId !== null ? allSites.find(s => s.id === siteId || String(s.id) === String(siteId)) : null;
+    }
+    const modalShareBtn = document.getElementById('modal-share-btn');
+    if (modalShareBtn) {
+        modalShareBtn.style.display = (currentModalSite && currentModalSite.id && currentModalSite.id !== 'album') ? 'inline-flex' : 'none';
     }
     currentModalImageIndex = imgIndex;
 
@@ -2318,6 +2322,8 @@ function closeModal() {
     if (img) img.src = '';
     if (prevBtn) prevBtn.style.display = 'none';
     if (nextBtn) nextBtn.style.display = 'none';
+    const modalShareBtn = document.getElementById('modal-share-btn');
+    if (modalShareBtn) modalShareBtn.style.display = 'none';
     currentModalSite = null;
 }
 
@@ -2464,6 +2470,43 @@ async function loadData() {
 
         setTimeout(() => renderSidebarList(allSites), 500);
         document.getElementById('recent-count').addEventListener('change', (e) => renderRecentChanges(parseInt(e.target.value)));
+
+        // --- DEEP LINKING: AUTOMATISK ÅPNING AV DELT PUNKT ---
+        (function checkDeepLinkedPoint() {
+            const params = new URLSearchParams(window.location.search);
+            const targetId = params.get('point');
+            const pLat = parseFloat(params.get('lat'));
+            const pLng = parseFloat(params.get('lng'));
+            const pZoom = parseInt(params.get('zoom')) || 17;
+
+            let targetSite = null;
+            if (targetId) {
+                targetSite = allSites.find(s => String(s.id) === String(targetId));
+            }
+            if (!targetSite && !isNaN(pLat) && !isNaN(pLng)) {
+                targetSite = allSites.find(s => Math.abs(s.lat - pLat) < 0.0002 && Math.abs(s.lng - pLng) < 0.0002);
+            }
+
+            if (targetSite) {
+                console.log("Deep-link: Åpner punkt", targetSite.name, targetSite);
+                // Sikre at punktet er synlig selv om filter evt. var lukket
+                targetSite.isVisibleByFilter = true;
+                targetSite.hidden = false;
+
+                map.setView([targetSite.lat, targetSite.lng], pZoom);
+
+                // Vent til Leaflet har satt visning og lagt til markør
+                setTimeout(() => {
+                    updateVisibleMarkers();
+                    if (targetSite.marker) {
+                        if (!markerLayer.hasLayer(targetSite.marker)) {
+                            markerLayer.addLayer(targetSite.marker);
+                        }
+                        targetSite.marker.openPopup();
+                    }
+                }, 500);
+            }
+        })();
 
         // START ADMIN TOOLS IF LOGGED IN
         if (typeof initAdminTools === 'function' && window.isAdminMode) {
@@ -2705,6 +2748,92 @@ function addMarker(site) {
     });
 }
 
+// --- DELE-FUNKSJONALITET ---
+function showShareToast(message) {
+    const toast = document.getElementById('share-toast');
+    if (!toast) return;
+    const txt = document.getElementById('share-toast-text');
+    if (txt && message) txt.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2500);
+}
+
+function getShareUrlForSite(site) {
+    if (!site) return window.location.href;
+    const base = window.location.origin + window.location.pathname;
+    const params = new URLSearchParams();
+    if (site.id !== undefined && site.id !== null) {
+        params.set('point', site.id);
+    }
+    if (typeof site.lat === 'number' && typeof site.lng === 'number') {
+        params.set('lat', site.lat.toFixed(5));
+        params.set('lng', site.lng.toFixed(5));
+    }
+    params.set('zoom', '17');
+    return `${base}?${params.toString()}`;
+}
+
+async function shareSite(siteId, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    const site = allSites.find(s => s.id === siteId || String(s.id) === String(siteId));
+    if (!site) return;
+
+    const shareUrl = getShareUrlForSite(site);
+    const siteName = site.displayName || site.name || 'Kartpunkt i Skiensmarka';
+    const shareData = {
+        title: `${siteName} – Skiensmarka`,
+        text: `Se ${siteName} på kartet over Skiensmarka:`,
+        url: shareUrl
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+            return;
+        } catch (err) {
+            // Bruker avbrøt deling eller feil oppstod -> fallback til utklippstavle
+            if (err.name === 'AbortError') return;
+        }
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+            await navigator.clipboard.writeText(shareUrl);
+            showShareToast('Lenke kopiert til utklippstavlen!');
+            return;
+        } catch (e) {}
+    }
+
+    // Fallback for eldre nettlesere
+    try {
+        const tempInput = document.createElement('input');
+        tempInput.value = shareUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showShareToast('Lenke kopiert til utklippstavlen!');
+    } catch (e) {
+        prompt('Kopier lenken her:', shareUrl);
+    }
+}
+
+function shareCurrentModal(event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    if (currentModalSite && currentModalSite.id && currentModalSite.id !== 'album') {
+        shareSite(currentModalSite.id, event);
+    }
+}
+
 function getPopupHTML(site) {
     const lat = site.lat.toFixed(5); const lng = site.lng.toFixed(5);
     let html = `<div class="popup-container">
@@ -2712,6 +2841,9 @@ function getPopupHTML(site) {
             <div class="popup-category" style="color: ${site.category.color};">
                 <span class="popup-category-icon">${site.category.icon}</span> ${site.category.name}
             </div>
+            <button type="button" class="share-btn" title="Del dette punktet" onclick="shareSite(${JSON.stringify(site.id)}, event)">
+                <span>🔗</span> Del
+            </button>
         </div>
         <h3 class="popup-title">${site.displayName || site.name}</h3>
         <div class="popup-coords">📍 ${lat}, ${lng}</div>`;

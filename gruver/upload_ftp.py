@@ -1,11 +1,27 @@
 import ftplib
 import os
+import subprocess
 import sys
 
 # FTP Settings
 FTP_HOST = "voxcuriosa.no"
 FTP_USER = "cpjvfkip"
-FTP_PASS = "***REMOVED***"
+# Password is read from the macOS Keychain (never stored in git).
+# Store/update it with:
+#   security add-generic-password -a cpjvfkip -s voxcuriosa-ftp -w 'NEW_PASSWORD' -U
+def _read_ftp_password():
+    env_pw = os.environ.get("VOXCURIOSA_FTP_PASS")
+    if env_pw:
+        return env_pw
+    result = subprocess.run(
+        ["security", "find-generic-password", "-a", FTP_USER, "-s", "voxcuriosa-ftp", "-w"],
+        capture_output=True, text=True
+    )
+    if result.returncode != 0:
+        sys.exit("FTP password not found in Keychain (service: voxcuriosa-ftp).")
+    return result.stdout.strip()
+
+FTP_PASS = _read_ftp_password()
 REMOTE_DIR_BASE = "public_html" 
 
 def upload_path(local_path, remote_path, ftp):

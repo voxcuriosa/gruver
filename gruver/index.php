@@ -594,40 +594,51 @@ session_start();
             transform: scale(0.98);
         }
 
-        /* Del-knapp i popup med eksakt samme dimensjoner og styling som Lukk-knappen */
-        .point-popup .popup-share-btn {
+        /* Del- og Lukk-knapp i popup: identisk størrelse, side om side */
+        .leaflet-container .point-popup a.leaflet-popup-close-button,
+        .leaflet-container .point-popup .popup-share-btn {
             position: absolute !important;
             top: 20px !important;
-            right: 125px !important;
             width: 70px !important;
             height: 30px !important;
             padding: 0 !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+            border-radius: 8px !important;
             font-size: 0.85rem !important;
             font-weight: 700 !important;
-            border-radius: 8px !important;
-            background: #0284c7 !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            color: white !important;
-            z-index: 16000 !important;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35) !important;
+            line-height: 1 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             gap: 4px !important;
             white-space: nowrap !important;
-            transition: all 0.2s !important;
+            z-index: 16000 !important;
         }
 
-        .point-popup .popup-share-btn:hover {
+        .leaflet-container .point-popup a.leaflet-popup-close-button {
+            right: 45px !important;
+        }
+
+        .leaflet-container .point-popup .popup-share-btn {
+            right: 125px !important;
+            background: #0284c7 !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35) !important;
+        }
+
+        .leaflet-container .point-popup .popup-share-btn:hover {
             background: #0369a1 !important;
-            transform: scale(1.05) !important;
         }
 
         @media (min-width: 1025px) {
-            .point-popup .popup-share-btn {
-                right: 85px !important;
-                width: 60px !important;
-                height: 28px !important;
+            .leaflet-container .point-popup a.leaflet-popup-close-button {
+                right: 15px !important;
+            }
+
+            .leaflet-container .point-popup .popup-share-btn {
+                right: 95px !important;
             }
         }
 

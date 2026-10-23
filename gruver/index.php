@@ -594,20 +594,39 @@ session_start();
             transform: scale(0.98);
         }
 
-        /* Del-knapp plassert ved siden av Lukk-knapp i popup */
+        /* Del-knapp i popup med eksakt samme dimensjoner og styling som Lukk-knappen */
         .point-popup .popup-share-btn {
             position: absolute !important;
             top: 20px !important;
             right: 125px !important;
+            width: 70px !important;
             height: 30px !important;
+            padding: 0 !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            border-radius: 8px !important;
+            background: #0284c7 !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
             z-index: 16000 !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 4px !important;
+            white-space: nowrap !important;
+            transition: all 0.2s !important;
+        }
+
+        .point-popup .popup-share-btn:hover {
+            background: #0369a1 !important;
+            transform: scale(1.05) !important;
         }
 
         @media (min-width: 1025px) {
             .point-popup .popup-share-btn {
                 right: 85px !important;
+                width: 60px !important;
                 height: 28px !important;
             }
         }

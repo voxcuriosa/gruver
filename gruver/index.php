@@ -436,12 +436,12 @@ session_start();
         }
 
         .leaflet-popup-pane {
-            z-index: 40000 !important;
-            /* Ensure popups are on top of everything */
+            z-index: 2147483647 !important;
+            /* Ensure popups are on top of everything including mobile top buttons */
         }
 
         .leaflet-popup {
-            z-index: 40000 !important;
+            z-index: 2147483647 !important;
             max-width: none !important;
         }
 

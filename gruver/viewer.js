@@ -2743,7 +2743,7 @@ function addMarker(site) {
         if (window.isAdminMode) return; // Unngå disorientering ved flytting i admin-modus
         const px = map.project([site.lat, site.lng], map.getZoom());
         // More aggressive offset to push marker to bottom on desktop
-        px.y -= (window.innerWidth > 1024 ? 350 : 250);
+        px.y -= (window.innerWidth > 1024 ? 350 : 320);
         map.setView(map.unproject(px, map.getZoom()), map.getZoom(), { animate: true });
     });
 }

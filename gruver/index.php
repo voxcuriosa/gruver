@@ -561,23 +561,22 @@ session_start();
         .popup-header-row {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 8px;
             margin-bottom: 2px;
         }
 
         .share-btn {
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.35);
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
             color: #38bdf8;
             border-radius: 8px;
             cursor: pointer;
-            padding: 5px 9px;
+            padding: 5px 12px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 5px;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             font-weight: 600;
             font-family: inherit;
             transition: all 0.2s ease;
@@ -585,14 +584,32 @@ session_start();
         }
 
         .share-btn:hover {
-            background: rgba(56, 189, 248, 0.25);
+            background: rgba(56, 189, 248, 0.3);
             border-color: #38bdf8;
             color: #fff;
-            transform: translateY(-1px);
+            transform: scale(1.03);
         }
 
         .share-btn:active {
-            transform: translateY(0);
+            transform: scale(0.98);
+        }
+
+        /* Del-knapp plassert ved siden av Lukk-knapp i popup */
+        .point-popup .popup-share-btn {
+            position: absolute !important;
+            top: 20px !important;
+            right: 125px !important;
+            height: 30px !important;
+            z-index: 16000 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        @media (min-width: 1025px) {
+            .point-popup .popup-share-btn {
+                right: 85px !important;
+                height: 28px !important;
+            }
         }
 
         #share-toast {

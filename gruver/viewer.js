@@ -2785,22 +2785,6 @@ async function shareSite(siteId, event) {
     if (!site) return;
 
     const shareUrl = getShareUrlForSite(site);
-    const siteName = site.displayName || site.name || 'Kartpunkt i Skiensmarka';
-    const shareData = {
-        title: `${siteName} – Skiensmarka`,
-        text: `Se ${siteName} på kartet over Skiensmarka:`,
-        url: shareUrl
-    };
-
-    if (navigator.share) {
-        try {
-            await navigator.share(shareData);
-            return;
-        } catch (err) {
-            // Bruker avbrøt deling eller feil oppstod -> fallback til utklippstavle
-            if (err.name === 'AbortError') return;
-        }
-    }
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
         try {
@@ -2810,7 +2794,7 @@ async function shareSite(siteId, event) {
         } catch (e) {}
     }
 
-    // Fallback for eldre nettlesere
+    // Fallback for nettlesere uten clipboard API
     try {
         const tempInput = document.createElement('input');
         tempInput.value = shareUrl;
@@ -2837,13 +2821,13 @@ function shareCurrentModal(event) {
 function getPopupHTML(site) {
     const lat = site.lat.toFixed(5); const lng = site.lng.toFixed(5);
     let html = `<div class="popup-container">
+        <button type="button" class="share-btn popup-share-btn" title="Kopier lenke til punkt" onclick="shareSite(${JSON.stringify(site.id)}, event)">
+            <span>🔗</span> Del
+        </button>
         <div class="popup-header-row">
             <div class="popup-category" style="color: ${site.category.color};">
                 <span class="popup-category-icon">${site.category.icon}</span> ${site.category.name}
             </div>
-            <button type="button" class="share-btn" title="Del dette punktet" onclick="shareSite(${JSON.stringify(site.id)}, event)">
-                <span>🔗</span> Del
-            </button>
         </div>
         <h3 class="popup-title">${site.displayName || site.name}</h3>
         <div class="popup-coords">📍 ${lat}, ${lng}</div>`;

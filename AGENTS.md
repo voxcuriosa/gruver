@@ -12,3 +12,7 @@
 - **Read Before You Write**: Read the codebase and existing imports first. Copy existing patterns in the project instead of introducing new conventions or libraries.
 - **Dependency Hygiene**: Avoid adding new dependencies unless absolutely necessary. Check if existing libraries or standard APIs can solve the problem first.
 - **Verification First**: Base diagnostics strictly on log/error evidence. Fix the underlying root cause rather than papering over symptoms with silent fail-safes.
+
+## Safe Exam Browser (SEB) & Student Privacy
+
+- **Zero Student Tracking**: Follow `.agents/skills/seb-zero-student-tracking/SKILL.md`. Links generated for students (`/seb/start/*`, `/seb/exam/*`, `?seb=1`, `/seb/quit`) must NEVER have any telemetry, analytics, cookies, IP/geo lookup, or visit logging. Visit tracking for `seb` is strictly confined to teacher clicks on the main portal and direct visits to the generator home page (`/seb/`).

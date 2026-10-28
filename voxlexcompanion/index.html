@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxLex Companion – Nettleser-ledsager for Chrome – VoxCuriosa</title>
+    <link rel="stylesheet" href="../voxlex/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .companion-hero {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .companion-logo {
+            width: 88px;
+            height: 88px;
+            border-radius: 20px;
+            box-shadow: 0 12px 28px rgba(0, 242, 255, 0.2);
+            flex-shrink: 0;
+        }
+        .hero-text h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.6rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .tag-pill {
+            font-size: 0.76rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .tag-cws {
+            background: rgba(0, 242, 255, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+        }
+        .tag-privacy {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .preview-box {
+            margin: 16px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1.5px solid var(--border);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+            background: #0f172a;
+        }
+        .preview-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .step-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 12px 0;
+        }
+        .step-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+        }
+        .step-num {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: #000;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.88rem;
+            text-align: center;
+            line-height: 28px;
+            margin-bottom: 10px;
+        }
+        .step-card h4 {
+            margin: 0 0 6px 0;
+            font-size: 1rem;
+            color: #f8fafc;
+        }
+        .step-card p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        .cws-btn {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            color: #0f172a !important;
+            font-weight: 800;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 8px 24px rgba(251, 191, 36, 0.3);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .cws-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(251, 191, 36, 0.45);
+        }
+        @media (max-width: 640px) {
+            .companion-hero {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blob"></div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Tilbake til Portal</a>
+        <h1>VoxLex Companion</h1>
+        <p class="subtitle">Nettleser-ledsageren for Chrome – umiddelbare synonymer, ordforklaringer og opplesing</p>
+
+        <div class="app-card">
+            <div class="companion-hero">
+                <img src="voxlex-logo.png" alt="VoxLex Logo" class="companion-logo">
+                <div class="hero-text">
+                    <h2>
+                        VoxLex Companion for Chrome
+                        <span class="tag-pill tag-cws">Manifest V3</span>
+                        <span class="tag-pill tag-privacy">100 % personverntrygg</span>
+                    </h2>
+                    <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">
+                        VoxLex Companion er en lese- og ordforklaringsutvidelse for elever og lærere i videregående skole. Ved å dobbeltklikke på eller markere et enkeltord på en nettside eller i en digital lærebok (Smartbok, Unibok, NDLA m.fl.), får du umiddelbart opp et høykontrast-kort med synonymer, enkel forklaring og opplesing.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Handlingsknapper -->
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; margin: 8px 0 16px 0;">
+                <!-- Link til Chrome Web Store -->
+                <a id="cws-link" href="https://chromewebstore.google.com/detail/voxlex-companion/lcjihcdpbniiakjndaacomfnojhcpgdg" target="_blank" rel="noopener noreferrer" class="cws-btn" style="flex: 1.5; min-width: 260px;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                        <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                        <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                    </svg>
+                    <span>Legg til i Chrome (Chrome Web Store)</span>
+                </a>
+
+                <a href="VoxLex-Companion-v1.0.0.zip" download="VoxLex-Companion-v1.0.0.zip" class="action-btn secondary" style="flex: 1; min-width: 220px; background: rgba(255, 255, 255, 0.08); color: #f8fafc; border-color: rgba(255, 255, 255, 0.2);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Last ned utvidelsespakke (.ZIP)</span>
+                </a>
+
+                <a href="https://github.com/voxcuriosa/voxlex-companion" target="_blank" rel="noopener noreferrer" class="action-btn secondary" style="flex: 1; min-width: 210px; background: rgba(255, 255, 255, 0.08); color: #f8fafc; border-color: rgba(255, 255, 255, 0.2);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    <span>Åpen kildekode (GitHub)</span>
+                </a>
+            </div>
+
+            <!-- Skjermbildeforhåndsvisning -->
+            <div class="preview-box">
+                <img src="preview.jpg" alt="VoxLex Companion i bruk på en digital lærebok">
+            </div>
+
+            <!-- Slik fungerer det -->
+            <div>
+                <h3 style="color: var(--primary); margin: 16px 0 12px 0;">Slik bruker du VoxLex Companion</h3>
+                <div class="step-list">
+                    <div class="step-card">
+                        <div class="step-num">1</div>
+                        <h4>Dobbeltklikk på et ord</h4>
+                        <p>Dobbeltklikk eller marker et ord på en nettside eller inne i en digital e-bok (Smartbok, Unibok, NDLA).</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">2</div>
+                        <h4>Synonymer og forklaring</h4>
+                        <p>Et høykontrast-kort åpnes umiddelbart (0 ms) med klikkbare synonym-piller og en lettlest forklaring.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">3</div>
+                        <h4>Opplesing og oversettelse</h4>
+                        <p>Klikk på LYD for å høre ordet lest opp på norsk, eller velg ønsket morsmål direkte i menyen øverst.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nøkkelfunksjoner -->
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>96 000+ oppslagsord lokalt</h3>
+                    <p>Hele Bokmålsordboka (UiB/Språkrådet) og Norske synonymer ligger pakket inn i utvidelsen. Fungerer 100 % offline på 0 ms uten nettverksforbruk.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Trygg på skolen og eksamen</h3>
+                    <p>Krever ingen innlogging eller konto. Ingen sporing, ingen analysekapsler og automatisk deaktivering på sensitive sider og eksamensplattformer (SEB, Inspera, Wiseflow, DigiExam).</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Faglige fordypningslenker</h3>
+                    <p>Ett klikk tar deg direkte til den offisielle fagartikkelen på Ordbøkene.no, Store norske leksikon (SNL) eller Wikipedia når du er på nett.</p>
+                </div>
+            </div>
+
+            <!-- Personvernerklæring (GDPR & Chrome Web Store Privacy Policy) -->
+            <div id="personvern" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-top: 8px;">
+                <h3 style="color: var(--primary); margin-top: 0;">Personvernerklæring (Privacy Policy)</h3>
+                <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+                    <strong>VoxLex Companion</strong> er utviklet for skolesektoren etter prinsippet om innebygd personvern (Privacy by Design). Utvidelsen er 100 % GDPR-sikker:
+                </p>
+                <ul style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.65; padding-left: 20px; margin-bottom: 0;">
+                    <li><strong>Ingen personopplysninger samles inn:</strong> Utvidelsen krever ingen brukerkonto, Feide-innlogging, e-post, elev-ID, sesjonstokens eller passord.</li>
+                    <li><strong>Ingen sporing eller analysekapsler:</strong> Vi bruker ingen informasjonskapsler (cookies), ingen analyseverktøy (Google Analytics eller lignende) og sporer aldri hvilke nettsider du besøker.</li>
+                    <li><strong>Kun lokalt på din egen maskin:</strong> Dine innstillinger (av/på-status og valgt støttespråk) lagres utelukkende lokalt i nettleseren din (<code>chrome.storage.local</code>) og synkroniseres aldri til skytjenester.</li>
+                    <li><strong>Ingen fritekstsøk:</strong> Utvidelsen har ikke fritekst- eller chatfelt. Dette forhindrer at elever ved et uhell taster inn personopplysninger eller meldinger. Kun ett enkelt markert oppslagsord (maks 35 bokstaver) kan behandles.</li>
+                    <li><strong>100 % EU-prosessering (Vertex AI) og K-anonymitet på skolenett:</strong> Utvidet oppslag og morsmålsoversettelse prosesseres utelukkende i EU (Google Cloud Vertex AI, <code>europe-west1</code> Belgia) med kontraktfestet null datalagring og null modelltrening (<em>Zero Data Retention</em>), strengt IP-låst til skolens felles nettverk uten logging av IP-adresser.</li>
+                    <li><strong>Automatisk eksamens- og domenesperre:</strong> Utvidelsen er teknisk sperret (<code>exclude_matches</code>) på digitale prøve- og eksamensplattformer (SEB, Inspera, Wiseflow, DigiExam) samt på BankID, Feide, ID-porten, Helsenorge, NAV og Altinn.</li>
+                    <li><strong>100 % Åpen kildekode (MIT-lisens):</strong> Hele kildekoden ligger åpent tilgjengelig for innsyn, revisjon og egen drift av IT-avdelinger og personvernombud på <a href="https://github.com/voxcuriosa/voxlex-companion" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">github.com/voxcuriosa/voxlex-companion</a>.</li>
+                    <li><strong>Kontakt:</strong> For henvendelser vedrørende personvern eller skoledistribusjon, se <a href="https://voxcuriosa.no/" style="color: var(--primary);">voxcuriosa.no</a>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

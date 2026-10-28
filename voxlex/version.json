@@ -1,0 +1,11 @@
+{
+  "version": "1.2.57",
+  "publishedAt": "2026-10-27T14:43:23Z",
+  "notes": "v1.2.57: Klargjort for NAV Hjelpemiddelsentral og skoleavtale med deterministisk offline-lisenskode (VX-...), Zero-Knowledge e-postgjenoppretting ved PC-bytte, delingsvern og oppdatert brukerveiledning.",
+  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.57-macOS.dmg",
+  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.57-macOS.tar.gz",
+  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.57-Windows.exe",
+  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.57-Windows.msi",
+  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.57-Windows.zip",
+  "winStatus": "Klar for nedlasting (v1.2.57)"
+}

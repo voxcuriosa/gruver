@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxLex – Lese- og skrivestøtte, Ordbok og Høytlesning – VoxCuriosa</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 20px;
+            margin-top: 14px;
+        }
+        .platform-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 22px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .platform-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 0 2px 0;
+            font-size: 1.12rem;
+            font-weight: 800;
+        }
+        .platform-tag {
+            font-size: 0.74rem;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+        .mini-step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 0.92rem;
+            color: #e2e8f0;
+            line-height: 1.58;
+        }
+        .mini-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .mini-step code {
+            background: rgba(0, 0, 0, 0.45);
+            padding: 1px 6px;
+            border-radius: 4px;
+            color: var(--primary);
+            font-size: 0.82rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="blob"></div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Tilbake til Portal</a>
+        <h1>VoxLex</h1>
+        <p class="subtitle">Lese- og skrivestøtte, dysleksivennlig stavekontroll, høytlesning og ordbok på 20 språk</p>
+
+        <div class="app-card">
+            <div>
+                <h2 style="margin-top: 0; color: var(--primary); display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    VoxLex for Skole (Mac, PC, iPad, Chromebook og Android)
+                    <span id="version-badge" style="font-size: 0.8rem; background: rgba(0,242,255,0.15); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: 600;">v1.2.57</span>
+                    <span style="font-size: 0.78rem; background: rgba(16,185,129,0.15); color: #34d399; padding: 3px 8px; border-radius: 6px; font-weight: 600;">Fungerer uten internett</span>
+                </h2>
+                <p style="color: #cbd5e1; line-height: 1.55; margin-bottom: 10px;">
+                    Et enkelt og raskt hjelpemiddel for elever og lærere. VoxLex hjelper deg å finne riktig ord når du er usikker på stavemåten, slår opp ord og bøyninger i hele <strong>Bokmålsordboka</strong> og <strong>Nynorskordboka</strong>, oversetter ord til og fra <strong>18 fremmedspråk</strong>, og leser opp både enkeltord og hele avsnitt med en naturlig norsk stemme.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>Hjelp mens du skriver</h3>
+                    <p>Foreslår riktig ord selv om du skriver ordet slik det uttales eller stokker om på bokstaver midt i ordet. Viser også orddeling (<code>sko·le</code>) og leser opp forslagene når du blar.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Ordbok og høytlesning i 20 språk</h3>
+                    <p>Full norsk ordbok med enkle forklaringer, eksempler og bøyningstabeller, pluss oversettelse begge veier i 18 språk (Engelsk, Spansk, Tysk, Fransk, Arabisk, Ukrainsk m.fl.).</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Trygg på prøver og eksamen</h3>
+                    <p>Fungerer helt uten internett etter installasjon, lagrer ingenting du skriver på nettet, og holder seg automatisk oppdatert når det kommer nye forbedringer.</p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: 6px 0;">
+                <a id="dmg-download-link" href="VoxLex-v1.2.57-macOS.dmg" download="VoxLex-v1.2.57-macOS.dmg" class="action-btn" style="flex: 1.3; min-width: 230px; font-size: 1rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Last ned for Mac (.DMG – v1.2.57)</span>
+                </a>
+
+                <a href="app/index.html" class="action-btn secondary" style="flex: 1.3; min-width: 240px; background: rgba(16, 185, 129, 0.18); color: #34d399; border-color: rgba(16, 185, 129, 0.45);">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                    </svg>
+                    <span>Åpne for iPad, Chromebook og Android</span>
+                </a>
+
+                <a id="win-download-btn" href="VoxLex-v1.1.2-Windows.exe" download="VoxLex-v1.1.2-Windows.exe" class="action-btn secondary" style="flex: 1; min-width: 190px; background: rgba(59, 130, 246, 0.22); color: #60a5fa; border-color: rgba(59, 130, 246, 0.45);" title="Windows-installasjonsfil (.EXE)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="3" width="8" height="8"></rect>
+                        <rect x="13" y="3" width="8" height="8"></rect>
+                        <rect x="3" y="13" width="8" height="8"></rect>
+                        <rect x="13" y="13" width="8" height="8"></rect>
+                    </svg>
+                    <span id="win-download-label">Windows (.EXE – v1.1.2)</span>
+                </a>
+
+                <a id="win-portable-btn" href="VoxLex-v1.1.2-Windows.zip" download="VoxLex-v1.1.2-Windows.zip" class="action-btn secondary" style="flex: 1.1; min-width: 215px; background: rgba(245, 158, 11, 0.18); color: #fbbf24; border-color: rgba(245, 158, 11, 0.45);" title="Portabel Windows-utgave for låste skole-PC-er (krever ikke installasjon eller administrator)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span id="win-portable-label">Windows Portabel (.ZIP – uten admin)</span>
+                </a>
+
+                <a href="help.html" class="action-btn secondary" style="flex: 1; min-width: 180px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <span>Brukerveiledning og Hjelp</span>
+                </a>
+            </div>
+
+            <div>
+                <h3 style="color: #fff; margin-bottom: 10px; margin-top: 6px;">Slik installerer du på din enhet (3 enkle steg):</h3>
+
+                <div class="platform-grid">
+                    <!-- 1. Mac -->
+                    <div class="platform-card" style="border-color: rgba(0, 242, 255, 0.3);">
+                        <h4 class="platform-title" style="color: var(--primary);">
+                            <span>Mac (macOS)</span>
+                            <span class="platform-tag" style="background: rgba(0, 242, 255, 0.15); color: var(--primary);">Skrivebords-app</span>
+                        </h4>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: var(--primary);">1</span>
+                            <span>Klikk på den blå knappen <b>«Last ned for Mac (.DMG)»</b> øverst.</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: var(--primary);">2</span>
+                            <span>Åpne den nedlastede filen og dra <b>VoxLex</b> over i <b>Programmer (Applications)</b>. <i>(Høyreklikk på VoxLex og velg «Åpne» første gang.)</i></span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: var(--primary);">3</span>
+                            <span>Gi tilgang under <code>Systeminnstillinger → Tilgjengelighet</code> slik at ordforslag, opplesning av markert tekst og diktering kan sette inn tekst rett i Word.</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Windows PC (Vanlig og Låst Skole-PC) -->
+                    <div class="platform-card" style="border-color: rgba(59, 130, 246, 0.35);">
+                        <h4 class="platform-title" style="color: #60a5fa;">
+                            <span>Windows 10 / 11 (PC)</span>
+                            <span class="platform-tag" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">.EXE / Portabel .ZIP</span>
+                        </h4>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #60a5fa; color: #000;">1</span>
+                            <span><b>Vanlig installasjon (.EXE):</b> Klikk på den blå knappen <b>«Windows (.EXE)»</b> øverst, åpne filen og fullfør installasjonen. <i>(Dersom Windows SmartScreen varsler på nye apper: klikk «Mer info» → «Kjør likevel».)</i></span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #fbbf24; color: #000;">2</span>
+                            <span><b>Låst skole-PC uten admin (.ZIP):</b> Hvis installasjon er sperret av IT/administrator, last ned den gule <b>«Windows Portabel (.ZIP)»</b>, høyreklikk og velg <b>«Pakk ut alle...»</b>.</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #34d399; color: #000;">3</span>
+                            <span>Dobbeltklikk på <b><code>Start-VoxLex.cmd</code></b> i mappen – den fjerner eventuelle sperrer, legger snarvei på skrivebordet og starter appen direkte!</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Chromebook -->
+                    <div class="platform-card" style="border-color: rgba(56, 189, 248, 0.35);">
+                        <h4 class="platform-title" style="color: #38bdf8;">
+                            <span>Chromebook (Skole-PC)</span>
+                            <span class="platform-tag" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">Lagres på maskinen</span>
+                        </h4>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #38bdf8;">1</span>
+                            <span>Klikk på den grønne knappen <b>«Åpne for iPad, Chromebook og Android»</b>.</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #38bdf8;">2</span>
+                            <span>Klikk på den grønne knappen <b>«Installer app nå»</b> øverst på siden som åpnes (eller på skjerm-ikonet i adressefeltet i Chrome).</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #38bdf8;">3</span>
+                            <span>Nå ligger VoxLex nederst på oppgavelinjen og virker også uten nett! Dra vinduet til høyre kant av skjermen for å ha det ved siden av Google Dokumenter.</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. iPad -->
+                    <div class="platform-card" style="border-color: rgba(52, 211, 153, 0.35);">
+                        <h4 class="platform-title" style="color: #34d399;">
+                            <span>iPad og iPhone</span>
+                            <span class="platform-tag" style="background: rgba(52, 211, 153, 0.15); color: #34d399;">Uten App Store</span>
+                        </h4>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #34d399;">1</span>
+                            <span>Åpne denne siden i <b>Safari</b> på iPaden og trykk på den grønne knappen <b>«Åpne for iPad, Chromebook og Android»</b>.</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #34d399;">2</span>
+                            <span>Trykk på <b>Del-ikonet</b> (firkant med pil opp øverst i Safari) og velg <b>«Legg til på Hjem-skjerm»</b>. Nå ligger VoxLex som en egen app på iPaden!</span>
+                        </div>
+                        <div class="mini-step">
+                            <span class="mini-num" style="background: #34d399;">3</span>
+                            <span>Når du skriver i Word eller Pages: trykk på de tre prikkene <code>•••</code> helt øverst på skjermen og velg <b>Split View</b> for å ha VoxLex ved siden av.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="credits-box">
+                <div style="font-weight: 700; color: #fff; margin-bottom: 6px;">Kilder og åpne språkressurser</div>
+                <div>• <strong>Norsk ordbok og bøyningsbank (CC BY 4.0):</strong> <em>Bokmålsordboka</em>, <em>Nynorskordboka</em> og <em>Norsk Ordbank</em> (<a href="https://ordbokene.no" target="_blank" style="color: var(--primary);">ordbokene.no</a> / <a href="https://ord.uib.no" target="_blank" style="color: var(--primary);">ord.uib.no</a>) fra <strong>Språkrådet og Universitetet i Bergen</strong>, lisensiert under <a href="https://creativecommons.org/licenses/by/4.0/deed.no" target="_blank" style="color: var(--primary);">CC BY 4.0</a> (tilpasset for lokal visning i VoxLex).</div>
+                <div style="margin-top: 4px;">• <strong>Norsk uttale, stemme og talegjenkjenning (CC0 1.0 / Apache 2.0):</strong> <em>NB Uttale / NST uttaleleksikon for bokmål</em> (<code>oai:nb.no:sbr-23</code>), <em>NB Talesyntese</em> (<code>sbr-79</code>) og <em>NB-Whisper</em> fra <strong>Språkbanken / AI-laben ved Nasjonalbiblioteket</strong>.</div>
+                <div style="margin-top: 4px;">• <strong>18 fremmedspråk og stemmer (MIT / CC0 / CC BY 4.0):</strong> Flerspråklige ordlister bygger på <strong>Meta AI MUSE</strong> (MIT License). Fremmedspråklige stemmer (lastes ned ved behov) drives av <strong>Rhasspy Piper TTS</strong> (MIT) med åpne modeller fra Lessac/LJSpeech (EN), Thorsten Müller (DE, CC0), SIWIS / Univ. of Edinburgh (FR, CC BY 4.0), DaveFX (ES), Nawar Halabi (AR), Ukrainian TTS / Lada (UK), Irina (RU), DFKI (TR), Darkman / Gosia (PL), Gyro (FA), VIVOS (VI), Paola (IT) og Faber (PT).</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        fetch('version.json?t=' + Date.now())
+            .then(r => r.json())
+            .then(d => {
+                if (!d) return;
+                if (d.version) {
+                    const b = document.getElementById('version-badge');
+                    if (b) b.textContent = 'v' + d.version;
+                }
+                if (d.winInstallerUrl) {
+                    const wb = document.getElementById('win-download-btn');
+                    const wl = document.getElementById('win-download-label');
+                    if (wb && wl) {
+                        wb.href = d.winInstallerUrl;
+                        wb.setAttribute('download', d.winInstallerUrl.split('/').pop() || 'VoxLex-Windows.exe');
+                        wb.classList.remove('disabled-btn');
+                        wb.style.pointerEvents = 'auto';
+                        wb.title = 'Last ned VoxLex for Windows 10/11 (.EXE)';
+                        const vMatch = d.winInstallerUrl.match(/v(\d+\.\d+\.\d+)/);
+                        wl.textContent = 'Windows (.EXE – v' + (vMatch ? vMatch[1] : (d.version || '1.1.2')) + ')';
+                    }
+                }
+                if (d.winPortableZipUrl) {
+                    const pb = document.getElementById('win-portable-btn');
+                    const pl = document.getElementById('win-portable-label');
+                    if (pb && pl) {
+                        pb.href = d.winPortableZipUrl;
+                        pb.setAttribute('download', d.winPortableZipUrl.split('/').pop() || 'VoxLex-Windows.zip');
+                        const vMatch = d.winPortableZipUrl.match(/v(\d+\.\d+\.\d+)/);
+                        pl.textContent = 'Windows Portabel (.ZIP – v' + (vMatch ? vMatch[1] : (d.version || '1.1.2')) + ')';
+                    }
+                }
+            })
+            .catch(() => {});
+    </script>
+
+    <!-- Besøkssporing for admin_visit_stats.php -->
+    <script>
+        (function() {
+            function getVisitorId() {
+                let id = localStorage.getItem('vox_visitor_id');
+                if (!id) {
+                    id = 'v-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                    localStorage.setItem('vox_visitor_id', id);
+                }
+                return id;
+            }
+
+            async function logVisit() {
+                let currentCountry = 'Unknown';
+                try {
+                    const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: 'force-cache' });
+                    if (geoRes.ok) {
+                        const geoData = await geoRes.json();
+                        if (geoData && geoData.country) currentCountry = geoData.country;
+                    }
+                } catch (e) {
+                    try {
+                        const fbRes = await fetch('https://api.country.is/', { cache: 'force-cache' });
+                        if (fbRes.ok) {
+                            const fbData = await fbRes.json();
+                            if (fbData && fbData.country) currentCountry = fbData.country;
+                        }
+                    } catch (fbErr) {}
+                }
+
+                const payload = {
+                    action: 'log_visit',
+                    app: 'voxlex',
+                    visitor_id: getVisitorId(),
+                    country: currentCountry,
+                    device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
+                    screen_resolution: window.screen.width + "x" + window.screen.height,
+                    referrer: document.referrer || 'Direct',
+                    language: navigator.language || 'no'
+                };
+
+                fetch('/history/auth_v2.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(() => {});
+            }
+
+            window.addEventListener('load', logVisit);
+        })();
+    </script>
+</body>
+
+</html>

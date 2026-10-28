@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>VoxLex – Brukerveiledning og Hjelpesenter</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0b0d12; --text: #f1f5f9; --text-muted: #94a3b8; --card-bg: rgba(255,255,255,0.04); --card-border: rgba(255,255,255,0.12); --item-bg: rgba(255,255,255,0.025); --item-border: #0ea5e9; --title-color: #38bdf8; --badge-bg: rgba(56,189,248,0.18); --badge-text: #38bdf8; --code-bg: rgba(15,23,42,0.9); --code-color: #7dd3fc; --font-scale: 1.05rem; --line-height: 1.8; --letter-spacing: 0.015em; color-scheme: light dark; }
+        html.theme-paper { --bg: #f6f1e8; --text: #1e293b; --text-muted: #475569; --card-bg: #fff; --card-border: #e2d7c7; --item-bg: #fbf8f2; --item-border: #0284c7; --title-color: #0369a1; --badge-bg: #e0f2fe; --badge-text: #0284c7; --code-bg: #ece5d8; --code-color: #0c4a6e; }
+        html.theme-paper h1 { background: none; -webkit-text-fill-color: initial; color: #0f172a; }
+        html.theme-paper .subtitle { color: #475569; }
+        html.theme-paper .back-link { color: #0284c7; }
+        html.theme-paper .blob { display: none; }
+        html.theme-contrast { --bg: #000; --text: #fff; --text-muted: #fef08a; --card-bg: #0a0a0a; --card-border: #facc15; --item-bg: #141414; --item-border: #facc15; --title-color: #facc15; --badge-bg: #facc15; --badge-text: #000; --code-bg: #1e1e1e; --code-color: #fef08a; }
+        html.theme-contrast h1 { background: none; -webkit-text-fill-color: #facc15; color: #facc15; }
+        html.theme-contrast .subtitle { color: #fef08a; }
+        html.theme-contrast .back-link { color: #facc15; }
+        html.theme-contrast .blob { display: none; }
+        html.size-large { --font-scale: 1.2rem; }
+        html.size-xlarge { --font-scale: 1.35rem; }
+        html.spacing-wide { --line-height: 2.1; --letter-spacing: 0.035em; }
+        body { font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        .container { width: 90%; max-width: 880px; margin: 0 auto; padding: 40px 16px 80px; }
+        .a11y-bar { display: flex; flex-wrap: wrap; gap: 12px 20px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px 18px; margin-bottom: 34px; align-items: center; }
+        .a11y-group { display: inline-flex; align-items: center; gap: 6px; }
+        .a11y-label { font-size: 0.86rem; font-weight: 700; color: var(--text-muted); margin-right: 4px; }
+        .a11y-btn { background: transparent; color: var(--text); border: 1px solid var(--card-border); padding: 6px 12px; border-radius: 8px; font-size: 0.88rem; font-weight: 700; cursor: pointer; min-height: 34px; }
+        .a11y-btn:hover { border-color: var(--title-color); color: var(--title-color); }
+        .a11y-btn.active { background: var(--badge-bg); border-color: var(--title-color); color: var(--badge-text); }
+        .a11y-btn:focus-visible, a:focus-visible { outline: 3px solid var(--title-color); outline-offset: 2px; }
+        .guide-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; padding: 28px 28px 32px; margin-bottom: 30px; }
+        .guide-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--card-border); }
+        .guide-num { width: 36px; height: 36px; border-radius: 50%; background: var(--badge-bg); color: var(--badge-text); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; }
+        .guide-title { margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text); line-height: 1.4; }
+        .guide-item { background: var(--item-bg); border-left: 4px solid var(--item-border); border-radius: 0 12px 12px 0; padding: 18px 20px; margin-top: 18px; }
+        .guide-item:first-of-type { margin-top: 0; }
+        .item-heading { font-size: 1.08rem; font-weight: 700; color: var(--title-color); margin: 0 0 8px 0; line-height: 1.4; }
+        .item-text { font-size: var(--font-scale); line-height: var(--line-height); letter-spacing: var(--letter-spacing); color: var(--text); margin: 0; }
+        .item-text code { background: var(--code-bg); color: var(--code-color); padding: 2px 7px; border-radius: 5px; font-family: ui-monospace, monospace; font-size: 0.88em; border: 1px solid var(--card-border); }
+        .item-text a { color: var(--title-color); font-weight: 700; text-decoration: underline; }
+        .credits-box { background: var(--item-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 22px 24px; font-size: 0.94rem; line-height: 1.75; color: var(--text-muted); display: flex; flex-direction: column; gap: 10px; }
+        .credits-box strong { color: var(--text); }
+        @media (max-width: 640px) { .container { padding: 24px 12px 60px; } .guide-card { padding: 20px 16px 24px; } .guide-item { padding: 14px 16px; } .guide-title { font-size: 1.1rem; } }
+    </style>
+</head>
+
+<body>
+    <div class="blob"></div>
+
+    <main class="container">
+        <a href="index.html" class="back-link">&larr; Tilbake til VoxLex Nedlasting</a>
+        <h1>VoxLex Hjelpesenter</h1>
+        <p class="subtitle">Brukerveiledning for Mac, Windows, iPad, Chromebook og Android-nettbrett</p>
+
+        <section class="a11y-bar" aria-label="Tilpass lesbarhet og visning">
+            <div class="a11y-group">
+                <span class="a11y-label">Tekst:</span>
+                <button type="button" class="a11y-btn active" id="btn-size-normal" onclick="setSize('normal')">A</button>
+                <button type="button" class="a11y-btn" id="btn-size-large" onclick="setSize('large')">A+</button>
+                <button type="button" class="a11y-btn" id="btn-size-xlarge" onclick="setSize('xlarge')">A++</button>
+            </div>
+            <div class="a11y-group">
+                <span class="a11y-label">Linjeavstand:</span>
+                <button type="button" class="a11y-btn active" id="btn-space-normal" onclick="setSpacing('normal')">Standard</button>
+                <button type="button" class="a11y-btn" id="btn-space-wide" onclick="setSpacing('wide')">Romslig</button>
+            </div>
+            <div class="a11y-group">
+                <span class="a11y-label">Tema:</span>
+                <button type="button" class="a11y-btn active" id="btn-theme-dark" onclick="setTheme('dark')">M&oslash;rk</button>
+                <button type="button" class="a11y-btn" id="btn-theme-paper" onclick="setTheme('paper')">Nordisk Papir</button>
+                <button type="button" class="a11y-btn" id="btn-theme-contrast" onclick="setTheme('contrast')">H&oslash;y Kontrast</button>
+            </div>
+        </section>
+
+        <article class="guide-card">
+            <header class="guide-header"><span class="guide-num">1</span><h2 class="guide-title">Fire visningsmoduser p&aring; Mac og PC (inkl. oppgavelinje) + Valgfri oppstart</h2></header>
+            <div class="guide-item">
+                <h3 class="item-heading">Valgfri oppstartsvisning</h3>
+                <p class="item-text">Under <strong>Innstillinger</strong> kan du velge om VoxLex skal starte som <strong>1-linjes verkt&oslash;ylinje (Standard)</strong>, <strong>Kun flytende logo</strong>, <strong>Full ordbokvisning</strong> eller <strong>Kun oppgavelinje / menylinje</strong> (skjuler flytende ikon og kj&oslash;rer diskr&eacute; i bakgrunnen ved klokken).</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Systemstatusfelt og menylinje (Tray-meny)</h3>
+                <p class="item-text">Et diskr&eacute; VoxLex-ikon finnes ved klokken p&aring; Windows og i menylinjen p&aring; Mac. Et klikk p&aring; ikonet gir umiddelbart en hurtigmeny for &aring; &aring;pne VoxLex, bytte aktivt spr&aring;k, veksle sanntids skrivest&oslash;tte, lese markert tekst i bakgrunnen uten &aring; forstyrre skjermen, og &aring;pne innstillinger.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Full ordbokvisning (med &laquo;Fest &oslash;verst P&Aring;/AV&raquo;)</h3>
+                <p class="item-text">Viser komplette norske ordforklaringer, uttale, synonymer, motsetninger (antonymer), faste uttrykk, ordhistorie (etymologi), b&oslash;yningstabeller og oversettelser.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Vises ogs&aring; over Word i fullskjerm</h3>
+                <p class="item-text">P&aring; Mac og Windows legger VoxLex seg trygt og synlig over Microsoft Word, Google Dokumenter og andre apper, selv n&aring;r appen kj&oslash;rer i fullskjermmodus.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Kompakt verkt&oslash;ylinje, valgfrie knapper og flytende ikon</h3>
+                <p class="item-text">Klikk p&aring; VL-logoen lengst til venstre for &aring; krympe vinduet til en smal verkt&oslash;ylinje &oslash;verst p&aring; skjermen eller kun et lite flytende ikon. I <strong>Innstillinger</strong> kan du skjule/vise knappene p&aring; verkt&oslash;ylinjen slik at pillen krymper etter ditt behov, og <strong>Pause/Stopp</strong> dukker automatisk opp kun mens noe faktisk leses opp.</p>
+            </div>
+        </article>
+
+        <article class="guide-card" style="border-color: rgba(16, 185, 129, 0.4);">
+            <header class="guide-header"><span class="guide-num" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">2</span><h2 class="guide-title" style="color: #34d399;">Slik installerer og bruker du VoxLex p&aring; iPad, Chromebook og Android-nettbrett</h2></header>
+            <div class="guide-item" style="border-left-color: #10b981;">
+                <h3 class="item-heading" style="color: #34d399;">P&aring; Chromebook (Skole-PC)</h3>
+                <p class="item-text">&Aring;pne <a href="app/index.html">voxcuriosa.no/voxlex/app</a> i Chrome og klikk p&aring; den gr&oslash;nne knappen <strong>&laquo;Installer app n&aring;&raquo;</strong> &oslash;verst (eller p&aring; skjerm-ikonet i adressefeltet). N&aring; ligger VoxLex p&aring; oppgavelinjen og fungerer 100 % uten internett! Dra vinduet til h&oslash;yre kant for &aring; ha det ved siden av Google Dokumenter.</p>
+            </div>
+            <div class="guide-item" style="border-left-color: #10b981;">
+                <h3 class="item-heading" style="color: #34d399;">P&aring; iPad (uten App Store)</h3>
+                <p class="item-text">&Aring;pne <a href="app/index.html">voxcuriosa.no/voxlex/app</a> i Safari p&aring; iPaden, trykk p&aring; <strong>Del-ikonet</strong> (firkant med pil opp) og velg <strong>&laquo;Legg til p&aring; Hjem-skjerm&raquo;</strong>. N&aring;r du skriver i Word eller Pages, trykker du p&aring; de tre prikkene <code>&bull;&bull;&bull;</code> &oslash;verst og velger <strong>Split View</strong> eller <strong>Slide Over</strong> med VoxLex ved siden av.</p>
+            </div>
+            <div class="guide-item" style="border-left-color: #10b981;">
+                <h3 class="item-heading" style="color: #34d399;">P&aring; Android-nettbrett</h3>
+                <p class="item-text">&Aring;pne <a href="app/index.html">voxcuriosa.no/voxlex/app</a> i Chrome og trykk p&aring; <strong>&laquo;Installer app n&aring;&raquo;</strong> (eller menyen <code>&vellip;</code> &rarr; <strong>&laquo;Installer app&raquo;</strong>). Bruk <strong>Delt skjerm</strong> sammen med skriveappen din.</p>
+            </div>
+            <div class="guide-item" style="border-left-color: #10b981;">
+                <h3 class="item-heading" style="color: #34d399;">Innsetting og h&oslash;ytlesning p&aring; nettbrett og Chromebook</h3>
+                <p class="item-text">Trykk <strong>&laquo;Sett inn&raquo;</strong> p&aring; et ordforslag for &aring; kopiere ordet rett inn i teksten din. Marker tekst og trykk <strong>&laquo;Les opp&raquo;</strong> for &aring; f&aring; teksten lest h&oslash;yt med naturlig stemme p&aring; valgt spr&aring;k.</p>
+            </div>
+        </article>
+
+        <article class="guide-card">
+            <header class="guide-header"><span class="guide-num">3</span><h2 class="guide-title">Fokusmodus (&Oslash;ye-ikon), Mini-Ordkort i Skrivest&oslash;tte og Hjelp ved stavefeil</h2></header>
+            <div class="guide-item">
+                <h3 class="item-heading">Fokusmodus (&Oslash;ye-ikon)</h3>
+                <p class="item-text">&Oslash;ye-knappen p&aring; verkt&oslash;ylinjen gir en rolig leseflate i varmt nordisk bokpapir-tema med leselinjal-kant, tydelig orddeling (f.eks. <code>sko &middot; le</code>) og automatisk opplesing av ordforslagene n&aring;r du blar.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Mini-Ordkort rett i Skrivest&oslash;tte (Bok-ikon)</h3>
+                <p class="item-text">Hvert ordforslag har en egen bok-knapp som &aring;pner et kompakt <strong>Mini-Ordkort</strong> rett under forslaget med ordforklaring, b&oslash;yning, valgte oversettelser, h&oslash;ytlesning og knapp for <strong>&laquo;&Aring;pne i full ordbok&raquo;</strong>.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Ordforslag ved skrivemark&oslash;ren i Word og nettleser (Mac/PC)</h3>
+                <p class="item-text">Viser ordforslag rett ved der du skriver. Du kan flytte forslagsfeltet manuelt og l&aring;se det til en fast plassering, eller la det f&oslash;lge mark&oslash;ren. Med <strong>&laquo;Kompakt / Full&raquo;</strong>-knappen kan du velge et smalt forslagsfelt (270 px) med kun ordet og hurtigikoner, eller full visning med forklaringer. Bla med <code>Pil opp / ned</code> og trykk <code>Enter</code> for &aring; sette inn ordet.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Finner ordet selv med stavefeil og hjelper med forvekslingsord</h3>
+                <p class="item-text">Fanger opp ord som skrives slik de uttales (<code>b&harr;d</code>, <code>p&harr;b</code>, <code>k&harr;g</code>, <code>o&harr;&aring;</code>, <code>e&harr;&aelig;</code>, <code>nd/ld/rd</code> og <code>skj/sj/kj</code>) og gir tydelige huskeregler p&aring; vanlige forvekslingsord (<strong>og/&aring;</strong>, <strong>da/n&aring;r</strong>, <strong>v&aelig;rt/hvert/vert</strong>, <strong>their/there/they're</strong>, <strong>to/too/two</strong>, <strong>your/you're</strong>).</p>
+            </div>
+        </article>
+
+        <article class="guide-card">
+            <header class="guide-header"><span class="guide-num">4</span><h2 class="guide-title">Bokm&aring;lsordboka, Nynorskordboka, 18 Fremmedspr&aring;k og Egendefinerte ord</h2></header>
+            <div class="guide-item">
+                <h3 class="item-heading">Norsk (Bokm&aring;l &harr; Nynorsk)</h3>
+                <p class="item-text">Over 190 000 oppslagsord og 718 000 b&oslash;yde former fra Spr&aring;kr&aring;det og Universitetet i Bergen, med direkte klikkbar <strong>Bokm&aring;l &harr; Nynorsk-kobling</strong> og sidestilte valgfrie former.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">S&oslash;k i &laquo;Oppslagsord&raquo; eller &laquo;All tekst&raquo; + Trekkspill-liste</h3>
+                <p class="item-text">I full ordbokvisning kan du velge mellom <strong>Oppslagsord</strong> og <strong>All tekst</strong> (s&oslash;ker i definisjoner, eksempler, synonymer og oversettelser) og &aring;pne flere ordbokkort samtidig i en oversiktlig trekkspill-liste. I Fokusmodus skjules dette automatisk for &aring; holde leseflaten helt rolig.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Egendefinerte ord (Personlig ordliste)</h3>
+                <p class="item-text">Under <strong>Innstillinger</strong> kan du legge til egne faguttrykk, stedsnavn og personnavn i stavekontrollen med enkel eksport og import. Funksjonen deaktiveres automatisk under eksamen.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">18 fremmedspr&aring;k begge veier</h3>
+                <p class="item-text">Engelsk, Tysk, Spansk og Fransk vises som standard i flaggmenyen. Under <strong>Innstillinger</strong> kan du ogs&aring; sl&aring; p&aring; Polsk, Somali, Arabisk, Ukrainsk, Persisk/Dari, Vietnamesisk, Kurdisk, Tigrinja, Litauisk, Russisk, Tyrkisk, Thai, Italiensk og Portugisisk.</p>
+            </div>
+        </article>
+
+        <article class="guide-card">
+            <header class="guide-header"><span class="guide-num">5</span><h2 class="guide-title">H&oslash;ytlesning, Diktering (Tale-til-tekst), Matteformler og Lydfil-eksport</h2></header>
+            <div class="guide-item">
+                <h3 class="item-heading">Pek-og-les (Les markert tekst), Pause/Fortsett og R&oslash;d Stopp-knapp</h3>
+                <p class="item-text">Leser opp teksten du aktivt har markert med naturlig norsk setningsmelodi, pauser ved punktum og komma, samt naturlig uttale av matematiske uttrykk (<code>x&sup2;</code>, <code>&radic;</code>, <code>&ge;</code>, <code>&le;</code>, <code>&asymp;</code>, <code>&pi;</code>, <code>f(x)</code>).</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Diktering &ndash; Tale til tekst (Mikrofon-knappen)</h3>
+                <p class="item-text">Klikk p&aring; mikrofon-ikonet for &aring; snakke inn tekst p&aring; bokm&aring;l, nynorsk eller valgt fremmedspr&aring;k. F&oslash;rste gang du klikker mikrofonen p&aring; Mac/PC installeres Nasjonalbibliotekets <strong>NB-Whisper</strong> automatisk lokalt (helt uten nettsky eller ekstern server).</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Lagre opplesning som lydfil</h3>
+                <p class="item-text">Lagre opplest tekst direkte som en <code>.wav</code>-lydfil i <strong>Nedlastinger</strong> for repetisjon og lyttetrening.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Fremmedspr&aring;kstemmer lastes kun ned ved behov</h3>
+                <p class="item-text">Norsk stemme f&oslash;lger ferdig med i programmet, mens fremmedspr&aring;kstemmer lastes ned automatisk kun n&aring;r du velger det spr&aring;ket.</p>
+            </div>
+        </article>
+
+        <article class="guide-card">
+            <header class="guide-header"><span class="guide-num">6</span><h2 class="guide-title">Trygg p&aring; Pr&oslash;ver/Eksamen (SEB), NAV-lisens og Automatisk Oppdatering</h2></header>
+            <div class="guide-item">
+                <h3 class="item-heading">NAV-lisens, Skoleavtale og Enkelt PC-bytte</h3>
+                <p class="item-text">Under <strong>Innstillinger &rarr; Om VoxLex</strong> kan du registrere lisenskode fra NAV Hjelpemiddelsentral eller skole (<code>VX-...</code>) sammen med en privat e-postadresse for gjenoppretting. E-posten lagres aldri i klartekst (Zero-Knowledge enveis-hash), men gj&oslash;r at du med ett klikk p&aring; <strong>&laquo;Glemt kode ved PC-bytte?&raquo;</strong> f&aring;r koden tilsendt til innboksen din n&aring;r du bytter PC.</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Trygg p&aring; eksamen (Safe Exam Browser / SEB)</h3>
+                <p class="item-text">N&aring;r Safe Exam Browser kj&oslash;rer, eller eksamensvakt l&aring;ser med PIN-kode (standard <code>2026</code>), er VoxLex alltid 100 % ul&aring;st og tilgjengelig lokalt, mens all nettilgang, egne ordlister, OS-fildialoger og ekstern navigering stenges fysisk i Rust-kjernen (<code>PermittedProcesses</code>: <code>VoxLex.exe</code> p&aring; Windows / <code>no.voxlex.skole</code> p&aring; macOS).</p>
+            </div>
+            <div class="guide-item">
+                <h3 class="item-heading">Oppdaterer seg selv i hverdagen</h3>
+                <p class="item-text">Til vanlig sjekker VoxLex automatisk om det har kommet en ny versjon p&aring; <code>voxcuriosa.no/voxlex</code> og oppdaterer seg selv uten at du trenger &aring; installere p&aring; nytt.</p>
+            </div>
+        </article>
+
+        <footer class="credits-box">
+            <div style="font-weight: 700; color: var(--text); margin-bottom: 2px;">Kilder, utvikler og lisenser</div>
+            <div style="margin-bottom: 4px;">&bull; <strong>Utviklet av:</strong> Christian Borchgrevink-Vigeland &bull; <strong>Chromo AS</strong> (<a href="https://chromo.no" target="_blank">chromo.no</a>) &bull; E-post: <a href="mailto:christian@chromo.no">christian@chromo.no</a> &bull; Tlf: <a href="tel:40202222">40202222</a></div>
+            <div>&bull; <strong>Spr&aring;kr&aring;det og Universitetet i Bergen:</strong> <strong>Bokm&aring;lsordboka</strong>, <strong>Nynorskordboka</strong> og <strong>Norsk Ordbank</strong> (<a href="https://ordbokene.no" target="_blank">ordbokene.no</a> / <a href="https://ord.uib.no" target="_blank">ord.uib.no</a>) &ndash; lisensiert under <strong>CC BY 4.0</strong>.</div>
+            <div>&bull; <strong>AI-laben og Spr&aring;kbanken ved Nasjonalbiblioteket:</strong> <strong>NB Uttale / NST uttaleleksikon for bokm&aring;l</strong> (CC0), <strong>NB Talesyntese</strong> (CC0) og <strong>NB-Whisper</strong> (<strong>Apache 2.0</strong>).</div>
+            <div>&bull; <strong>Meta AI MUSE og Rhasspy Piper Voices:</strong> Flerspr&aring;klige ordlister (MUSE, <strong>MIT</strong>) og &aring;pne stemmemodeller (<strong>CC0 1.0 / CC BY 4.0 / MIT</strong>).</div>
+        </footer>
+    </main>
+
+    <script>
+        function setSize(s){document.documentElement.classList.remove('size-large','size-xlarge');if(s==='large')document.documentElement.classList.add('size-large');if(s==='xlarge')document.documentElement.classList.add('size-xlarge');document.querySelectorAll('[id^="btn-size-"]').forEach(b=>b.classList.remove('active'));const b=document.getElementById('btn-size-'+s);if(b)b.classList.add('active');try{localStorage.setItem('vx_h_sz',s);}catch(e){}}
+        function setSpacing(w){document.documentElement.classList.toggle('spacing-wide',w==='wide');document.querySelectorAll('[id^="btn-space-"]').forEach(b=>b.classList.remove('active'));const b=document.getElementById('btn-space-'+w);if(b)b.classList.add('active');try{localStorage.setItem('vx_h_sp',w);}catch(e){}}
+        function setTheme(t){document.documentElement.classList.remove('theme-paper','theme-contrast');if(t==='paper')document.documentElement.classList.add('theme-paper');if(t==='contrast')document.documentElement.classList.add('theme-contrast');document.querySelectorAll('[id^="btn-theme-"]').forEach(b=>b.classList.remove('active'));const b=document.getElementById('btn-theme-'+t);if(b)b.classList.add('active');try{localStorage.setItem('vx_h_th',t);}catch(e){}}
+        (function(){try{const sz=localStorage.getItem('vx_h_sz');if(sz)setSize(sz);const sp=localStorage.getItem('vx_h_sp');if(sp)setSpacing(sp);const th=localStorage.getItem('vx_h_th');if(th)setTheme(th);}catch(e){}})();
+    </script>
+</body>
+
+</html>

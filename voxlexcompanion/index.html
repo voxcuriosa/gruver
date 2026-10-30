@@ -166,13 +166,13 @@
                     <span>Legg til i Chrome (Chrome Web Store)</span>
                 </a>
 
-                <a href="VoxLex-Companion-v1.0.0.zip" download="VoxLex-Companion-v1.0.0.zip" class="action-btn secondary" style="flex: 1; min-width: 220px; background: rgba(255, 255, 255, 0.08); color: #f8fafc; border-color: rgba(255, 255, 255, 0.2);">
+                <a href="VoxLex-Companion-v1.0.5.zip" download="VoxLex-Companion-v1.0.5.zip" class="action-btn secondary" style="flex: 1; min-width: 220px; background: rgba(255, 255, 255, 0.08); color: #f8fafc; border-color: rgba(255, 255, 255, 0.2);">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                    <span>Last ned utvidelsespakke (.ZIP)</span>
+                    <span>Last ned utvidelsespakke (.ZIP – v1.0.5)</span>
                 </a>
 
                 <a href="https://github.com/voxcuriosa/voxlex-companion" target="_blank" rel="noopener noreferrer" class="action-btn secondary" style="flex: 1; min-width: 210px; background: rgba(255, 255, 255, 0.08); color: #f8fafc; border-color: rgba(255, 255, 255, 0.2);">
@@ -213,22 +213,26 @@
             <!-- Nøkkelfunksjoner -->
             <div class="feature-grid">
                 <div class="feature-item">
-                    <h3>96 000+ oppslagsord lokalt</h3>
-                    <p>Hele Bokmålsordboka (UiB/Språkrådet) og Norske synonymer ligger pakket inn i utvidelsen. Fungerer 100 % offline på 0 ms uten nettverksforbruk.</p>
+                    <h3>130 600 oppslagsord lokalt</h3>
+                    <p>Hele Bokmålsordboka, Nynorskordboka (UiB/Språkrådet) og Norske synonymer ligger pakket inn i utvidelsen. Fungerer 100 % offline overalt på 0 ms uten nettverksforbruk.</p>
                 </div>
                 <div class="feature-item">
                     <h3>Trygg på skolen og eksamen</h3>
                     <p>Krever ingen innlogging eller konto. Ingen sporing, ingen analysekapsler og automatisk deaktivering på sensitive sider og eksamensplattformer (SEB, Inspera, Wiseflow, DigiExam).</p>
                 </div>
                 <div class="feature-item">
-                    <h3>Faglige fordypningslenker</h3>
-                    <p>Ett klikk tar deg direkte til den offisielle fagartikkelen på Ordbøkene.no, Store norske leksikon (SNL) eller Wikipedia når du er på nett.</p>
+                    <h3>Skolenett i Telemark (gratis for flere)</h3>
+                    <p>Utvidet AI-oppslag og morsmålsoversettelse fungerer foreløpig på skoler i Telemark fylkeskommune. Andre fylker og kommuner får gratis tilgang ved å oppgi sin IP-rekke.</p>
                 </div>
             </div>
 
             <!-- Personvernerklæring (GDPR & Chrome Web Store Privacy Policy) -->
             <div id="personvern" style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-top: 8px;">
-                <h3 style="color: var(--primary); margin-top: 0;">Personvernerklæring (Privacy Policy)</h3>
+                <h3 style="color: var(--primary); margin-top: 0;">Hjelp, Skolenett-tilgang og Personvernerklæring (GDPR)</h3>
+                <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
+                    <strong>Hva virker hjemme (Lokal modus) vs. på skolen?</strong><br>
+                    Hele den innebygde ordboka på bokmål og nynorsk (<strong>130 600 oppslagsord</strong> og over 385 000 bøyde ordformer), høytlesning og oppslag mot Store norske leksikon (SNL) og Wikipedia fungerer <strong>overalt</strong> – også hjemmefra (indikert med merket <code>[LOKAL MODUS]</code>). Utvidet AI-søk og flerspråklig morsmålsoversettelse er av personvernhensyn (k-anonymitet) låst til skolens nettverk og fungerer foreløpig på skoler i <strong>Telemark fylkeskommune</strong>. <strong>Andre fylkeskommuner, kommuner og skoler kan ta kontakt på <a href="mailto:christian@chromo.no" style="color: var(--primary);">christian@chromo.no</a> og oppgi sin offentlige IP-rekke (IP-range / CIDR) for å få åpnet gratis tilgang.</strong>
+                </p>
                 <p style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.6;">
                     <strong>VoxLex Companion</strong> er utviklet for skolesektoren etter prinsippet om innebygd personvern (Privacy by Design). Utvidelsen er 100 % GDPR-sikker:
                 </p>
@@ -238,9 +242,9 @@
                     <li><strong>Kun lokalt på din egen maskin:</strong> Dine innstillinger (av/på-status og valgt støttespråk) lagres utelukkende lokalt i nettleseren din (<code>chrome.storage.local</code>) og synkroniseres aldri til skytjenester.</li>
                     <li><strong>Ingen fritekstsøk:</strong> Utvidelsen har ikke fritekst- eller chatfelt. Dette forhindrer at elever ved et uhell taster inn personopplysninger eller meldinger. Kun ett enkelt markert oppslagsord (maks 35 bokstaver) kan behandles.</li>
                     <li><strong>100 % EU-prosessering (Vertex AI) og K-anonymitet på skolenett:</strong> Utvidet oppslag og morsmålsoversettelse prosesseres utelukkende i EU (Google Cloud Vertex AI, <code>europe-west1</code> Belgia) med kontraktfestet null datalagring og null modelltrening (<em>Zero Data Retention</em>), strengt IP-låst til skolens felles nettverk uten logging av IP-adresser.</li>
-                    <li><strong>Automatisk eksamens- og domenesperre:</strong> Utvidelsen er teknisk sperret (<code>exclude_matches</code>) på digitale prøve- og eksamensplattformer (SEB, Inspera, Wiseflow, DigiExam) samt på BankID, Feide, ID-porten, Helsenorge, NAV og Altinn.</li>
+                    <li><strong>Automatisk eksamens- og domenesperre:</strong> Utvidelsen er teknisk sperret (<code>exclude_matches</code> og runtime-sjekk) på digitale prøve- og eksamensplattformer (SEB, Inspera, Wiseflow, DigiExam, Privex) samt på BankID, Vipps, Feide, ID-porten, Helsenorge, NAV, Skatteetaten, Lånekassen og Altinn.</li>
                     <li><strong>100 % Åpen kildekode (MIT-lisens):</strong> Hele kildekoden ligger åpent tilgjengelig for innsyn, revisjon og egen drift av IT-avdelinger og personvernombud på <a href="https://github.com/voxcuriosa/voxlex-companion" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">github.com/voxcuriosa/voxlex-companion</a>.</li>
-                    <li><strong>Kontakt:</strong> For henvendelser vedrørende personvern eller skoledistribusjon, se <a href="https://voxcuriosa.no/" style="color: var(--primary);">voxcuriosa.no</a>.</li>
+                    <li><strong>Gratis tilgang for flere fylker og kommuner:</strong> Kontakt <a href="mailto:christian@chromo.no" style="color: var(--primary);">christian@chromo.no</a> (<a href="https://voxcuriosa.no/" style="color: var(--primary);">voxcuriosa.no</a>) med skolens/fylkets offentlige IP-range for gratis åpning av skolenett-funksjoner.</li>
                 </ul>
             </div>
         </div>

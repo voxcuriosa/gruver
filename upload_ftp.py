@@ -13,10 +13,13 @@ def _read_ftp_password():
     env_pw = os.environ.get("VOXCURIOSA_FTP_PASS")
     if env_pw:
         return env_pw
-    result = subprocess.run(
-        ["security", "find-generic-password", "-a", FTP_USER, "-s", "voxcuriosa-ftp", "-w"],
-        capture_output=True, text=True
-    )
+    try:
+        result = subprocess.run(
+            ["security", "find-generic-password", "-a", FTP_USER, "-s", "voxcuriosa-ftp", "-w"],
+            capture_output=True, text=True
+        )
+    except FileNotFoundError:
+        sys.exit("VOXCURIOSA_FTP_PASS is not set and macOS Keychain ('security') is unavailable.")
     if result.returncode != 0:
         sys.exit("FTP password not found in Keychain (service: voxcuriosa-ftp).")
     return result.stdout.strip()

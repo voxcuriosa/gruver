@@ -25,6 +25,8 @@ jobs:
         run: python gruver/sync_google_photos.py
 
       - name: Deploy to Server via FTP
+        env:
+          VOXCURIOSA_FTP_PASS: ${{ secrets.VOXCURIOSA_FTP_PASS }}
         run: |
           python upload_ftp.py gruver/albumgooglephotos gruver
           python upload_ftp.py gruver/sync_registry.json gruver

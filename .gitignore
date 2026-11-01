@@ -2,6 +2,7 @@
 gruver/bilder/
 gruver/backup/
 backup/
+voxlex/*.dmg
 
 # Python
 __pycache__/

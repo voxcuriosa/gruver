@@ -1,4 +1,4 @@
-const CACHE_NAME = 'voxlex-ipad-pwa-v1.2.57';
+const CACHE_NAME = 'voxlex-ipad-pwa-v1.2.75';
 const CORE_ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {

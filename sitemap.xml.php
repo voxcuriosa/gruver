@@ -12,6 +12,42 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <priority>1.0</priority>
     </url>
     <url>
+        <loc><?php echo $base_url; ?>voxlex/</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+    </url>
+    <url>
+        <loc><?php echo $base_url; ?>voxlex/help.html</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc><?php echo $base_url; ?>voxlex/app/index.html</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc><?php echo $base_url; ?>voxlexcompanion/</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc><?php echo $base_url; ?>seb/</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc><?php echo $base_url; ?>assistent/</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
         <loc><?php echo $base_url; ?>gruver/</loc>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>weekly</changefreq>

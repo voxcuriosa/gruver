@@ -1,11 +1,11 @@
 {
-  "version": "1.2.75",
-  "publishedAt": "2026-11-02T20:09:13Z",
-  "notes": "v1.0.1: Støtte for iPad, Chromebook og Android-nettbrett (installerbar offline PWA + delt skjerm), komplett Bokmåls- og Nynorskordbok og automatisk oppdatering.",
-  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-macOS.dmg",
-  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.75-macOS.tar.gz",
-  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.74-Windows.exe",
-  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.74-Windows.msi",
-  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.74-Windows.zip",
-  "winStatus": "Klar for nedlasting (v1.2.75)"
+  "version": "1.2.76",
+  "publishedAt": "2026-11-02T22:10:08Z",
+  "notes": "Fjernet manuell eksamenslås/vakt-PIN-fane fra Innstillinger (SEB oppdages automatisk i bakgrunnen).",
+  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-macOS.dmg",
+  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.76-macOS.tar.gz",
+  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-Windows.exe",
+  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-Windows.msi",
+  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-Windows.zip",
+  "winStatus": "Klar for nedlasting (v1.2.76)"
 }

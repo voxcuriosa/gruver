@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Passordhash (SHA-256) for admin-tilgang ("voxlex2026" eller eksamensvakt/admin-kode)
+// Passordhash (SHA-256) for admin-tilgang ("voxlex2026" eller "privex2026")
 $VALID_HASHES = [
     hash('sha256', 'voxlex2026'),
     hash('sha256', 'privex2026'),
@@ -38,8 +38,9 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
     :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8; --brand: #2563eb; --ok: #10b981; }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; }
-    .wrap { max-width: 680px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; }
+    .wrap { max-width: 740px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; }
     h1 { margin: 0 0 0.5rem 0; font-size: 1.35rem; }
+    h2 { margin: 1.75rem 0 0.75rem 0; font-size: 1.05rem; color: #e2e8f0; border-top: 1px solid var(--border); padding-top: 1.35rem; }
     p { margin: 0 0 1.25rem 0; color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
     label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; }
     input, select { width: 100%; padding: 0.65rem 0.8rem; border-radius: 10px; border: 1px solid var(--border); background: #0f172a; color: var(--text); font-size: 0.92rem; margin-bottom: 1rem; }
@@ -48,11 +49,18 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
     button { padding: 0.7rem 1.2rem; border-radius: 10px; border: none; background: var(--brand); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
     .presets { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
     .preset-btn { background: #0f172a; border: 1px solid var(--border); color: var(--text); padding: 0.45rem 0.75rem; font-size: 0.8rem; font-weight: 600; }
-    .result-box { margin-top: 1.25rem; padding: 1.25rem; border-radius: 12px; background: #0f172a; border: 1px solid var(--ok); }
+    .ref-row { display: flex; gap: 0.5rem; align-items: stretch; margin-bottom: 1rem; }
+    .ref-row input { margin-bottom: 0; flex: 1; }
+    .result-box { margin-top: 0.75rem; padding: 1.25rem; border-radius: 12px; background: #0f172a; border: 1px solid var(--ok); }
     .key-code { font-family: ui-monospace, monospace; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.04em; color: #34d399; margin: 0.4rem 0 0.9rem 0; word-break: break-all; }
     .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
     a.logout { color: var(--muted); font-size: 0.82rem; text-decoration: underline; }
     .err { color: #fca5a5; font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .guide-grid { display: grid; gap: 0.85rem; margin-top: 0.75rem; }
+    .guide-card { background: #0f172a; border: 1px solid var(--border); border-radius: 10px; padding: 0.95rem 1.1rem; }
+    .guide-card strong { display: block; color: #f8fafc; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .guide-card p { margin: 0; font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+    code { font-family: ui-monospace, monospace; background: #1e293b; color: #93c5fd; padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.82rem; }
   </style>
 </head>
 <body>
@@ -89,21 +97,24 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
           <input type="text" id="vx-period" value="9999" oninput="updateKey()" />
         </div>
         <div>
-          <label for="vx-type">Lisenskategori / Referanse (3–8 tegn)</label>
-          <select id="vx-type-preset" onchange="document.getElementById('vx-ref').value = this.value; updateKey();">
-            <option value="FRI1">FRI1 – Manuell gratis/spesiallisens</option>
-            <option value="PRIV">PRIV – Privex-abonnent</option>
-            <option value="VIPP">VIPP – Kun VoxLex (20 kr/mnd Vipps)</option>
-            <option value="SITE">SITE – Skole- / kommunelisens</option>
-            <option value="4501">4501 – NAV Enkeltvedtak</option>
+          <label for="vx-type-preset">Lisenskategori (legger automatisk til unik ID)</label>
+          <select id="vx-type-preset" onchange="applyCategoryRandom(this.value)">
+            <option value="FRI">FRI – Manuell gratis/spesiallisens (enkeltbruker)</option>
+            <option value="PRIV">PRIV – Privex-abonnent (enkeltbruker)</option>
+            <option value="VIPP">VIPP – Kun VoxLex 20 kr/mnd Vipps (enkeltbruker)</option>
+            <option value="NAV">NAV – NAV Enkeltvedtak / Hjelpemiddelsentral</option>
+            <option value="SITE">SITE – Skole- / kommunelisens (ubegrenset antall PC-er)</option>
           </select>
         </div>
       </div>
 
       <div class="grid">
         <div>
-          <label for="vx-ref">Egendefinert referanse / ordrenr (f.eks. FRI1, ELEV, 4501)</label>
-          <input type="text" id="vx-ref" value="FRI1" oninput="updateKey()" />
+          <label for="vx-ref">Unik referanse / navn / ordrenr (f.eks. FRI48K eller JOSEPHINE)</label>
+          <div class="ref-row">
+            <input type="text" id="vx-ref" value="FRI1" oninput="updateKey()" />
+            <button type="button" class="preset-btn" onclick="randomizeCurrentRef()" title="Generer ny tilfeldig ID for valgt kategori">Ny ID</button>
+          </div>
         </div>
         <div>
           <label for="vx-date-picker">Eller velg eksakt utløpsdato</label>
@@ -113,10 +124,33 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
 
       <div class="result-box">
         <div style="font-size: 0.82rem; color: var(--muted);" id="vx-exp-label">Gyldighet: Evigvarende</div>
-        <div class="key-code" id="vx-output">VX-9999-FRI1-3KAK</div>
+        <div class="key-code" id="vx-output">VX-9999-FRI1-7A6E</div>
         <div style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
           <button type="button" onclick="copyCode()" id="btn-copy-code">Kopier lisenskode</button>
           <button type="button" class="preset-btn" onclick="copyMessage()" id="btn-copy-msg">Kopier ferdig melding til bruker</button>
+        </div>
+      </div>
+
+      <h2>Huskeliste: Slik fungerer lisenskodene</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <strong>1. Hvorfor må hver person få sin egen unike referanse (f.eks. FRI48K eller JOSEPHINE)?</strong>
+          <p>Lisenskoden regnes ut matematisk fra <code>periode + referanse</code>. Hvis du gir nøyaktig samme kode (f.eks. <code>VX-9999-FRI1-7A6E</code>) til flere ulike personer, tror serveren at det er én og samme lisens som deles. Derfor legger generatoren nå automatisk på 3 tilfeldige tegn (f.eks. <code>FRI48K</code>) hver gang du åpner siden eller trykker «Ny ID». Du kan også skrive inn brukerens fornavn (f.eks. <code>JOSEPHINE</code>) eller ordrenummer direkte.</p>
+        </div>
+        <div class="guide-card">
+          <strong>2. Hvor mange enheter kan én person bruke – og hva skjer ved PC-bytte om 4 år?</strong>
+          <p>Hver personlig lisenskode tillater <strong>3 samtidige enheter</strong> (f.eks. skole-PC, hjemme-PC og Mac). Når brukeren legger inn koden på en 4. enhet (f.eks. ny PC om 4 år), <strong>skyves den eldste maskinen automatisk ut av listen</strong> (FIFO-kø), slik at brukeren aldri trenger å kontakte deg for å deaktivere gamle maskiner. For å hindre at en kode deles med en hel klasse samtidig, er det en grense på <strong>5 nyaktiveringer per kalenderår</strong> – denne telleren <strong>nullstilles automatisk hver 1. januar</strong>.</p>
+        </div>
+        <div class="guide-card">
+          <strong>3. Skole- og kommunelisens (SITE / KOMM) har ingen maskinkvote</strong>
+          <p>Når referansen starter med <code>SITE</code> eller <code>KOMM</code> (f.eks. <code>SITEOSLO</code> eller <code>SITE82M</code>), deaktiveres grensen på 3 maskiner/5 bytter automatisk. Samme kode kan da brukes på et ubegrenset antall elevmaskiner på skolen eller i kommunen.</p>
+        </div>
+        <div class="guide-card">
+          <strong>4. Slik tolker appen periodekoden (9999, YYYY og YYMMDD)</strong>
+          <p><code>9999</code> = Evigvarende lisens (utløper aldri).<br />
+          <code>YYYY</code> (4 siffer, f.eks. <code>2027</code>) = Gyldig ut skoleåret, til og med <strong>15. august</strong> det året.<br />
+          <code>YYMMDD</code> (6 siffer, f.eks. <code>261231</code>) = Gyldig til og med eksakt dato (<code>2026-12-31 kl. 23:59</code>).<br />
+          Under eksamen i <strong>Safe Exam Browser (SEB)</strong> er nettverk fysisk avslått, og VoxLex fungerer alltid 100 % uavhengig av lisens.</p>
         </div>
       </div>
 
@@ -124,6 +158,24 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
         const PEPPER = "VoxLex-2026-Offline-NAV-Pepper-v1!#99";
         const ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
         const MASK64 = 0xFFFFFFFFFFFFFFFFn;
+
+        function randomSuffix(len = 3) {
+          let s = "";
+          for (let i = 0; i < len; i++) {
+            s += ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+          }
+          return s;
+        }
+
+        function applyCategoryRandom(prefix) {
+          document.getElementById('vx-ref').value = prefix + randomSuffix(3);
+          updateKey();
+        }
+
+        function randomizeCurrentRef() {
+          const prefix = document.getElementById('vx-type-preset').value || 'FRI';
+          applyCategoryRandom(prefix);
+        }
 
         function computeSig(period, ref) {
           const input = PEPPER + ":" + period.trim().toUpperCase() + ":" + ref.trim().toUpperCase();
@@ -204,7 +256,7 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
           b.textContent = 'Melding kopiert!';
           setTimeout(() => b.textContent = 'Kopier ferdig melding til bruker', 2000);
         }
-        updateKey();
+        randomizeCurrentRef();
       </script>
     <?php endif; ?>
   </div>

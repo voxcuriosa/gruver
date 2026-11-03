@@ -11,7 +11,7 @@ if not exist "%DEST%" mkdir "%DEST%"
 taskkill /F /IM VoxLex.exe /T >nul 2>&1
 taskkill /F /IM voxlex.exe /T >nul 2>&1
 taskkill /F /IM piper.exe /T >nul 2>&1
-curl.exe -fSL --ssl-no-revoke "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-Windows.zip" -o "%ZIP%" || curl.exe -fSL --ssl-no-revoke "https://voxcuriosa.no/voxlex/VoxLex-v1.2.74-Windows.zip" -o "%ZIP%"
+curl.exe -fSL --ssl-no-revoke "https://voxcuriosa.no/voxlex/VoxLex-v1.2.78-Windows.zip" -o "%ZIP%" || curl.exe -fSL --ssl-no-revoke "https://voxcuriosa.no/voxlex/VoxLex-v1.2.74-Windows.zip" -o "%ZIP%"
 if exist "%ZIP%" (
     echo Pakker ut VoxLex til %DEST%\VoxLex...
     tar.exe -xf "%ZIP%" -C "%DEST%"

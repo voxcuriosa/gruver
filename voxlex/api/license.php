@@ -6,6 +6,14 @@
  * der brukerens egen e-post er dekrypteringsnøkkel.
  */
 header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 
 $SERVER_PEPPER = 'VoxLex-ZK-Server-Pepper-2026-ChromoAS-991482';
 $DATA_DIR = __DIR__ . '/../../voxlex_private_store';
@@ -16,10 +24,13 @@ if (!is_dir($DATA_DIR)) {
 $STORE_FILE = $DATA_DIR . '/zk_licenses.json';
 
 function load_store(string $file): array {
-    if (!file_exists($file)) return ['licenses' => [], 'recover_lookup' => [], 'ratelimit' => []];
+    $default = ['licenses' => [], 'recover_lookup' => [], 'ratelimit' => [], 'trials' => []];
+    if (!file_exists($file)) return $default;
     $raw = @file_get_contents($file);
     $data = $raw ? json_decode($raw, true) : null;
-    return is_array($data) ? $data : ['licenses' => [], 'recover_lookup' => [], 'ratelimit' => []];
+    if (!is_array($data)) return $default;
+    if (!isset($data['trials']) || !is_array($data['trials'])) $data['trials'] = [];
+    return $data;
 }
 
 function save_store(string $file, array $store): void {
@@ -53,6 +64,32 @@ $action = $_POST['action'] ?? '';
 $store = load_store($STORE_FILE);
 $now = time();
 $year_Now = date('Y');
+
+// Synkroniser anonymt starttidspunkt for 14-dagers prøveperiode (hindrer nullstilling ved sletting av AppData / klokkespoling)
+if ($action === 'trial_sync') {
+    $hw_hash = trim($_POST['hw_hash'] ?? '');
+    $client_ts = (int)($_POST['client_ts'] ?? 0);
+    if ($hw_hash === '' || strlen($hw_hash) < 8) {
+        echo json_encode(['ok' => false]);
+        exit;
+    }
+    $min_valid_ts = 1761955200; // 2025-11-01
+    $sanitized_client_ts = ($client_ts >= $min_valid_ts && $client_ts <= ($now + 3600)) ? $client_ts : $now;
+    $trial_id = hash('sha256', 'trial:' . $hw_hash . ':' . $SERVER_PEPPER);
+
+    if (isset($store['trials'][$trial_id]['startedAt'])) {
+        $saved_ts = (int)$store['trials'][$trial_id]['startedAt'];
+        $earliest_ts = ($saved_ts >= $min_valid_ts) ? min($saved_ts, $sanitized_client_ts) : $sanitized_client_ts;
+    } else {
+        $earliest_ts = $sanitized_client_ts;
+    }
+    if (!isset($store['trials'][$trial_id]) || $store['trials'][$trial_id]['startedAt'] !== $earliest_ts) {
+        $store['trials'][$trial_id] = ['startedAt' => $earliest_ts, 'updatedAt' => $now];
+        save_store($STORE_FILE, $store);
+    }
+    echo json_encode(['ok' => true, 'trialStartedAt' => $earliest_ts, 'serverNow' => $now]);
+    exit;
+}
 
 if ($action === 'activate') {
     $key = strtoupper(trim($_POST['key'] ?? ''));

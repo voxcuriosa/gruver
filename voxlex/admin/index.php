@@ -1,31 +1,6 @@
 <?php
-session_start();
-
-// Passordhash (SHA-256) for admin-tilgang ("voxlex2026" eller "privex2026")
-$VALID_HASHES = [
-    hash('sha256', 'voxlex2026'),
-    hash('sha256', 'privex2026'),
-];
-
-if (isset($_GET['logout'])) {
-    unset($_SESSION['vx_admin_ok']);
-    header('Location: index.php');
-    exit;
-}
-
-$loginError = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_pass'])) {
-    $inputHash = hash('sha256', trim((string)$_POST['admin_pass']));
-    if (in_array($inputHash, $VALID_HASHES, true)) {
-        $_SESSION['vx_admin_ok'] = true;
-        header('Location: index.php');
-        exit;
-    } else {
-        $loginError = 'Feil admin-passord.';
-    }
-}
-
-$isAuthed = !empty($_SESSION['vx_admin_ok']);
+define('VX_ADMIN_ENTRY', true);
+require_once __DIR__ . '/auth_guard.php';
 ?>
 <!DOCTYPE html>
 <html lang="no">
@@ -47,6 +22,7 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
     button { padding: 0.7rem 1.2rem; border-radius: 10px; border: none; background: var(--brand); color: #fff; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
     .presets { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
     .preset-btn { background: #0f172a; border: 1px solid var(--border); color: var(--text); padding: 0.45rem 0.75rem; font-size: 0.8rem; font-weight: 600; }
     .ref-row { display: flex; gap: 0.5rem; align-items: stretch; margin-bottom: 1rem; }
@@ -55,7 +31,8 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
     .key-code { font-family: ui-monospace, monospace; font-size: 1.4rem; font-weight: 800; letter-spacing: 0.04em; color: #34d399; margin: 0.4rem 0 0.9rem 0; word-break: break-all; }
     .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
     a.logout { color: var(--muted); font-size: 0.82rem; text-decoration: underline; }
-    .err { color: #fca5a5; font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .err { color: #fca5a5; background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.35); padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.85rem; margin-bottom: 0.9rem; }
+    .sec-note { margin-top: 1rem; font-size: 0.76rem; color: var(--muted); }
     .guide-grid { display: grid; gap: 0.85rem; margin-top: 0.75rem; }
     .guide-card { background: #0f172a; border: 1px solid var(--border); border-radius: 10px; padding: 0.95rem 1.1rem; }
     .guide-card strong { display: block; color: #f8fafc; font-size: 0.88rem; margin-bottom: 0.3rem; }
@@ -69,11 +46,13 @@ $isAuthed = !empty($_SESSION['vx_admin_ok']);
       <h1>VoxLex Admin – Logg inn</h1>
       <p>Skriv inn admin-passordet for å generere manuelle lisenskoder for VoxLex.</p>
       <?php if ($loginError): ?><div class="err"><?= htmlspecialchars($loginError) ?></div><?php endif; ?>
-      <form method="post">
+      <form method="post" autocomplete="off">
+        <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['vx_csrf'] ?? '') ?>" />
         <label for="admin_pass">Admin-passord</label>
-        <input type="password" id="admin_pass" name="admin_pass" required autofocus placeholder="Passord..." />
-        <button type="submit">Logg inn</button>
+        <input type="password" id="admin_pass" name="admin_pass" required autofocus placeholder="Passord..." <?= !empty($isLockedOut) ? 'disabled' : '' ?> />
+        <button type="submit" <?= !empty($isLockedOut) ? 'disabled' : '' ?>>Logg inn</button>
       </form>
+      <div class="sec-note">Beskyttet med PBKDF2-HMAC-SHA256 (120 000 iterasjoner) og automatisk 30 minutters IP-lås etter 5 feilforsøk.</div>
     <?php else: ?>
       <div class="top-bar">
         <h1>VoxLex Admin – Nøkkelgenerator</h1>

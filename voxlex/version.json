@@ -1,11 +1,11 @@
 {
-  "version": "1.2.76",
-  "publishedAt": "2026-11-02T22:10:08Z",
-  "notes": "Fjernet manuell eksamenslås/vakt-PIN-fane fra Innstillinger (SEB oppdages automatisk i bakgrunnen).",
-  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-macOS.dmg",
-  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.76-macOS.tar.gz",
-  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-Windows.exe",
-  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-Windows.msi",
-  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.75-Windows.zip",
-  "winStatus": "Klar for nedlasting (v1.2.76)"
+  "version": "1.2.78",
+  "publishedAt": "2026-11-03T07:05:56Z",
+  "notes": "Komplett ordbokoppdatering for alle 20 språk (inkl. polsk, somali, persisk/dari, vietnamesisk, kurdisk, tigrinja, litauisk, italiensk og portugisisk), valgfrie hunkjønnsformer (en/ei), separate bøyningskort for flertydige ord, høyttalerknapp per betydning og ny Livstidslisens (499 kr med Vipps).",
+  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.78-macOS.dmg",
+  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.78-macOS.tar.gz",
+  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-Windows.exe",
+  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-Windows.msi",
+  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-Windows.zip",
+  "winStatus": "Klar for nedlasting (v1.2.78)"
 }

@@ -1,11 +1,11 @@
 {
-  "version": "1.2.78",
-  "publishedAt": "2026-11-03T07:05:56Z",
-  "notes": "Komplett ordbokoppdatering for alle 20 språk (inkl. polsk, somali, persisk/dari, vietnamesisk, kurdisk, tigrinja, litauisk, italiensk og portugisisk), valgfrie hunkjønnsformer (en/ei), separate bøyningskort for flertydige ord, høyttalerknapp per betydning og ny Livstidslisens (499 kr med Vipps).",
-  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.78-macOS.dmg",
-  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.78-macOS.tar.gz",
-  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-Windows.exe",
-  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-Windows.msi",
-  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.76-Windows.zip",
-  "winStatus": "Klar for nedlasting (v1.2.78)"
+  "version": "1.2.81",
+  "publishedAt": "2026-11-04T17:56:38Z",
+  "notes": "Sikrer at systemstatusikonet (tray-ikonet) på Windows fjernes på hovedtråden før oppdateringsinstalleren starter og ved avslutning via app.exit(0).",
+  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.81-macOS.dmg",
+  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.81-macOS.tar.gz",
+  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.80-Windows.exe",
+  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.80-Windows.msi",
+  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.80-Windows.zip",
+  "winStatus": "Klar for nedlasting (v1.2.81)"
 }

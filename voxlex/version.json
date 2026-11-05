@@ -1,11 +1,11 @@
 {
-  "version": "1.2.81",
-  "publishedAt": "2026-11-04T17:56:38Z",
-  "notes": "Sikrer at systemstatusikonet (tray-ikonet) på Windows fjernes på hovedtråden før oppdateringsinstalleren starter og ved avslutning via app.exit(0).",
-  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.81-macOS.dmg",
-  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.81-macOS.tar.gz",
-  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.80-Windows.exe",
-  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.80-Windows.msi",
-  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.80-Windows.zip",
-  "winStatus": "Klar for nedlasting (v1.2.81)"
+  "version": "1.2.82",
+  "publishedAt": "2026-11-05T08:53:55Z",
+  "notes": "Fjerner all e-postlagring ved lisensaktivering (100 % null lagrede persondata), forbedrer lisenspanelet og oppdaterer admin-veiledningen.",
+  "macDmgUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.82-macOS.dmg",
+  "macUpdateTarUrl": "https://voxcuriosa.no/voxlex/VoxLex-Update-v1.2.82-macOS.tar.gz",
+  "winInstallerUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.81-Windows.exe",
+  "winMsiUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.81-Windows.msi",
+  "winPortableZipUrl": "https://voxcuriosa.no/voxlex/VoxLex-v1.2.81-Windows.zip",
+  "winStatus": "Klar for nedlasting (v1.2.82)"
 }

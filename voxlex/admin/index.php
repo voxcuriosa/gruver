@@ -113,19 +113,23 @@ require_once __DIR__ . '/auth_guard.php';
       <h2>Huskeliste: Slik fungerer lisenskodene</h2>
       <div class="guide-grid">
         <div class="guide-card">
-          <strong>1. Hvorfor må hver person få sin egen unike referanse (f.eks. FRI48K eller JOSEPHINE)?</strong>
-          <p>Lisenskoden regnes ut matematisk fra <code>periode + referanse</code>. Hvis du gir nøyaktig samme kode (f.eks. <code>VX-9999-FRI1-7A6E</code>) til flere ulike personer, tror serveren at det er én og samme lisens som deles. Derfor legger generatoren nå automatisk på 3 tilfeldige tegn (f.eks. <code>FRI48K</code>) hver gang du åpner siden eller trykker «Ny ID». Du kan også skrive inn brukerens fornavn (f.eks. <code>JOSEPHINE</code>) eller ordrenummer direkte.</p>
+          <strong>1. Hvorfor må hver person få sin egen unike referanse (f.eks. NAV450188 eller FRI48K)?</strong>
+          <p>Lisenskoden regnes ut matematisk fra <code>periode + referanse</code>. Hvis du gir nøyaktig samme kode (f.eks. <code>VX-9999-FRI1-7A6E</code>) til flere ulike personer, tror serveren at det er én og samme lisens som deles. Derfor legger generatoren automatisk på 3 tilfeldige tegn (f.eks. <code>FRI48K</code>) når du trykker «Ny ID», eller du kan skrive inn <strong>NAV sitt ordrenummer/rekvisisjonsnummer</strong> (f.eks. <code>NAV450188</code>) direkte.</p>
         </div>
         <div class="guide-card">
-          <strong>2. Hvor mange enheter kan én person bruke – og hva skjer ved PC-bytte om 4 år?</strong>
+          <strong>2. NAV-vedtak og mistet kode ved PC-bytte – 100 % uten kundedatabase (Null GDPR-lagring)</strong>
+          <p>VoxLex samler aldri inn eller lagrer e-postadresser, navn eller personopplysninger om elever. Når NAV Hjelpemiddelsentral bestiller lisens, bruker du bare <strong>ordrenummeret fra NAV-bestillingen/fakturaen</strong> som referanse (f.eks. <code>NAV450188</code>). Fordi koden er 100 % matematisk bestemt av <code>periode + ordrenummer</code>, kan du når som helst om 2–4 år skrive inn samme ordrenummer her i generatoren og få ut <strong>nøyaktig samme gyldige kode</strong> på nytt – helt uten kunderegister! (Privatkunder som kjøper 20 kr/mnd eller 499 kr Livstidslisens med Vipps finner alltid koden sin ved å logge inn med Vipps på <strong>Privex Min Side</strong>).</p>
+        </div>
+        <div class="guide-card">
+          <strong>3. Hvor mange enheter kan én person bruke – og hva skjer ved PC-bytte om 4 år?</strong>
           <p>Hver personlig lisenskode tillater <strong>3 samtidige enheter</strong> (f.eks. skole-PC, hjemme-PC og Mac). Når brukeren legger inn koden på en 4. enhet (f.eks. ny PC om 4 år), <strong>skyves den eldste maskinen automatisk ut av listen</strong> (FIFO-kø), slik at brukeren aldri trenger å kontakte deg for å deaktivere gamle maskiner. For å hindre at en kode deles med en hel klasse samtidig, er det en grense på <strong>5 nyaktiveringer per kalenderår</strong> – denne telleren <strong>nullstilles automatisk hver 1. januar</strong>.</p>
         </div>
         <div class="guide-card">
-          <strong>3. Skole- og kommunelisens (SITE / KOMM) har ingen maskinkvote</strong>
+          <strong>4. Skole- og kommunelisens (SITE / KOMM) har ingen maskinkvote</strong>
           <p>Når referansen starter med <code>SITE</code> eller <code>KOMM</code> (f.eks. <code>SITEOSLO</code> eller <code>SITE82M</code>), deaktiveres grensen på 3 maskiner/5 bytter automatisk. Samme kode kan da brukes på et ubegrenset antall elevmaskiner på skolen eller i kommunen.</p>
         </div>
         <div class="guide-card">
-          <strong>4. Slik tolker appen periodekoden (9999, YYYY og YYMMDD)</strong>
+          <strong>5. Slik tolker appen periodekoden (9999, YYYY og YYMMDD)</strong>
           <p><code>9999</code> = Evigvarende lisens (utløper aldri).<br />
           <code>YYYY</code> (4 siffer, f.eks. <code>2027</code>) = Gyldig ut skoleåret, til og med <strong>15. august</strong> det året.<br />
           <code>YYMMDD</code> (6 siffer, f.eks. <code>261231</code>) = Gyldig til og med eksakt dato (<code>2026-12-31 kl. 23:59</code>).<br />

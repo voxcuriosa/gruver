@@ -515,7 +515,7 @@
                 </svg>
             </div>
             <h2>VoxLex - companion</h2>
-            <p>Nettleser-ledsager for Chrome. Umiddelbare synonymer, enkle ordforklaringer, taleopplesing og morsmålsstøtte ved dobbeltklikk på nettsider og i e-bøker (Smartbok, Unibok, NDLA).</p>
+            <p>Nettleser-ledsager for Chrome og Edge. Umiddelbare synonymer, enkle ordforklaringer, taleopplesing og morsmålsstøtte ved dobbeltklikk på nettsider og i e-bøker (Smartbok, Unibok, NDLA).</p>
             <span class="btn">SE UTVIDELSE ELLER INSTALLER →</span>
         </a>
 
@@ -532,6 +532,24 @@
             <h2>Bok- og PDF-scanner</h2>
             <p>Automatisk sideskanning, klippeverktøy og søkbar PDF-generering for e-bøker.</p>
             <span class="btn">ÅPNE SCANNER →</span>
+        </a>
+
+        <!-- Historien -->
+        <a href="/historien/" class="card" onclick="logAppVisit('historien')">
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 21V9"></path>
+                    <path d="M12 14c-3.5 0-6-2-7-5"></path>
+                    <path d="M12 11c3.5 0 6-2 7-5"></path>
+                    <circle cx="12" cy="5" r="2"></circle>
+                    <circle cx="5" cy="7" r="2"></circle>
+                    <circle cx="19" cy="4" r="2"></circle>
+                </svg>
+            </div>
+            <h2>Historien</h2>
+            <p>Interaktive emnetrær gjennom historiens lange linjer for VG2 og VG3 – med årsakskjeder, fagbegreper og drøftingsoppgaver.</p>
+            <span class="btn">UTFORSK HISTORIEN →</span>
         </a>
 
         <!-- 6. Historienotater -->
@@ -769,41 +787,71 @@
         }
 
         async function logAppVisit(appName) {
+            if (appName === 'historien') {
+                try {
+                    localStorage.setItem('vox_historien_last_logged_at', String(Date.now()));
+                } catch (e) {}
+            }
+
+            let sent = false;
+            const sendVisit = (countryCode) => {
+                if (sent) return;
+                sent = true;
+                const payload = {
+                    action: 'log_visit',
+                    app: appName,
+                    visitor_id: getVisitorId(),
+                    country: countryCode || 'Unknown',
+                    device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
+                    screen_resolution: window.screen.width + "x" + window.screen.height,
+                    referrer: document.referrer || 'Direct',
+                    language: navigator.language || 'en'
+                };
+
+                fetch('/history/auth_v2.php', {
+                    method: 'POST',
+                    keepalive: true,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(err => console.log("Analytics skipped."));
+            };
+
             let currentCountry = 'Unknown';
             try {
-                const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: "force-cache" });
-                if (geoRes.ok) {
-                    const geoData = await geoRes.json();
-                    if (geoData && geoData.country) currentCountry = geoData.country;
-                } else throw new Error("geojs not ok");
-            } catch (e) {
+                currentCountry = sessionStorage.getItem('vox_country_cache') || 'Unknown';
+            } catch (e) {}
+
+            const onPageHide = () => sendVisit(currentCountry);
+            window.addEventListener('pagehide', onPageHide, { once: true });
+
+            if (currentCountry === 'Unknown') {
                 try {
-                    const fbRes = await fetch('https://api.country.is/', { cache: "force-cache" });
-                    if (fbRes.ok) {
-                        const fbData = await fbRes.json();
-                        if (fbData && fbData.country) currentCountry = fbData.country;
+                    const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json', { cache: "force-cache" });
+                    if (geoRes.ok) {
+                        const geoData = await geoRes.json();
+                        if (geoData && geoData.country) {
+                            currentCountry = geoData.country;
+                            try { sessionStorage.setItem('vox_country_cache', currentCountry); } catch (e) {}
+                        }
+                    } else throw new Error("geojs not ok");
+                } catch (e) {
+                    try {
+                        const fbRes = await fetch('https://api.country.is/', { cache: "force-cache" });
+                        if (fbRes.ok) {
+                            const fbData = await fbRes.json();
+                            if (fbData && fbData.country) {
+                                currentCountry = fbData.country;
+                                try { sessionStorage.setItem('vox_country_cache', currentCountry); } catch (e) {}
+                            }
+                        }
+                    } catch (fbErr) {
+                        console.warn("Geoloc fetch failed", fbErr);
                     }
-                } catch (fbErr) {
-                    console.warn("Geoloc fetch failed", fbErr);
                 }
             }
 
-            const payload = {
-                action: 'log_visit',
-                app: appName,
-                visitor_id: getVisitorId(),
-                country: currentCountry,
-                device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'PC',
-                screen_resolution: window.screen.width + "x" + window.screen.height,
-                referrer: document.referrer || 'Direct',
-                language: navigator.language || 'en'
-            };
-
-            fetch('/history/auth_v2.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).catch(err => console.log("Analytics skipped."));
+            window.removeEventListener('pagehide', onPageHide);
+            sendVisit(currentCountry);
         }
 
         // Register Service Worker

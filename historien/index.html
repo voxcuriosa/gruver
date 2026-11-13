@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Historien — Lange linjer i pensum | VoxCuriosa</title>
+  <meta
+    name="description"
+    content="Utforsk historiens lange linjer gjennom fem interaktive emnetrær for VG2 og VG3 (HIS1010 og HIS1011) med årsakskjeder, fagbegreper og drøftingsoppgaver."
+  />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <style>html,body,#root{color:#f8fafc;background:#0b1120;width:100%;height:100%;margin:0;padding:0}</style>
+  <script>
+    window.__HISTORIEN_BASE__ = "/historien";
+  </script>
+  <script type="module" crossorigin src="/historien/assets/index-DvwdQKqA.js"></script>
+  <link rel="stylesheet" crossorigin href="/historien/assets/index-DSmnRAsN.css">
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    async function logHistorienVisit() {
+      try {
+        var lastLogged = Number(localStorage.getItem("vox_historien_last_logged_at") || "0");
+        if (Date.now() - lastLogged < 4500) return;
+        localStorage.setItem("vox_historien_last_logged_at", String(Date.now()));
+      } catch (e) {}
+
+      let currentCountry = "Unknown";
+      try {
+        currentCountry = sessionStorage.getItem("vox_country_cache") || "Unknown";
+      } catch (e) {}
+
+      if (currentCountry === "Unknown") {
+        try {
+          const geoRes = await fetch("https://get.geojs.io/v1/ip/country.json", { cache: "force-cache" });
+          if (geoRes.ok) {
+            const geoData = await geoRes.json();
+            if (geoData && geoData.country) {
+              currentCountry = geoData.country;
+              try { sessionStorage.setItem("vox_country_cache", currentCountry); } catch (e) {}
+            }
+          } else {
+            throw new Error("geojs not ok");
+          }
+        } catch (e) {
+          try {
+            const fbRes = await fetch("https://api.country.is/", { cache: "force-cache" });
+            if (fbRes.ok) {
+              const fbData = await fbRes.json();
+              if (fbData && fbData.country) {
+                currentCountry = fbData.country;
+                try { sessionStorage.setItem("vox_country_cache", currentCountry); } catch (err) {}
+              }
+            }
+          } catch (fbErr) {}
+        }
+      }
+
+      let visitorId = "v_anon_" + Date.now().toString(36);
+      try {
+        const storedId = localStorage.getItem("vox_visitor_id");
+        if (storedId) {
+          visitorId = storedId;
+        } else {
+          visitorId = "v_" + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+          localStorage.setItem("vox_visitor_id", visitorId);
+        }
+      } catch (e) {}
+
+      fetch("/history/auth_v2.php", {
+        method: "POST",
+        keepalive: true,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "log_visit",
+          app: "historien",
+          visitor_id: visitorId,
+          country: currentCountry,
+          device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+            ? "Mobile"
+            : "PC",
+          screen_resolution: window.screen.width + "x" + window.screen.height,
+          referrer: document.referrer || "Direct",
+          language: navigator.language || "no",
+        }),
+      }).catch(function () {});
+    }
+    window.addEventListener("load", logHistorienVisit);
+  </script>
+</body>
+</html>

@@ -64,6 +64,12 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <priority>0.7</priority>
     </url>
     <url>
+        <loc><?php echo $base_url; ?>historien/</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
         <loc><?php echo $base_url; ?>notebooks/</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>

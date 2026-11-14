@@ -21,6 +21,9 @@
             --samfunn: #38bdf8;
             --samfunn-bg: rgba(56, 189, 248, 0.12);
             --samfunn-border: rgba(56, 189, 248, 0.35);
+            --geografi: #10b981;
+            --geografi-bg: rgba(16, 185, 129, 0.12);
+            --geografi-border: rgba(16, 185, 129, 0.35);
         }
 
         * {
@@ -143,6 +146,11 @@
             box-shadow: 0 12px 30px -12px rgba(56, 189, 248, 0.25);
         }
 
+        .subject-card.geografi:hover {
+            border-color: var(--geografi-border);
+            box-shadow: 0 12px 30px -12px rgba(16, 185, 129, 0.25);
+        }
+
         .card-header {
             display: flex;
             align-items: center;
@@ -169,6 +177,12 @@
             background: var(--samfunn-bg);
             color: var(--samfunn);
             border: 1px solid var(--samfunn-border);
+        }
+
+        .geografi .icon-wrap {
+            background: var(--geografi-bg);
+            color: var(--geografi);
+            border: 1px solid var(--geografi-border);
         }
 
         .subject-card h2 {
@@ -205,6 +219,25 @@
 
         .samfunn .cta {
             color: var(--samfunn);
+        }
+
+        .geografi .cta {
+            color: var(--geografi);
+        }
+
+        .wip-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #6ee7b7;
+            background: rgba(16, 185, 129, 0.14);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.12rem 0.45rem;
+            border-radius: 999px;
+            margin-left: 0.4rem;
+            vertical-align: middle;
         }
 
         .coming-soon {
@@ -269,6 +302,23 @@
                 </div>
                 <p>Utforsk sammenhenger i politikk, demokrati, økonomi og samfunnsutvikling gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Samfunnsfag →</span>
+            </a>
+
+            <a href="/geografi/" class="subject-card geografi" onclick="logAppVisit('geografi')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Geografi <span class="wip-badge">Under bygging</span></h2>
+                        <span class="level-tag">Natur, landskap og befolkning</span>
+                    </div>
+                </div>
+                <p>Utforsk naturgeografi, klima, ressurser og samfunnsgeografiske sammenhenger gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Geografi →</span>
             </a>
         </main>
 

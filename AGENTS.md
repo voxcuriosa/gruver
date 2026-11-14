@@ -16,3 +16,8 @@
 ## Safe Exam Browser (SEB) & Student Privacy
 
 - **Zero Student Tracking**: Follow `.agents/skills/seb-zero-student-tracking/SKILL.md`. Links generated for students (`/seb/start/*`, `/seb/exam/*`, `?seb=1`, `/seb/quit`) must NEVER have any telemetry, analytics, cookies, IP/geo lookup, or visit logging. Visit tracking for `seb` is strictly confined to teacher clicks on the main portal and direct visits to the generator home page (`/seb/`).
+
+## Kunnskapstreet (`/kunnskap/`)
+
+- **Subject Names**: Always use the official school subject name on subject tiles and CTAs (e.g., `Historie`, `Samfunnsfag`), not the app or URL name (`Historien`, `Samfunnet`).
+- **Consistent Subtitles**: Use consistent, thematic subtitles across all subject tiles (e.g., `Tidslinjer og årsakssammenhenger`, `Politikk, demokrati og samfunn`) rather than grade-level labels (`VG2 & VG3`).

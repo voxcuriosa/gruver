@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunnskapstreet – Vox Curiosa</title>
+    <meta name="description" content="Interaktive emnetrær på tvers av fag – utforsk årsakskjeder, fagbegreper og drøftingsoppgaver.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <style>
+        :root {
+            --bg: #0b0f17;
+            --surface: #131a26;
+            --surface-hover: #192233;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --historien: #f59e0b;
+            --historien-bg: rgba(245, 158, 11, 0.12);
+            --historien-border: rgba(245, 158, 11, 0.35);
+            --samfunn: #38bdf8;
+            --samfunn-bg: rgba(56, 189, 248, 0.12);
+            --samfunn-border: rgba(56, 189, 248, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+            background: radial-gradient(circle at top center, #162033 0%, var(--bg) 60%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1.25rem 3rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.25rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #a7f3d0;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.28);
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            margin-bottom: 0.9rem;
+        }
+
+        h1 {
+            font-size: clamp(1.9rem, 4vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.6rem;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .subject-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-radius: 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-3px);
+            background: var(--surface-hover);
+        }
+
+        .subject-card.historien:hover {
+            border-color: var(--historien-border);
+            box-shadow: 0 12px 30px -12px rgba(245, 158, 11, 0.25);
+        }
+
+        .subject-card.samfunn:hover {
+            border-color: var(--samfunn-border);
+            box-shadow: 0 12px 30px -12px rgba(56, 189, 248, 0.25);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .historien .icon-wrap {
+            background: var(--historien-bg);
+            color: var(--historien);
+            border: 1px solid var(--historien-border);
+        }
+
+        .samfunn .icon-wrap {
+            background: var(--samfunn-bg);
+            color: var(--samfunn);
+            border: 1px solid var(--samfunn-border);
+        }
+
+        .subject-card h2 {
+            font-size: 1.25rem;
+            font-weight: 650;
+        }
+
+        .level-tag {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .subject-card p {
+            color: var(--muted);
+            font-size: 0.94rem;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .historien .cta {
+            color: var(--historien);
+        }
+
+        .samfunn .cta {
+            color: var(--samfunn);
+        }
+
+        .coming-soon {
+            margin-top: 1.5rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--muted);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="topbar">
+            <a href="/" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                Tilbake til forsiden
+            </a>
+        </div>
+
+        <header>
+            <div class="badge">Vox Curiosa</div>
+            <h1>Kunnskapstreet</h1>
+            <p class="subtitle">Velg fag for å utforske interaktive emnetrær med årsakskjeder, fagbegreper og drøftingsoppgaver.</p>
+        </header>
+
+        <main class="grid">
+            <a href="/historien/" class="subject-card historien" onclick="logAppVisit('historien')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                            <path d="M3 3v5h5"/>
+                            <path d="M12 7v5l4 2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Historien</h2>
+                        <span class="level-tag">VG2 &amp; VG3</span>
+                    </div>
+                </div>
+                <p>Interaktive emnetrær gjennom historiens lange linjer – med årsakskjeder, fagbegreper og drøftingsoppgaver.</p>
+                <span class="cta">Utforsk Historien →</span>
+            </a>
+
+            <a href="/samfunnet/" class="subject-card samfunn" onclick="logAppVisit('samfunnet')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Samfunnsfag</h2>
+                        <span class="level-tag">Samfunnet</span>
+                    </div>
+                </div>
+                <p>Utforsk sammenhenger i politikk, demokrati, økonomi og samfunnsutvikling gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Samfunnsfag →</span>
+            </a>
+        </main>
+
+        <div class="coming-soon">
+            Flere fag kommer etterhvert.
+        </div>
+    </div>
+
+    <script>
+        function logAppVisit(appName) {
+            try {
+                const payload = JSON.stringify({ app: appName });
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon('/api/log_visit.php', new Blob([payload], { type: 'application/json' }));
+                } else {
+                    fetch('/api/log_visit.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: payload,
+                        keepalive: true
+                    }).catch(() => {});
+                }
+            } catch (_) {}
+        }
+    </script>
+</body>
+</html>

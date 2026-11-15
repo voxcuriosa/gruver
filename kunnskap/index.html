@@ -24,6 +24,9 @@
             --geografi: #10b981;
             --geografi-bg: rgba(16, 185, 129, 0.12);
             --geografi-border: rgba(16, 185, 129, 0.35);
+            --helse: #2dd4bf;
+            --helse-bg: rgba(45, 212, 191, 0.12);
+            --helse-border: rgba(45, 212, 191, 0.35);
             --sosiologi: #a78bfa;
             --sosiologi-bg: rgba(167, 139, 250, 0.12);
             --sosiologi-border: rgba(167, 139, 250, 0.35);
@@ -166,6 +169,11 @@
             box-shadow: 0 12px 30px -12px rgba(16, 185, 129, 0.25);
         }
 
+        .subject-card.helse:hover {
+            border-color: var(--helse-border);
+            box-shadow: 0 12px 30px -12px rgba(45, 212, 191, 0.25);
+        }
+
         .subject-card.sosiologi:hover {
             border-color: var(--sosiologi-border);
             box-shadow: 0 12px 30px -12px rgba(167, 139, 250, 0.25);
@@ -223,6 +231,12 @@
             background: var(--geografi-bg);
             color: var(--geografi);
             border: 1px solid var(--geografi-border);
+        }
+
+        .helse .icon-wrap {
+            background: var(--helse-bg);
+            color: var(--helse);
+            border: 1px solid var(--helse-border);
         }
 
         .sosiologi .icon-wrap {
@@ -293,6 +307,10 @@
 
         .geografi .cta {
             color: var(--geografi);
+        }
+
+        .helse .cta {
+            color: var(--helse);
         }
 
         .sosiologi .cta {
@@ -373,6 +391,24 @@
                 </div>
                 <p>Utforsk naturgeografi, klima, ressurser og samfunnsgeografiske sammenhenger gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Geografi →</span>
+            </a>
+
+            <a href="/helsefremmende/" class="subject-card helse" onclick="logAppVisit('helsefremmende')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                            <path d="M12 8v8"/>
+                            <path d="M8 12h8"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Helsefremmende arbeid</h2>
+                        <span class="level-tag">Helse, livsstil og omsorg</span>
+                    </div>
+                </div>
+                <p>Utforsk folkehelse, forebygging, ernæring, hygiene og grunnleggende pleie gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Helsefremmende arbeid →</span>
             </a>
 
             <a href="/historien/" class="subject-card historien" onclick="logAppVisit('historien')">

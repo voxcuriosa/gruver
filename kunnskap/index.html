@@ -30,6 +30,9 @@
             --psykologi: #f472b6;
             --psykologi-bg: rgba(244, 114, 182, 0.12);
             --psykologi-border: rgba(244, 114, 182, 0.35);
+            --samfunnsgeografi: #fb923c;
+            --samfunnsgeografi-bg: rgba(251, 146, 60, 0.12);
+            --samfunnsgeografi-border: rgba(251, 146, 60, 0.35);
         }
 
         * {
@@ -167,6 +170,11 @@
             box-shadow: 0 12px 30px -12px rgba(244, 114, 182, 0.25);
         }
 
+        .subject-card.samfunnsgeografi:hover {
+            border-color: var(--samfunnsgeografi-border);
+            box-shadow: 0 12px 30px -12px rgba(251, 146, 60, 0.25);
+        }
+
         .card-header {
             display: flex;
             align-items: center;
@@ -211,6 +219,12 @@
             background: var(--psykologi-bg);
             color: var(--psykologi);
             border: 1px solid var(--psykologi-border);
+        }
+
+        .samfunnsgeografi .icon-wrap {
+            background: var(--samfunnsgeografi-bg);
+            color: var(--samfunnsgeografi);
+            border: 1px solid var(--samfunnsgeografi-border);
         }
 
         .subject-card h2 {
@@ -259,6 +273,10 @@
 
         .psykologi .cta {
             color: var(--psykologi);
+        }
+
+        .samfunnsgeografi .cta {
+            color: var(--samfunnsgeografi);
         }
 
         .wip-badge {
@@ -392,6 +410,23 @@
                 </div>
                 <p>Utforsk kognisjon, utvikling, personlighet og psykisk helse gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Psykologi →</span>
+            </a>
+
+            <a href="/samfunnsgeografi/" class="subject-card samfunnsgeografi" onclick="logAppVisit('samfunnsgeografi')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Samfunnsgeografi</h2>
+                        <span class="level-tag">Byer, globalisering og ressurser</span>
+                    </div>
+                </div>
+                <p>Utforsk urbanisering, migrasjon, global økonomi og bærekraftig utvikling gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Samfunnsgeografi →</span>
             </a>
         </main>
 

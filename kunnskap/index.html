@@ -18,6 +18,9 @@
             --historien: #f59e0b;
             --historien-bg: rgba(245, 158, 11, 0.12);
             --historien-border: rgba(245, 158, 11, 0.35);
+            --norsk: #eab308;
+            --norsk-bg: rgba(234, 179, 8, 0.12);
+            --norsk-border: rgba(234, 179, 8, 0.35);
             --samfunn: #38bdf8;
             --samfunn-bg: rgba(56, 189, 248, 0.12);
             --samfunn-border: rgba(56, 189, 248, 0.35);
@@ -159,6 +162,11 @@
             box-shadow: 0 12px 30px -12px rgba(245, 158, 11, 0.25);
         }
 
+        .subject-card.norsk:hover {
+            border-color: var(--norsk-border);
+            box-shadow: 0 12px 30px -12px rgba(234, 179, 8, 0.25);
+        }
+
         .subject-card.samfunn:hover {
             border-color: var(--samfunn-border);
             box-shadow: 0 12px 30px -12px rgba(56, 189, 248, 0.25);
@@ -219,6 +227,12 @@
             background: var(--historien-bg);
             color: var(--historien);
             border: 1px solid var(--historien-border);
+        }
+
+        .norsk .icon-wrap {
+            background: var(--norsk-bg);
+            color: var(--norsk);
+            border: 1px solid var(--norsk-border);
         }
 
         .samfunn .icon-wrap {
@@ -299,6 +313,10 @@
 
         .historien .cta {
             color: var(--historien);
+        }
+
+        .norsk .cta {
+            color: var(--norsk);
         }
 
         .samfunn .cta {
@@ -427,6 +445,23 @@
                 </div>
                 <p>Interaktive emnetrær gjennom historiens lange linjer – med årsakskjeder, fagbegreper og drøftingsoppgaver.</p>
                 <span class="cta">Utforsk Historie →</span>
+            </a>
+
+            <a href="/norsk/" class="subject-card norsk" onclick="logAppVisit('norsk')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"/>
+                            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Norsk</h2>
+                        <span class="level-tag">Språk, litteratur og retorikk</span>
+                    </div>
+                </div>
+                <p>Utforsk litteraturhistorie, språkhistorie, retorisk analyse og sakprosa gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Norsk →</span>
             </a>
 
             <a href="/psykologi/" class="subject-card psykologi" onclick="logAppVisit('psykologi')">

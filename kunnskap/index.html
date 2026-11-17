@@ -48,6 +48,9 @@
             --religion: #818cf8;
             --religion-bg: rgba(129, 140, 248, 0.12);
             --religion-border: rgba(129, 140, 248, 0.35);
+            --raavare: #d97706;
+            --raavare-bg: rgba(217, 119, 6, 0.12);
+            --raavare-border: rgba(217, 119, 6, 0.35);
             --treningslaere: #ef4444;
             --treningslaere-bg: rgba(239, 68, 68, 0.12);
             --treningslaere-border: rgba(239, 68, 68, 0.35);
@@ -221,6 +224,11 @@
             box-shadow: 0 12px 30px -12px rgba(129, 140, 248, 0.25);
         }
 
+        .subject-card.raavare:hover {
+            border-color: var(--raavare-border);
+            box-shadow: 0 12px 30px -12px rgba(217, 119, 6, 0.25);
+        }
+
         .subject-card.treningslaere:hover {
             border-color: var(--treningslaere-border);
             box-shadow: 0 12px 30px -12px rgba(239, 68, 68, 0.25);
@@ -313,6 +321,12 @@
             border: 1px solid var(--religion-border);
         }
 
+        .raavare .icon-wrap {
+            background: var(--raavare-bg);
+            color: var(--raavare);
+            border: 1px solid var(--raavare-border);
+        }
+
         .treningslaere .icon-wrap {
             background: var(--treningslaere-bg);
             color: var(--treningslaere);
@@ -395,6 +409,10 @@
 
         .religion .cta {
             color: var(--religion);
+        }
+
+        .raavare .cta {
+            color: var(--raavare);
         }
 
         .treningslaere .cta {
@@ -609,6 +627,24 @@
                 </div>
                 <p>Utforsk verdensreligioner, livssyn, etiske teorier og filosofiske spørsmål gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Religion og etikk →</span>
+            </a>
+
+            <a href="/raavare/" class="subject-card raavare" onclick="logAppVisit('raavare')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+                            <path d="M7 2v20"/>
+                            <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Råvare, produksjon og kvalitet</h2>
+                        <span class="level-tag">Matfag, råvarer og bærekraft</span>
+                    </div>
+                </div>
+                <p>Utforsk råvarekunnskap, matproduksjon, kvalitetssikring og bærekraft gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Råvare, produksjon og kvalitet →</span>
             </a>
 
             <a href="/samfunnet/" class="subject-card samfunn" onclick="logAppVisit('samfunnet')">

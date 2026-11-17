@@ -15,6 +15,9 @@
             --border: rgba(255, 255, 255, 0.08);
             --text: #f1f5f9;
             --muted: #94a3b8;
+            --engelsk: #60a5fa;
+            --engelsk-bg: rgba(96, 165, 250, 0.12);
+            --engelsk-border: rgba(96, 165, 250, 0.35);
             --historien: #f59e0b;
             --historien-bg: rgba(245, 158, 11, 0.12);
             --historien-border: rgba(245, 158, 11, 0.35);
@@ -163,6 +166,11 @@
             background: var(--surface-hover);
         }
 
+        .subject-card.engelsk:hover {
+            border-color: var(--engelsk-border);
+            box-shadow: 0 12px 30px -12px rgba(96, 165, 250, 0.25);
+        }
+
         .subject-card.historien:hover {
             border-color: var(--historien-border);
             box-shadow: 0 12px 30px -12px rgba(245, 158, 11, 0.25);
@@ -237,6 +245,12 @@
             display: grid;
             place-items: center;
             flex-shrink: 0;
+        }
+
+        .engelsk .icon-wrap {
+            background: var(--engelsk-bg);
+            color: var(--engelsk);
+            border: 1px solid var(--engelsk-border);
         }
 
         .historien .icon-wrap {
@@ -339,6 +353,10 @@
             text-transform: uppercase;
         }
 
+        .engelsk .cta {
+            color: var(--engelsk);
+        }
+
         .historien .cta {
             color: var(--historien);
         }
@@ -430,6 +448,27 @@
         </header>
 
         <main class="grid">
+            <a href="/engelsk/" class="subject-card engelsk" onclick="logAppVisit('engelsk')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m5 8 6 6"/>
+                            <path d="m4 14 6-6 2-3"/>
+                            <path d="M2 5h12"/>
+                            <path d="M7 2h1"/>
+                            <path d="m22 22-5-10-5 10"/>
+                            <path d="M14 18h6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Engelsk</h2>
+                        <span class="level-tag">Språk, kultur og kommunikasjon</span>
+                    </div>
+                </div>
+                <p>Utforsk engelskspråklig litteratur, kultur, samfunnsforhold og kommunikasjon gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Engelsk →</span>
+            </a>
+
             <a href="/geografi/" class="subject-card geografi" onclick="logAppVisit('geografi')">
                 <div class="card-header">
                     <div class="icon-wrap">

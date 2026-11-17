@@ -48,6 +48,9 @@
             --treningslaere: #ef4444;
             --treningslaere-bg: rgba(239, 68, 68, 0.12);
             --treningslaere-border: rgba(239, 68, 68, 0.35);
+            --treningsledelse: #f97316;
+            --treningsledelse-bg: rgba(249, 115, 22, 0.12);
+            --treningsledelse-border: rgba(249, 115, 22, 0.35);
         }
 
         * {
@@ -215,6 +218,11 @@
             box-shadow: 0 12px 30px -12px rgba(239, 68, 68, 0.25);
         }
 
+        .subject-card.treningsledelse:hover {
+            border-color: var(--treningsledelse-border);
+            box-shadow: 0 12px 30px -12px rgba(249, 115, 22, 0.25);
+        }
+
         .card-header {
             display: flex;
             align-items: center;
@@ -297,6 +305,12 @@
             border: 1px solid var(--treningslaere-border);
         }
 
+        .treningsledelse .icon-wrap {
+            background: var(--treningsledelse-bg);
+            color: var(--treningsledelse);
+            border: 1px solid var(--treningsledelse-border);
+        }
+
         .subject-card h2 {
             font-size: 1.25rem;
             font-weight: 650;
@@ -367,6 +381,10 @@
 
         .treningslaere .cta {
             color: var(--treningslaere);
+        }
+
+        .treningsledelse .cta {
+            color: var(--treningsledelse);
         }
 
         .wip-badge {
@@ -606,6 +624,27 @@
                 </div>
                 <p>Utforsk sosialisering, normer, kulturforståelse og samfunnsstrukturer gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Sosiologi og sosialantropologi →</span>
+            </a>
+
+            <a href="/treningsledelse/" class="subject-card treningsledelse" onclick="logAppVisit('treningsledelse')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                            <path d="M12 11h4"/>
+                            <path d="M12 16h4"/>
+                            <path d="M8 11h.01"/>
+                            <path d="M8 16h.01"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Treningsledelse</h2>
+                        <span class="level-tag">Veiledning, motivasjon og gruppeledelse</span>
+                    </div>
+                </div>
+                <p>Utforsk trenerrollen, instruksjon, treningsplanlegging og motivasjon gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Treningsledelse →</span>
             </a>
 
             <a href="/treningslaere/" class="subject-card treningslaere" onclick="logAppVisit('treningslaere')">

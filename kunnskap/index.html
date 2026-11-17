@@ -18,6 +18,9 @@
             --historien: #f59e0b;
             --historien-bg: rgba(245, 158, 11, 0.12);
             --historien-border: rgba(245, 158, 11, 0.35);
+            --idrett: #84cc16;
+            --idrett-bg: rgba(132, 204, 22, 0.12);
+            --idrett-border: rgba(132, 204, 22, 0.35);
             --norsk: #eab308;
             --norsk-bg: rgba(234, 179, 8, 0.12);
             --norsk-border: rgba(234, 179, 8, 0.35);
@@ -162,6 +165,11 @@
             box-shadow: 0 12px 30px -12px rgba(245, 158, 11, 0.25);
         }
 
+        .subject-card.idrett:hover {
+            border-color: var(--idrett-border);
+            box-shadow: 0 12px 30px -12px rgba(132, 204, 22, 0.25);
+        }
+
         .subject-card.norsk:hover {
             border-color: var(--norsk-border);
             box-shadow: 0 12px 30px -12px rgba(234, 179, 8, 0.25);
@@ -227,6 +235,12 @@
             background: var(--historien-bg);
             color: var(--historien);
             border: 1px solid var(--historien-border);
+        }
+
+        .idrett .icon-wrap {
+            background: var(--idrett-bg);
+            color: var(--idrett);
+            border: 1px solid var(--idrett-border);
         }
 
         .norsk .icon-wrap {
@@ -313,6 +327,10 @@
 
         .historien .cta {
             color: var(--historien);
+        }
+
+        .idrett .cta {
+            color: var(--idrett);
         }
 
         .norsk .cta {
@@ -445,6 +463,44 @@
                 </div>
                 <p>Interaktive emnetrær gjennom historiens lange linjer – med årsakskjeder, fagbegreper og drøftingsoppgaver.</p>
                 <span class="cta">Utforsk Historie →</span>
+            </a>
+
+            <a href="/idrettogsamfunn/" class="subject-card idrett" onclick="logAppVisit('idrettogsamfunn')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                            <path d="M4 22h16"/>
+                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Idrett og samfunn</h2>
+                        <span class="level-tag">Idrettshistorie, etikk og fellesskap</span>
+                    </div>
+                </div>
+                <p>Utforsk idrettens rolle i samfunnet, verdier, kommersialisering og folkehelse gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Idrett og samfunn →</span>
+            </a>
+
+            <a href="/mediesamfunnet/" class="subject-card samfunn" onclick="logAppVisit('mediesamfunnet')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
+                            <polyline points="17 2 12 7 7 2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Mediesamfunnet</h2>
+                        <span class="level-tag">Medier, ytringsfrihet og digital kultur</span>
+                    </div>
+                </div>
+                <p>Utforsk medienes rolle i demokratiet, journalistikk, kildekritikk og digital påvirkning gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Mediesamfunnet →</span>
             </a>
 
             <a href="/norsk/" class="subject-card norsk" onclick="logAppVisit('norsk')">

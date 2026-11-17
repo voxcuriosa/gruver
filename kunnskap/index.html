@@ -15,6 +15,9 @@
             --border: rgba(255, 255, 255, 0.08);
             --text: #f1f5f9;
             --muted: #94a3b8;
+            --bransje: #0ea5e9;
+            --bransje-bg: rgba(14, 165, 233, 0.12);
+            --bransje-border: rgba(14, 165, 233, 0.35);
             --engelsk: #60a5fa;
             --engelsk-bg: rgba(96, 165, 250, 0.12);
             --engelsk-border: rgba(96, 165, 250, 0.35);
@@ -169,6 +172,11 @@
             background: var(--surface-hover);
         }
 
+        .subject-card.bransje:hover {
+            border-color: var(--bransje-border);
+            box-shadow: 0 12px 30px -12px rgba(14, 165, 233, 0.25);
+        }
+
         .subject-card.engelsk:hover {
             border-color: var(--engelsk-border);
             box-shadow: 0 12px 30px -12px rgba(96, 165, 250, 0.25);
@@ -253,6 +261,12 @@
             display: grid;
             place-items: center;
             flex-shrink: 0;
+        }
+
+        .bransje .icon-wrap {
+            background: var(--bransje-bg);
+            color: var(--bransje);
+            border: 1px solid var(--bransje-border);
         }
 
         .engelsk .icon-wrap {
@@ -367,6 +381,10 @@
             text-transform: uppercase;
         }
 
+        .bransje .cta {
+            color: var(--bransje);
+        }
+
         .engelsk .cta {
             color: var(--engelsk);
         }
@@ -466,6 +484,23 @@
         </header>
 
         <main class="grid">
+            <a href="/bransje/" class="subject-card bransje" onclick="logAppVisit('bransje')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            <rect width="20" height="14" x="2" y="6" rx="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Bransje og arbeidsliv</h2>
+                        <span class="level-tag">Arbeidsmiljø, yrkesetikk og næring</span>
+                    </div>
+                </div>
+                <p>Utforsk arbeidslivets regler, HMS, yrkesetikk, kundebehandling og bransjeforståelse gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Bransje og arbeidsliv →</span>
+            </a>
+
             <a href="/engelsk/" class="subject-card engelsk" onclick="logAppVisit('engelsk')">
                 <div class="card-header">
                     <div class="icon-wrap">

@@ -30,6 +30,9 @@
             --norsk: #eab308;
             --norsk-bg: rgba(234, 179, 8, 0.12);
             --norsk-border: rgba(234, 179, 8, 0.35);
+            --politikk: #3b82f6;
+            --politikk-bg: rgba(59, 130, 246, 0.12);
+            --politikk-border: rgba(59, 130, 246, 0.35);
             --samfunn: #38bdf8;
             --samfunn-bg: rgba(56, 189, 248, 0.12);
             --samfunn-border: rgba(56, 189, 248, 0.35);
@@ -197,6 +200,11 @@
             box-shadow: 0 12px 30px -12px rgba(234, 179, 8, 0.25);
         }
 
+        .subject-card.politikk:hover {
+            border-color: var(--politikk-border);
+            box-shadow: 0 12px 30px -12px rgba(59, 130, 246, 0.25);
+        }
+
         .subject-card.samfunn:hover {
             border-color: var(--samfunn-border);
             box-shadow: 0 12px 30px -12px rgba(56, 189, 248, 0.25);
@@ -291,6 +299,12 @@
             background: var(--norsk-bg);
             color: var(--norsk);
             border: 1px solid var(--norsk-border);
+        }
+
+        .politikk .icon-wrap {
+            background: var(--politikk-bg);
+            color: var(--politikk);
+            border: 1px solid var(--politikk-border);
         }
 
         .samfunn .icon-wrap {
@@ -399,6 +413,10 @@
 
         .norsk .cta {
             color: var(--norsk);
+        }
+
+        .politikk .cta {
+            color: var(--politikk);
         }
 
         .samfunn .cta {
@@ -630,6 +648,27 @@
                 </div>
                 <p>Utforsk litteraturhistorie, språkhistorie, retorisk analyse og sakprosa gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Norsk →</span>
+            </a>
+
+            <a href="/politikk/" class="subject-card politikk" onclick="logAppVisit('politikk')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" x2="21" y1="22" y2="22"/>
+                            <line x1="6" x2="6" y1="18" y2="11"/>
+                            <line x1="10" x2="10" y1="18" y2="11"/>
+                            <line x1="14" x2="14" y1="18" y2="11"/>
+                            <line x1="18" x2="18" y1="18" y2="11"/>
+                            <polygon points="12 2 20 7 4 7"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Politikk</h2>
+                        <span class="level-tag">Makt, demokrati og menneskerettigheter</span>
+                    </div>
+                </div>
+                <p>Utforsk politiske systemer, internasjonal politikk, maktfordeling og menneskerettigheter gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Politikk →</span>
             </a>
 
             <a href="/psykologi/" class="subject-card psykologi" onclick="logAppVisit('psykologi')">

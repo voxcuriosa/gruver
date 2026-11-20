@@ -85,7 +85,7 @@
 
         .container {
             width: 100%;
-            max-width: 860px;
+            max-width: 1080px;
         }
 
         .topbar {
@@ -151,10 +151,34 @@
             margin: 0 auto;
         }
 
-        .grid {
+        .columns-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .columns-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .column-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .column-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
         }
 
         .subject-card {
@@ -503,25 +527,11 @@
             <p class="subtitle">Velg fag for å utforske interaktive emnetrær med årsakskjeder, fagbegreper og drøftingsoppgaver.</p>
         </header>
 
-        <main class="grid">
-            <a href="/bransje/" class="subject-card bransje" onclick="logAppVisit('bransje')">
-                <div class="card-header">
-                    <div class="icon-wrap">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                            <rect width="20" height="14" x="2" y="6" rx="2"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Bransje og arbeidsliv</h2>
-                        <span class="level-tag">Arbeidsmiljø, yrkesetikk og næring</span>
-                    </div>
-                </div>
-                <p>Utforsk arbeidslivets regler, HMS, yrkesetikk, kundebehandling og bransjeforståelse gjennom interaktive emnetrær.</p>
-                <span class="cta">Utforsk Bransje og arbeidsliv →</span>
-            </a>
-
-            <a href="/engelsk/" class="subject-card engelsk" onclick="logAppVisit('engelsk')">
+        <main class="columns-grid">
+            <section>
+                <h2 class="column-title">Fellesfag</h2>
+                <div class="column-stack">
+                    <a href="/engelsk/" class="subject-card engelsk" onclick="logAppVisit('engelsk')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -542,7 +552,7 @@
                 <span class="cta">Utforsk Engelsk →</span>
             </a>
 
-            <a href="/geografi/" class="subject-card geografi" onclick="logAppVisit('geografi')">
+                    <a href="/geografi/" class="subject-card geografi" onclick="logAppVisit('geografi')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -559,25 +569,7 @@
                 <span class="cta">Utforsk Geografi →</span>
             </a>
 
-            <a href="/helsefremmende/" class="subject-card helse" onclick="logAppVisit('helsefremmende')">
-                <div class="card-header">
-                    <div class="icon-wrap">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
-                            <path d="M12 8v8"/>
-                            <path d="M8 12h8"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Helsefremmende arbeid</h2>
-                        <span class="level-tag">Helse, livsstil og omsorg</span>
-                    </div>
-                </div>
-                <p>Utforsk folkehelse, forebygging, ernæring, hygiene og grunnleggende pleie gjennom interaktive emnetrær.</p>
-                <span class="cta">Utforsk Helsefremmende arbeid →</span>
-            </a>
-
-            <a href="/historien/" class="subject-card historien" onclick="logAppVisit('historien')">
+                    <a href="/historien/" class="subject-card historien" onclick="logAppVisit('historien')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -595,7 +587,97 @@
                 <span class="cta">Utforsk Historie →</span>
             </a>
 
-            <a href="/idrettogsamfunn/" class="subject-card idrett" onclick="logAppVisit('idrettogsamfunn')">
+                    <a href="/norsk/" class="subject-card norsk" onclick="logAppVisit('norsk')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"/>
+                            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Norsk</h2>
+                        <span class="level-tag">Språk, litteratur og retorikk</span>
+                    </div>
+                </div>
+                <p>Utforsk litteraturhistorie, språkhistorie, retorisk analyse og sakprosa gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Norsk →</span>
+            </a>
+
+                    <a href="/religion/" class="subject-card religion" onclick="logAppVisit('religion')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Religion og etikk</h2>
+                        <span class="level-tag">Livssyn, filosofi og verdier</span>
+                    </div>
+                </div>
+                <p>Utforsk verdensreligioner, livssyn, etiske teorier og filosofiske spørsmål gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Religion og etikk →</span>
+            </a>
+
+                    <a href="/samfunnet/" class="subject-card samfunn" onclick="logAppVisit('samfunnet')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Samfunnsfag</h2>
+                        <span class="level-tag">Politikk, demokrati og samfunn</span>
+                    </div>
+                </div>
+                <p>Utforsk sammenhenger i politikk, demokrati, økonomi og samfunnsutvikling gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Samfunnsfag →</span>
+            </a>
+                </div>
+            </section>
+            <section>
+                <h2 class="column-title">Programfag</h2>
+                <div class="column-stack">
+                    <a href="/bransje/" class="subject-card bransje" onclick="logAppVisit('bransje')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            <rect width="20" height="14" x="2" y="6" rx="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Bransje og arbeidsliv</h2>
+                        <span class="level-tag">Arbeidsmiljø, yrkesetikk og næring</span>
+                    </div>
+                </div>
+                <p>Utforsk arbeidslivets regler, HMS, yrkesetikk, kundebehandling og bransjeforståelse gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Bransje og arbeidsliv →</span>
+            </a>
+
+                    <a href="/helsefremmende/" class="subject-card helse" onclick="logAppVisit('helsefremmende')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+                            <path d="M12 8v8"/>
+                            <path d="M8 12h8"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Helsefremmende arbeid</h2>
+                        <span class="level-tag">Helse, livsstil og omsorg</span>
+                    </div>
+                </div>
+                <p>Utforsk folkehelse, forebygging, ernæring, hygiene og grunnleggende pleie gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Helsefremmende arbeid →</span>
+            </a>
+
+                    <a href="/idrettogsamfunn/" class="subject-card idrett" onclick="logAppVisit('idrettogsamfunn')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -616,7 +698,7 @@
                 <span class="cta">Utforsk Idrett og samfunn →</span>
             </a>
 
-            <a href="/mediesamfunnet/" class="subject-card samfunn" onclick="logAppVisit('mediesamfunnet')">
+                    <a href="/mediesamfunnet/" class="subject-card samfunn" onclick="logAppVisit('mediesamfunnet')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -633,24 +715,7 @@
                 <span class="cta">Utforsk Mediesamfunnet →</span>
             </a>
 
-            <a href="/norsk/" class="subject-card norsk" onclick="logAppVisit('norsk')">
-                <div class="card-header">
-                    <div class="icon-wrap">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 20h9"/>
-                            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Norsk</h2>
-                        <span class="level-tag">Språk, litteratur og retorikk</span>
-                    </div>
-                </div>
-                <p>Utforsk litteraturhistorie, språkhistorie, retorisk analyse og sakprosa gjennom interaktive emnetrær.</p>
-                <span class="cta">Utforsk Norsk →</span>
-            </a>
-
-            <a href="/politikk/" class="subject-card politikk" onclick="logAppVisit('politikk')">
+                    <a href="/politikk/" class="subject-card politikk" onclick="logAppVisit('politikk')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -671,7 +736,7 @@
                 <span class="cta">Utforsk Politikk →</span>
             </a>
 
-            <a href="/psykologi/" class="subject-card psykologi" onclick="logAppVisit('psykologi')">
+                    <a href="/psykologi/" class="subject-card psykologi" onclick="logAppVisit('psykologi')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -689,23 +754,7 @@
                 <span class="cta">Utforsk Psykologi →</span>
             </a>
 
-            <a href="/religion/" class="subject-card religion" onclick="logAppVisit('religion')">
-                <div class="card-header">
-                    <div class="icon-wrap">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Religion og etikk</h2>
-                        <span class="level-tag">Livssyn, filosofi og verdier</span>
-                    </div>
-                </div>
-                <p>Utforsk verdensreligioner, livssyn, etiske teorier og filosofiske spørsmål gjennom interaktive emnetrær.</p>
-                <span class="cta">Utforsk Religion og etikk →</span>
-            </a>
-
-            <a href="/raavare/" class="subject-card raavare" onclick="logAppVisit('raavare')">
+                    <a href="/raavare/" class="subject-card raavare" onclick="logAppVisit('raavare')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -723,25 +772,7 @@
                 <span class="cta">Utforsk Råvare, produksjon og kvalitet →</span>
             </a>
 
-            <a href="/samfunnet/" class="subject-card samfunn" onclick="logAppVisit('samfunnet')">
-                <div class="card-header">
-                    <div class="icon-wrap">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
-                            <path d="M2 12h20"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Samfunnsfag</h2>
-                        <span class="level-tag">Politikk, demokrati og samfunn</span>
-                    </div>
-                </div>
-                <p>Utforsk sammenhenger i politikk, demokrati, økonomi og samfunnsutvikling gjennom interaktive emnetrær.</p>
-                <span class="cta">Utforsk Samfunnsfag →</span>
-            </a>
-
-            <a href="/samfunnsgeografi/" class="subject-card samfunnsgeografi" onclick="logAppVisit('samfunnsgeografi')">
+                    <a href="/samfunnsgeografi/" class="subject-card samfunnsgeografi" onclick="logAppVisit('samfunnsgeografi')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -758,7 +789,7 @@
                 <span class="cta">Utforsk Samfunnsgeografi →</span>
             </a>
 
-            <a href="/sosiologi/" class="subject-card sosiologi" onclick="logAppVisit('sosiologi')">
+                    <a href="/sosiologi/" class="subject-card sosiologi" onclick="logAppVisit('sosiologi')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -777,7 +808,7 @@
                 <span class="cta">Utforsk Sosiologi og sosialantropologi →</span>
             </a>
 
-            <a href="/treningsledelse/" class="subject-card treningsledelse" onclick="logAppVisit('treningsledelse')">
+                    <a href="/treningsledelse/" class="subject-card treningsledelse" onclick="logAppVisit('treningsledelse')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -798,7 +829,7 @@
                 <span class="cta">Utforsk Treningsledelse →</span>
             </a>
 
-            <a href="/treningslaere/" class="subject-card treningslaere" onclick="logAppVisit('treningslaere')">
+                    <a href="/treningslaere/" class="subject-card treningslaere" onclick="logAppVisit('treningslaere')">
                 <div class="card-header">
                     <div class="icon-wrap">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -814,6 +845,8 @@
                 <p>Utforsk treningsprinsipper, utholdenhet, styrke, anatomi og restitusjon gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Treningslære →</span>
             </a>
+                </div>
+            </section>
         </main>
 
         <div class="coming-soon">

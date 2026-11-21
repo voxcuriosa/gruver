@@ -66,6 +66,9 @@
             --treningsledelse: #f97316;
             --treningsledelse-bg: rgba(249, 115, 22, 0.12);
             --treningsledelse-border: rgba(249, 115, 22, 0.35);
+            --yrkesliv: #14b8a6;
+            --yrkesliv-bg: rgba(20, 184, 166, 0.12);
+            --yrkesliv-border: rgba(20, 184, 166, 0.35);
         }
 
         * {
@@ -287,6 +290,11 @@
             box-shadow: 0 12px 30px -12px rgba(249, 115, 22, 0.25);
         }
 
+        .subject-card.yrkesliv:hover {
+            border-color: var(--yrkesliv-border);
+            box-shadow: 0 12px 30px -12px rgba(20, 184, 166, 0.25);
+        }
+
         .card-header {
             display: flex;
             align-items: center;
@@ -405,6 +413,12 @@
             border: 1px solid var(--treningsledelse-border);
         }
 
+        .yrkesliv .icon-wrap {
+            background: var(--yrkesliv-bg);
+            color: var(--yrkesliv);
+            border: 1px solid var(--yrkesliv-border);
+        }
+
         .subject-card h2 {
             font-size: 1.25rem;
             font-weight: 650;
@@ -499,6 +513,10 @@
 
         .treningsledelse .cta {
             color: var(--treningsledelse);
+        }
+
+        .yrkesliv .cta {
+            color: var(--yrkesliv);
         }
 
         .wip-badge {
@@ -878,6 +896,22 @@
                 </div>
                 <p>Utforsk treningsprinsipper, utholdenhet, styrke, anatomi og restitusjon gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Treningslære →</span>
+            </a>
+
+                    <a href="/yrkesliv/" class="subject-card yrkesliv" onclick="logAppVisit('yrkesliv')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Yrkesliv i helse- og oppvekstfag</h2>
+                        <span class="level-tag">Yrkesutøvelse, etikk og lovverk</span>
+                    </div>
+                </div>
+                <p>Utforsk yrkesetikk, taushetsplikt, brukermedvirkning, HMS og samarbeid i helse- og oppvekstsektoren gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Yrkesliv i helse- og oppvekstfag →</span>
             </a>
                 </div>
             </section>

@@ -15,6 +15,9 @@
             --border: rgba(255, 255, 255, 0.08);
             --text: #f1f5f9;
             --muted: #94a3b8;
+            --biologi: #22c55e;
+            --biologi-bg: rgba(34, 197, 94, 0.12);
+            --biologi-border: rgba(34, 197, 94, 0.35);
             --bransje: #0ea5e9;
             --bransje-bg: rgba(14, 165, 233, 0.12);
             --bransje-border: rgba(14, 165, 233, 0.35);
@@ -27,6 +30,9 @@
             --idrett: #84cc16;
             --idrett-bg: rgba(132, 204, 22, 0.12);
             --idrett-border: rgba(132, 204, 22, 0.35);
+            --kjemi: #a855f7;
+            --kjemi-bg: rgba(168, 85, 247, 0.12);
+            --kjemi-border: rgba(168, 85, 247, 0.35);
             --kommunikasjon: #06b6d4;
             --kommunikasjon-bg: rgba(6, 182, 212, 0.12);
             --kommunikasjon-border: rgba(6, 182, 212, 0.35);
@@ -205,6 +211,16 @@
             background: var(--surface-hover);
         }
 
+        .subject-card.biologi:hover {
+            border-color: var(--biologi-border);
+            box-shadow: 0 12px 30px -12px rgba(34, 197, 94, 0.25);
+        }
+
+        .subject-card.kjemi:hover {
+            border-color: var(--kjemi-border);
+            box-shadow: 0 12px 30px -12px rgba(168, 85, 247, 0.25);
+        }
+
         .subject-card.bransje:hover {
             border-color: var(--bransje-border);
             box-shadow: 0 12px 30px -12px rgba(14, 165, 233, 0.25);
@@ -309,6 +325,18 @@
             display: grid;
             place-items: center;
             flex-shrink: 0;
+        }
+
+        .biologi .icon-wrap {
+            background: var(--biologi-bg);
+            color: var(--biologi);
+            border: 1px solid var(--biologi-border);
+        }
+
+        .kjemi .icon-wrap {
+            background: var(--kjemi-bg);
+            color: var(--kjemi);
+            border: 1px solid var(--kjemi-border);
         }
 
         .bransje .icon-wrap {
@@ -445,6 +473,14 @@
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
+        }
+
+        .biologi .cta {
+            color: var(--biologi);
+        }
+
+        .kjemi .cta {
+            color: var(--kjemi);
         }
 
         .bransje .cta {
@@ -678,6 +714,23 @@
             <section>
                 <h2 class="column-title">Programfag</h2>
                 <div class="column-stack">
+                    <a href="/biologi/" class="subject-card biologi" onclick="logAppVisit('biologi')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Biologi</h2>
+                        <span class="level-tag">Cellen, evolusjon og økologi</span>
+                    </div>
+                </div>
+                <p>Utforsk cellebiologi, genetikk, fysiologi, evolusjon og økologiske sammenhenger gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Biologi →</span>
+            </a>
+
                     <a href="/bransje/" class="subject-card bransje" onclick="logAppVisit('bransje')">
                 <div class="card-header">
                     <div class="icon-wrap">
@@ -732,6 +785,24 @@
                 </div>
                 <p>Utforsk idrettens rolle i samfunnet, verdier, kommersialisering og folkehelse gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Idrett og samfunn →</span>
+            </a>
+
+                    <a href="/kjemi/" class="subject-card kjemi" onclick="logAppVisit('kjemi')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>
+                            <path d="M8.5 2h7"/>
+                            <path d="M7 16h10"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Kjemi</h2>
+                        <span class="level-tag">Atomer, reaksjoner og likevekt</span>
+                    </div>
+                </div>
+                <p>Utforsk kjemiske bindinger, støkiometri, syrer og baser, redoksreaksjoner og organisk kjemi gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Kjemi →</span>
             </a>
 
                     <a href="/kommunikasjon/" class="subject-card kommunikasjon" onclick="logAppVisit('kommunikasjon')">

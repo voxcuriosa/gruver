@@ -27,6 +27,9 @@
             --idrett: #84cc16;
             --idrett-bg: rgba(132, 204, 22, 0.12);
             --idrett-border: rgba(132, 204, 22, 0.35);
+            --kommunikasjon: #06b6d4;
+            --kommunikasjon-bg: rgba(6, 182, 212, 0.12);
+            --kommunikasjon-border: rgba(6, 182, 212, 0.35);
             --norsk: #eab308;
             --norsk-bg: rgba(234, 179, 8, 0.12);
             --norsk-border: rgba(234, 179, 8, 0.35);
@@ -219,6 +222,11 @@
             box-shadow: 0 12px 30px -12px rgba(132, 204, 22, 0.25);
         }
 
+        .subject-card.kommunikasjon:hover {
+            border-color: var(--kommunikasjon-border);
+            box-shadow: 0 12px 30px -12px rgba(6, 182, 212, 0.25);
+        }
+
         .subject-card.norsk:hover {
             border-color: var(--norsk-border);
             box-shadow: 0 12px 30px -12px rgba(234, 179, 8, 0.25);
@@ -317,6 +325,12 @@
             background: var(--idrett-bg);
             color: var(--idrett);
             border: 1px solid var(--idrett-border);
+        }
+
+        .kommunikasjon .icon-wrap {
+            background: var(--kommunikasjon-bg);
+            color: var(--kommunikasjon);
+            border: 1px solid var(--kommunikasjon-border);
         }
 
         .norsk .icon-wrap {
@@ -433,6 +447,10 @@
 
         .idrett .cta {
             color: var(--idrett);
+        }
+
+        .kommunikasjon .cta {
+            color: var(--kommunikasjon);
         }
 
         .norsk .cta {
@@ -696,6 +714,22 @@
                 </div>
                 <p>Utforsk idrettens rolle i samfunnet, verdier, kommersialisering og folkehelse gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Idrett og samfunn →</span>
+            </a>
+
+                    <a href="/kommunikasjon/" class="subject-card kommunikasjon" onclick="logAppVisit('kommunikasjon')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Kommunikasjon og samhandling</h2>
+                        <span class="level-tag">Samspill, empati og dialog</span>
+                    </div>
+                </div>
+                <p>Utforsk kommunikasjonsteori, profesjonelt samspill, konflikthåndtering og relasjonsbygging gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Kommunikasjon og samhandling →</span>
             </a>
 
                     <a href="/mediesamfunnet/" class="subject-card samfunn" onclick="logAppVisit('mediesamfunnet')">

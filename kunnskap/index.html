@@ -18,6 +18,9 @@
             --biologi: #22c55e;
             --biologi-bg: rgba(34, 197, 94, 0.12);
             --biologi-border: rgba(34, 197, 94, 0.35);
+            --fysikk: #6366f1;
+            --fysikk-bg: rgba(99, 102, 241, 0.12);
+            --fysikk-border: rgba(99, 102, 241, 0.35);
             --bransje: #0ea5e9;
             --bransje-bg: rgba(14, 165, 233, 0.12);
             --bransje-border: rgba(14, 165, 233, 0.35);
@@ -231,6 +234,11 @@
             box-shadow: 0 12px 30px -12px rgba(34, 197, 94, 0.25);
         }
 
+        .subject-card.fysikk:hover {
+            border-color: var(--fysikk-border);
+            box-shadow: 0 12px 30px -12px rgba(99, 102, 241, 0.25);
+        }
+
         .subject-card.kjemi:hover {
             border-color: var(--kjemi-border);
             box-shadow: 0 12px 30px -12px rgba(168, 85, 247, 0.25);
@@ -346,6 +354,12 @@
             background: var(--biologi-bg);
             color: var(--biologi);
             border: 1px solid var(--biologi-border);
+        }
+
+        .fysikk .icon-wrap {
+            background: var(--fysikk-bg);
+            color: var(--fysikk);
+            border: 1px solid var(--fysikk-border);
         }
 
         .kjemi .icon-wrap {
@@ -492,6 +506,10 @@
 
         .biologi .cta {
             color: var(--biologi);
+        }
+
+        .fysikk .cta {
+            color: var(--fysikk);
         }
 
         .kjemi .cta {
@@ -915,6 +933,24 @@
                 </div>
                 <p>Utforsk cellebiologi, genetikk, fysiologi, evolusjon og økologiske sammenhenger gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Biologi →</span>
+            </a>
+
+                    <a href="/fysikk/" class="subject-card fysikk" onclick="logAppVisit('fysikk')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1"/>
+                            <path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"/>
+                            <path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Fysikk</h2>
+                        <span class="level-tag">Mekanikk, energi og kvantefysikk</span>
+                    </div>
+                </div>
+                <p>Utforsk krefter, bevegelse, elektromagnetisme, termofysikk og moderne fysikk gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Fysikk →</span>
             </a>
 
                     <a href="/kjemi/" class="subject-card kjemi" onclick="logAppVisit('kjemi')">

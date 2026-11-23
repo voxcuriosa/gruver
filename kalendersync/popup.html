@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 320px;
+      padding: 16px;
+      margin: 0;
+      color: #1f2937;
+      background: #f9fafb;
+    }
+    h2 {
+      font-size: 16px;
+      margin: 0 0 12px 0;
+      color: #111827;
+    }
+    .field {
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #374151;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 13px;
+      background: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    #btn-ics {
+      background: #2563eb;
+      color: #fff;
+    }
+    #btn-ics:hover {
+      background: #1d4ed8;
+    }
+    #btn-pa {
+      background: #059669;
+      color: #fff;
+    }
+    #btn-pa:hover {
+      background: #047857;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #status {
+      font-size: 12px;
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 6px;
+      display: none;
+      white-space: pre-wrap;
+    }
+    #status.ok {
+      display: block;
+      background: #d1fae5;
+      color: #065f46;
+    }
+    #status.err {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    #status.info, #grade-status.info {
+      display: block;
+      background: #e0f2fe;
+      color: #075985;
+    }
+    #grade-status {
+      font-size: 12px;
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 6px;
+      display: none;
+      white-space: pre-wrap;
+    }
+    #grade-status.ok { display: block; background: #d1fae5; color: #065f46; }
+    #grade-status.err { display: block; background: #fee2e2; color: #991b1b; }
+    .tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+    .tab-btn {
+      flex: 1; padding: 7px; border: 1px solid #d1d5db; background: #fff;
+      color: #374151; border-radius: 6px; font-size: 12px; font-weight: 600;
+      cursor: pointer; margin-bottom: 0;
+    }
+    .tab-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 6px; }
+    th, td { text-align: left; padding: 4px; border-bottom: 1px solid #e5e7eb; }
+  </style>
+</head>
+<body>
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+    <h2 style="margin:0;">InSchool ↔ Outlook sync</h2>
+    <a href="https://voxcuriosa.no/kalendersync/" target="_blank" style="font-size:11px; color:#2563eb; text-decoration:none; font-weight:600;">Hjelp ↗</a>
+  </div>
+
+  <div class="tabs">
+    <button type="button" id="tab-kalender" class="tab-btn active">Kalender</button>
+    <button type="button" id="tab-karakterer" class="tab-btn">Karakterer</button>
+  </div>
+
+  <div id="view-kalender">
+  <div id="autosync-badge" style="display:none; font-size:11px; font-weight:600; color:#065f46; background:#d1fae5; padding:4px 8px; border-radius:6px; margin-bottom:10px;">● Auto-sync aktiv (lokal bro)</div>
+
+  <div class="field">
+    <label for="facultyId">Lærer-ID (hentes automatisk eller fylles inn)</label>
+    <input type="text" id="facultyId" value="" placeholder="F.eks. 423516">
+  </div>
+
+  <div style="background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:12px; margin-bottom:12px;">
+    <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:#2563eb; margin-bottom:8px;">InSchool → Outlook (valgfritt)</div>
+
+    <div class="field">
+      <label for="weeks">Antall uker fremover (fra denne uken)</label>
+      <select id="weeks">
+        <option value="1">1 uke</option>
+        <option value="2" selected>2 uker</option>
+        <option value="4">4 uker</option>
+        <option value="8">8 uker</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Hva skal synkroniseres?</label>
+      <div style="display:flex; flex-direction:column; gap:6px; margin-top:4px;">
+        <label style="display:flex; align-items:center; gap:8px; margin:0; font-weight:500; cursor:pointer;">
+          <input type="checkbox" id="includeLessons" checked style="width:auto; margin:0;"> Skoletimer
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; margin:0; font-weight:500; cursor:pointer;">
+          <input type="checkbox" id="includeActivities" checked style="width:auto; margin:0;"> Møter og aktiviteter
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; margin:0; font-weight:500; cursor:pointer;">
+          <input type="checkbox" id="skipMotetid" style="width:auto; margin:0;"> Hopp over generell «Møtetid»
+        </label>
+      </div>
+    </div>
+
+    <button id="btn-ics">Last ned .ics-fil (Outlook)</button>
+    <button id="btn-onedrive" style="background:#0284c7; color:#fff; margin-bottom:0;">Lagre sync-fil til OneDrive (.json)</button>
+  </div>
+
+  <div style="background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:12px;">
+    <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:#7c3aed; margin-bottom:8px;">Outlook → InSchool (valgfritt, 30 dager frem)</div>
+    <input type="file" id="outlookJsonFile" accept=".json" style="display:none;">
+    <button id="btn-to-inschool" style="background:#7c3aed; color:#fff; margin-bottom:0;">Velg Outlook-fil (.json) → InSchool</button>
+  </div>
+
+  <div id="status"></div>
+  </div>
+
+  <div id="view-karakterer" style="display:none;">
+    <div style="background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:12px;">
+      <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:#2563eb; margin-bottom:6px;">Curiosa / Teams → InSchool</div>
+      <p style="font-size:11px; color:#6b7280; margin:0 0 10px 0;">Alt leses lokalt på din PC/Mac. Ingen elevdata forlater maskinen.</p>
+      <input type="file" id="gradeFile" accept=".json,.csv,.xlsx" style="display:none;">
+      <button type="button" id="btn-pick-grade-file" style="background:#2563eb; color:#fff;">Velg Curiosa (.json), Teams (.csv) eller Excel (.xlsx)</button>
+
+      <div id="grade-assignment-wrap" style="display:none; margin-top:8px;">
+        <label for="grade-assignment" style="display:none;">Velg oppgave/prøve (forhåndsvisning)</label>
+        <select id="grade-assignment" style="display:none;"></select>
+        <div id="grade-multi-wrap" style="margin-top:6px; border:1px solid #e5e7eb; border-radius:6px; padding:4px 6px; background:#f9fafb; font-size:11px;"></div>
+        <label for="grade-scale" style="display:none;">Karakterskala</label>
+        <select id="grade-scale" style="display:none;">
+          <option value="Findelt med IV">Findelt med IV (1–6)</option>
+          <option value="Måloppnåelse">Måloppnåelse (Lav / Middels / Høy)</option>
+          <option value="Godkjent/Ikke godkjent">Godkjent / Ikke godkjent</option>
+        </select>
+        <label style="display:flex; align-items:center; gap:6px; margin-top:6px; font-weight:500; cursor:pointer;">
+          <input type="checkbox" id="grade-create-new" style="width:auto; margin:0;">
+          Opprett ny vurdering i InSchool (hvis den ikke finnes)
+        </label>
+      </div>
+
+      <div id="grade-duplicates-wrap" style="display:none; margin-top:6px; padding:6px 8px; background:#fef3c7; border:1px solid #f59e0b; border-radius:6px; font-size:11px; color:#92400e;"></div>
+
+      <div id="grade-preview-wrap" style="display:none; margin-top:6px; max-height:280px; overflow-y:auto;">
+        <table>
+          <thead><tr><th>Elev</th><th>Karakter</th><th>Status</th></tr></thead>
+          <tbody id="grade-preview-body"></tbody>
+        </table>
+      </div>
+
+      <button type="button" id="btn-save-grades" disabled style="background:#059669; color:#fff; margin-top:10px; margin-bottom:0;">Bekreft og lagre i InSchool</button>
+      <button type="button" id="btn-refresh-inschool" style="display:none; background:#374151; color:#fff; margin-top:6px; margin-bottom:0;">↻ Last inn InSchool på nytt</button>
+    </div>
+    <div id="grade-status"></div>
+  </div>
+
+  <script src="popup.js"></script>
+  <script src="xlsxReader.js"></script>
+  <script src="grades.js"></script>
+</body>
+</html>

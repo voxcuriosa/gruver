@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalendersync – Vox Curiosa</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --green: #10b981;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .back-link:hover { color: var(--text); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 8px 0; font-size: 26px; }
+    h2 { margin: 24px 0 10px 0; font-size: 18px; color: #e2e8f0; }
+    p { color: var(--muted); margin: 0 0 14px 0; }
+    .pin-box {
+      max-width: 360px;
+      margin: 60px auto;
+      text-align: center;
+    }
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      text-align: center;
+      letter-spacing: 6px;
+      margin-bottom: 12px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #059669; }
+    .err {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+    }
+    ol, ul { color: #cbd5e1; padding-left: 20px; }
+    li { margin-bottom: 8px; }
+    code {
+      background: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #93c5fd;
+    }
+    .downloads {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 16px 0 8px 0;
+    }
+    #content { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-link">← Tilbake til Vox Curiosa</a>
+
+    <div id="gate" class="card pin-box">
+      <h1>🔒 Kalendersync</h1>
+      <p>Skriv inn adgangskode for å åpne oppskrift og nedlasting.</p>
+      <input type="password" id="pin" maxlength="8" placeholder="••••" autofocus>
+      <button class="btn" id="unlock-btn" style="width:100%">Åpne</button>
+      <div id="pin-err" class="err">Feil kode. Prøv igjen.</div>
+    </div>
+
+    <div id="content">
+      <div class="card">
+        <h1>InSchool ↔ Outlook Kalender Sync (Toveis)</h1>
+        <p>Toveis synkronisering mellom Visma InSchool og Microsoft Outlook (og Teams på PC/Mac): Få timeplanen inn som et eget kalenderlag (<strong>InSchool</strong>) i Outlook – og hent møter fra Outlook rett inn i din InSchool-kalender.</p>
+        <div class="downloads">
+          <a href="https://chromewebstore.google.com/detail/nfiddfelapipongmnbnaimimbeiiiboc" target="_blank" class="btn btn-green">🧩 Installer Chrome-utvidelse (Chrome Web Store)</a>
+        </div>
+        <div class="downloads" style="margin-top:0;">
+          <a href="OutlooktilInSchool.zip" download class="btn">⬇ Flyt: Outlook → InSchool (.zip)</a>
+          <a href="InSchoolsync.zip" download class="btn">⬇ Flyt: InSchool → Outlook (.zip)</a>
+        </div>
+        <img src="preview.jpg" alt="Eksempel på synkronisert kalender i Teams/Outlook" style="width:100%; border-radius:10px; margin-top:16px; border:1px solid var(--border);">
+      </div>
+
+      <div class="card">
+        <h2>Felles forberedelse (1 gang)</h2>
+        <ol>
+          <li>Opprett en tom mappe i <a href="https://onedrive.live.com" target="_blank" style="color:#60a5fa">OneDrive</a> som heter <code>InSchool sync</code>.</li>
+          <li>Installer <a href="https://chromewebstore.google.com/detail/nfiddfelapipongmnbnaimimbeiiiboc" target="_blank" style="color:#60a5fa">InSchool Kalender Sync i Chrome Web Store</a> (fungerer også i Microsoft Edge).</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>Del 1 (Mest vanlig): Outlook → InSchool</h2>
+        <p>Få møter fra hovedkalenderen din i Outlook inn som egne avtaler i din InSchool-kalender (30 dager frem i tid).</p>
+        <ol>
+          <li>Last ned <a href="OutlooktilInSchool.zip" download style="color:#60a5fa">OutlooktilInSchool.zip</a>.</li>
+          <li>Gå til <a href="https://make.powerautomate.com" target="_blank" style="color:#60a5fa">make.powerautomate.com</a> → <strong>Mine flyter → Importer → Importer pakke (avskrevet)</strong> og last opp filen.</li>
+          <li>Sjekk at øverste linje står på <strong>Opprett som ny</strong>, klikk <strong>Velg ved import</strong> på linjene med rødt utropstegn → velg/opprett <strong>Office 365 Outlook</strong> og <strong>OneDrive for Business</strong> → <strong>Lagre</strong> → <strong>Importer</strong>.</li>
+          <li>Åpne flyten (<strong>Rediger</strong>), sjekk at <code>Calendar</code> (hovedkalenderen) og mappen <code>/InSchool sync</code> er valgt, og trykk <strong>Lagre</strong>. Flyten lager nå <code>outlook-events.json</code> automatisk hver dag. <strong>Første gang:</strong> Trykk <strong>Kjør (Run)</strong> på flyten for å opprette <code>outlook-events.json</code> i OneDrive med én gang (så slipper du å vente til neste dag).</li>
+          <li>Åpne InSchool i Chrome, klikk på utvidelsesikonet, trykk <strong>«Velg Outlook-fil (.json) → InSchool»</strong> og velg <code>outlook-events.json</code> (duplikater hoppes over automatisk). <strong style="color:#fbbf24;">(Dette siste steget må gjentas manuelt hver gang du vil hente nye møter inn i InSchool.)</strong></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>Del 2 (Valgfritt): InSchool → Outlook</h2>
+        <p>Få timeplanen din fra InSchool inn som et eget kalenderlag (<code>InSchool</code>) i Outlook (og Teams på PC/Mac).</p>
+        <ol>
+          <li>Åpne <a href="https://outlook.office.com" target="_blank" style="color:#60a5fa">outlook.office.com</a> → <strong>Kalender → Legg til kalender → Opprett tom kalender</strong> → kall den <code>InSchool</code>.</li>
+          <li>Last ned <a href="InSchoolsync.zip" download style="color:#60a5fa">InSchoolsync.zip</a> og importer den i Power Automate (på samme måte som i Del 1). Under <strong>Related resources</strong> vil de to tilkoblingene være røde og <strong>Import</strong>-knappen grå. Klikk på den blå lenken <strong>«Select during import»</strong> på begge linjene:
+            <ul>
+              <li>På <strong>Office 365 Outlook Connection</strong>: velg din egen Outlook-tilkobling (eller klikk <strong>Create new</strong> og logg inn med skolekontoen) og trykk <strong>Save</strong>.</li>
+              <li>På <strong>OneDrive for Business Connection</strong>: velg din egen OneDrive-tilkobling (eller klikk <strong>Create new</strong> og logg inn med skolekontoen) og trykk <strong>Save</strong>.</li>
+            </ul>
+            Når begge har fått grønn hake, blir <strong>Import</strong>-knappen aktiv.</li>
+          <li>Åpne flyten (<strong>Rediger</strong>), velg <code>/InSchool sync</code> i den øverste OneDrive-boksen, og velg <code>InSchool</code> i <strong>Calendar Id</strong> på de tre Outlook-boksene. Trykk <strong>Lagre</strong>.</li>
+          <li>Åpne InSchool i Chrome, klikk på utvidelsen og trykk <strong>«Lagre sync-fil til OneDrive (.json)»</strong> i mappen <code>InSchool sync</code>. Power Automate oppdaterer Outlook uten duplikater og sletter filen etterpå. <strong style="color:#fbbf24;">(Dette siste steget må gjentas manuelt hver gang du vil oppdatere Outlook med nye endringer fra InSchool – eller gjøres automatisk med Del 3 nedenfor.)</strong></li>
+        </ol>
+        <p style="margin-top:14px;"><strong>Rask test uten Power Automate?</strong> Trykk på <strong>«Last ned .ics-fil (Outlook)»</strong> i utvidelsen og åpne filen direkte i Outlook.</p>
+      </div>
+
+      <div class="card">
+        <h2>Del 3 (Valgfritt): Helautomatisk daglig sync (uten klikk)</h2>
+        <p>Vil du at <strong>begge veier (InSchool ↔ Outlook)</strong> skal gå helt automatisk hver dag uten at du trenger å trykke på noe i utvidelsen?</p>
+        <ol>
+          <li>Last ned <a href="local_bridge.py" download style="color:#60a5fa">local_bridge.py</a> (krever Python 3, ingen ekstra pakker).</li>
+          <li>Kjør den i bakgrunnen på Mac/PC: <code>python3 local_bridge.py</code>.
+            <ul style="margin-top:6px;">
+              <li><strong>Windows (automatisk ved oppstart):</strong> Trykk <code>Win + R</code>, skriv <code>shell:startup</code> → <strong>Ny → Snarvei</strong> → <code>pythonw.exe "C:\sti\til\local_bridge.py"</code> (kjører usynlig i bakgrunnen).</li>
+              <li><strong>Mac (automatisk ved oppstart):</strong> Legg den inn som en <code>LaunchAgent</code> i <code>~/Library/LaunchAgents/</code>.</li>
+            </ul>
+          </li>
+          <li>Når den kjører, synkroniserer Chrome-utvidelsen <strong>begge veier</strong> automatisk én gang i døgnet når du åpner InSchool (lagrer <code>inschool-sync.json</code> og leser inn <code>outlook-events.json</code>).</li>
+        </ol>
+        <p style="margin-top:14px;"><strong>Personvern:</strong> Alt kjører 100 % lokalt i din egen nettleser på din egen PC/Mac – ingenting forlater maskinen din, og ingen data sendes til tredjepartsservere.</p>
+      </div>
+
+      <div class="card">
+        <h2>Del 4 (Valgfritt): Karakter-sync (Curiosa / Teams → InSchool)</h2>
+        <p>Fyll inn karakterer fra en lokal Curiosa-fil (<code>.json</code>), Teams-eksport (<code>.csv</code>) eller Excel (<code>.xlsx</code>) rett inn i en vurdering i InSchool. Alt leses lokalt på din PC/Mac – ingen elevdata forlater maskinen.</p>
+        <ol>
+          <li><strong>Eksporter fra Teams eller Curiosa:</strong> I Teams går du til fanen <strong>Karakterer</strong> i teamet og velger <strong>Eksporter til Excel</strong> (bruk <code>.csv</code>-filen, ikke <code>.xlsx</code>). Fra Curiosa bruker du din lokale <code>curiosa-laerer-rettinger.json</code>.</li>
+          <li><strong>Gå til riktig sted i Visma InSchool:</strong> Åpne <strong>Undervisning → [velg klasse/fag] → Vurderinger → Underveis</strong> (eller gå inn på en konkret vurdering i den faggruppen). Du må stå inne på vurderingssiden til den klassen du vil importere karakterer til (ikke på startsiden eller i timeplanen).</li>
+          <li>Klikk på utvidelsesikonet, velg fanen <strong>Karakterer</strong>, og trykk <strong>«Velg Curiosa (.json), Teams (.csv) eller Excel (.xlsx)»</strong>.</li>
+          <li>Huk av for én eller flere oppgaver (filtreres automatisk på klassen) og velg eventuelt karakterskala per oppgave (<em>1–6</em>, <em>Lav/Mid/Høy</em> eller <em>GK/IGK</em>).</li>
+          <li>Huk av for <strong>«Opprett ny vurdering i InSchool (hvis den ikke finnes)»</strong> for å opprette vurderingen automatisk med alle elevene i klassen, dato fra Curiosa og duplikatsjekk (manglende elever får <code>IV</code> / <code>FRAVÆRENDE</code>).</li>
+          <li>Trykk <strong>«Bekreft og lagre i InSchool»</strong>, og klikk deretter <strong>«↻ Last inn InSchool på nytt»</strong> for å se karakterene.</li>
+        </ol>
+        <p style="margin-top:14px; font-size:13px; color:var(--muted);">Spørsmål eller brukerstøtte? Ta kontakt på <span id="contact-email"></span>.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CODE = "1212";
+    const gate = document.getElementById("gate");
+    const content = document.getElementById("content");
+    const pinInput = document.getElementById("pin");
+    const errEl = document.getElementById("pin-err");
+
+    function unlock() {
+      if (pinInput.value.trim() === CODE) {
+        gate.style.display = "none";
+        content.style.display = "block";
+        sessionStorage.setItem("kalendersync_unlocked", "1");
+      } else {
+        errEl.style.display = "block";
+        pinInput.value = "";
+        pinInput.focus();
+      }
+    }
+
+    if (sessionStorage.getItem("kalendersync_unlocked") === "1") {
+      gate.style.display = "none";
+      content.style.display = "block";
+    }
+
+    document.getElementById("unlock-btn").addEventListener("click", unlock);
+    pinInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") unlock();
+    });
+
+    (function () {
+      const u = "borchgrevink", d = "gmail.com";
+      const a = document.createElement("a");
+      a.href = "mai" + "lto:" + u + "@" + d;
+      a.textContent = u + "@" + d;
+      a.style.color = "#60a5fa";
+      document.getElementById("contact-email").appendChild(a);
+    })();
+
+    (function () {
+      const overlay = document.createElement("div");
+      Object.assign(overlay.style, {
+        display: "none", position: "fixed", inset: "0", background: "rgba(0,0,0,0.88)",
+        zIndex: "9999", alignItems: "center", justifyContent: "center", padding: "20px", cursor: "zoom-out"
+      });
+      const bigImg = document.createElement("img");
+      Object.assign(bigImg.style, { maxWidth: "95vw", maxHeight: "95vh", borderRadius: "10px", boxShadow: "0 10px 40px rgba(0,0,0,0.6)" });
+      overlay.appendChild(bigImg);
+      document.body.appendChild(overlay);
+      overlay.addEventListener("click", () => { overlay.style.display = "none"; });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") overlay.style.display = "none"; });
+      document.querySelectorAll("#content img").forEach((img) => {
+        img.style.cursor = "zoom-in";
+        img.addEventListener("click", () => { bigImg.src = img.src; overlay.style.display = "flex"; });
+      });
+    })();
+  </script>
+</body>
+</html>

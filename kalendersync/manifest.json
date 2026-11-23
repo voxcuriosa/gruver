@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "InSchool Sync",
+  "version": "1.6.49",
+  "description": "Synkroniser timeplan og karakterer mellom Visma InSchool, Outlook/Teams og Curiosa.",
+  "permissions": ["activeTab", "storage", "scripting", "cookies", "notifications"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://*.inschool.visma.no/*",
+    "http://127.0.0.1:8765/*"
+  ],
+  "icons": {
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.inschool.visma.no/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "InSchool Kalender Sync",
+    "default_icon": "icon128.png"
+  }
+}

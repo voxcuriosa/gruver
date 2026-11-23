@@ -72,6 +72,9 @@
             --raavare: #d97706;
             --raavare-bg: rgba(217, 119, 6, 0.12);
             --raavare-border: rgba(217, 119, 6, 0.35);
+            --rettslare: #fbbf24;
+            --rettslare-bg: rgba(251, 191, 36, 0.12);
+            --rettslare-border: rgba(251, 191, 36, 0.35);
             --treningslaere: #ef4444;
             --treningslaere-bg: rgba(239, 68, 68, 0.12);
             --treningslaere-border: rgba(239, 68, 68, 0.35);
@@ -327,6 +330,11 @@
             box-shadow: 0 12px 30px -12px rgba(217, 119, 6, 0.25);
         }
 
+        .subject-card.rettslare:hover {
+            border-color: var(--rettslare-border);
+            box-shadow: 0 12px 30px -12px rgba(251, 191, 36, 0.25);
+        }
+
         .subject-card.treningslaere:hover {
             border-color: var(--treningslaere-border);
             box-shadow: 0 12px 30px -12px rgba(239, 68, 68, 0.25);
@@ -472,6 +480,12 @@
             border: 1px solid var(--raavare-border);
         }
 
+        .rettslare .icon-wrap {
+            background: var(--rettslare-bg);
+            color: var(--rettslare);
+            border: 1px solid var(--rettslare-border);
+        }
+
         .treningslaere .icon-wrap {
             background: var(--treningslaere-bg);
             color: var(--treningslaere);
@@ -592,6 +606,10 @@
 
         .raavare .cta {
             color: var(--raavare);
+        }
+
+        .rettslare .cta {
+            color: var(--rettslare);
         }
 
         .treningslaere .cta {
@@ -1042,6 +1060,26 @@
                 </div>
                 <p>Utforsk kognisjon, utvikling, personlighet og psykisk helse gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Psykologi →</span>
+            </a>
+
+                    <a href="/rettslare/" class="subject-card rettslare" onclick="logAppVisit('rettslare')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                            <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                            <path d="M7 21h10"/>
+                            <path d="M12 3v18"/>
+                            <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Rettslære</h2>
+                        <span class="level-tag">Lovverk, rettigheter og rettsstat</span>
+                    </div>
+                </div>
+                <p>Utforsk juridisk metode, avtalerett, familierett, erstatningsrett og strafferett gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Rettslære →</span>
             </a>
 
                     <a href="/samfunnsgeografi/" class="subject-card samfunnsgeografi" onclick="logAppVisit('samfunnsgeografi')">

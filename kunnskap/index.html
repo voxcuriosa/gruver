@@ -66,6 +66,9 @@
             --samfunnsgeografi: #fb923c;
             --samfunnsgeografi-bg: rgba(251, 146, 60, 0.12);
             --samfunnsgeografi-border: rgba(251, 146, 60, 0.35);
+            --samfunnsokonomi: #10b981;
+            --samfunnsokonomi-bg: rgba(16, 185, 129, 0.12);
+            --samfunnsokonomi-border: rgba(16, 185, 129, 0.35);
             --religion: #818cf8;
             --religion-bg: rgba(129, 140, 248, 0.12);
             --religion-border: rgba(129, 140, 248, 0.35);
@@ -320,6 +323,11 @@
             box-shadow: 0 12px 30px -12px rgba(251, 146, 60, 0.25);
         }
 
+        .subject-card.samfunnsokonomi:hover {
+            border-color: var(--samfunnsokonomi-border);
+            box-shadow: 0 12px 30px -12px rgba(16, 185, 129, 0.25);
+        }
+
         .subject-card.religion:hover {
             border-color: var(--religion-border);
             box-shadow: 0 12px 30px -12px rgba(129, 140, 248, 0.25);
@@ -468,6 +476,12 @@
             border: 1px solid var(--samfunnsgeografi-border);
         }
 
+        .samfunnsokonomi .icon-wrap {
+            background: var(--samfunnsokonomi-bg);
+            color: var(--samfunnsokonomi);
+            border: 1px solid var(--samfunnsokonomi-border);
+        }
+
         .religion .icon-wrap {
             background: var(--religion-bg);
             color: var(--religion);
@@ -598,6 +612,10 @@
 
         .samfunnsgeografi .cta {
             color: var(--samfunnsgeografi);
+        }
+
+        .samfunnsokonomi .cta {
+            color: var(--samfunnsokonomi);
         }
 
         .religion .cta {
@@ -1097,6 +1115,23 @@
                 </div>
                 <p>Utforsk urbanisering, migrasjon, global økonomi og bærekraftig utvikling gjennom interaktive emnetrær.</p>
                 <span class="cta">Utforsk Samfunnsgeografi →</span>
+            </a>
+
+                    <a href="/samfunnsokonomi/" class="subject-card samfunnsokonomi" onclick="logAppVisit('samfunnsokonomi')">
+                <div class="card-header">
+                    <div class="icon-wrap">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                            <polyline points="16 7 22 7 22 13"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Samfunnsøkonomi</h2>
+                        <span class="level-tag">Markeder, vekst og økonomisk politikk</span>
+                    </div>
+                </div>
+                <p>Utforsk tilbud og etterspørsel, konjunkturer, pengepolitikk og internasjonal handel gjennom interaktive emnetrær.</p>
+                <span class="cta">Utforsk Samfunnsøkonomi →</span>
             </a>
 
                     <a href="/sosiologi/" class="subject-card sosiologi" onclick="logAppVisit('sosiologi')">
